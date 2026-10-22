@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,20 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+// وزن‌سنجی‌های روزانه برای پیگیری کاهش وزن
+model WeightEntry {
   id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
+  weight    Float // کیلوگرم
+  date      String   @unique // فرمت YYYY-MM-DD (یک رکورد در روز)
+  note      String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-model Post {
+// ثبت جلسات تمرین انجام‌شده (dayId: day1 | day2 | day3)
+model WorkoutLog {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  dayId     String // day1 | day2 | day3
+  weekKey   String // شناسه هفته مثل 2025-W23
+  completedAt DateTime @default(now())
+
+  @@unique([dayId, weekKey])
 }
