@@ -1,227 +1,142 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import { PROGRAM, PROFILE, totalExercises } from "@/lib/program";
-import ScheduleStrip from "@/components/dashboard/ScheduleStrip";
-import ProgramTabs from "@/components/dashboard/ProgramTabs";
-import WeightTracker from "@/components/dashboard/WeightTracker";
-import WorkoutChecklist from "@/components/dashboard/WorkoutChecklist";
-import NutritionPanel from "@/components/dashboard/NutritionPanel";
-import MedicalNotes from "@/components/dashboard/MedicalNotes";
-import CreatineResearch from "@/components/dashboard/CreatineResearch";
-import HevyGuide from "@/components/dashboard/HevyGuide";
-import SourcesSection from "@/components/dashboard/SourcesSection";
-import ProgressionCard from "@/components/dashboard/ProgressionCard";
-import MobilitySection from "@/components/dashboard/MobilitySection";
-import CardioSection from "@/components/dashboard/CardioSection";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Flame, Dumbbell, Activity, Droplets, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { Dumbbell } from "lucide-react";
+import HomeView from "@/components/app/HomeView";
+import ProgramView from "@/components/app/ProgramView";
+import WorkoutView from "@/components/app/WorkoutView";
+import ProgressView from "@/components/app/ProgressView";
+import ProfileView from "@/components/app/ProfileView";
+import BottomNavigation from "@/components/app/BottomNavigation";
+import Onboarding from "@/components/app/Onboarding";
+import { useAppStore } from "@/lib/store/app";
 
-function fa(n: number, digits = 0) {
-  return n.toLocaleString("fa-IR", { maximumFractionDigits: digits });
+interface ProfileResponse {
+  profile: {
+    id: number;
+    name: string | null;
+    goal: string;
+    experience: string;
+    daysPerWeek: number;
+    equipment: string;
+    limitations: string | null;
+    weightKg: number | null;
+    heightCm: number | null;
+    units: string;
+    reducedMotion: boolean;
+    onboardingDone: boolean;
+    weekSessionsGoal: number;
+  };
 }
 
-// مقدار امن برای SSR (سمت سرور -1، سمت کلاینت روز واقعی)
-const emptySubscribe = () => () => {};
+async function fetchProfile(): Promise<ProfileResponse> {
+  const res = await fetch("/api/profile");
+  if (!res.ok) throw new Error("خطا در دریافت پروفایل");
+  return res.json();
+}
 
-export default function Dashboard() {
-  const today = useSyncExternalStore(
-    emptySubscribe,
-    () => new Date().getDay(),
-    () => -1
-  );
+function AppShell() {
+  const view = useAppStore((s) => s.view);
+  const queryClient = useQueryClient();
 
-  // محاسبات تغذیه (Mifflin-St Jeor)
-  const bmr =
-    10 * PROFILE.startWeight + 6.25 * PROFILE.height - 5 * PROFILE.age + 5;
-  const tdee = Math.round(bmr * PROFILE.activityFactor);
-  const targetKcal = tdee - PROFILE.calorieDeficit;
-  const protein = Math.round(PROFILE.targetWeight * PROFILE.proteinPerTargetKg);
-  const bmi = PROFILE.startWeight / Math.pow(PROFILE.height / 100, 2);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["profile"],
+    queryFn: fetchProfile,
+    staleTime: 60_000,
+    retry: 1,
+  });
 
-  // امروز چه تمرینی؟ (شنبه = 6 در JS)
-  const todayPlan = PROGRAM.find((d) =>
-    [
-      { dayId: "day1", jsDay: 6 },
-      { dayId: "day2", jsDay: 1 },
-      { dayId: "day3", jsDay: 3 },
-    ].some((m) => m.dayId === d.id && m.jsDay === today)
-  );
-
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const profile = data?.profile;
+  const showOnboarding =
+    !!profile && !profile.onboardingDone && view === "home";
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* ---------- هدر ---------- */}
-      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center">
-              <Dumbbell className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <div className="font-extrabold text-sm sm:text-base">
-                داشبورد فیتنس من
-              </div>
-              <div className="text-[11px] text-muted-foreground">
-                برنامه شناگر • اصول FST-7
-              </div>
-            </div>
+    <div className="flex min-h-screen flex-col">
+      {/* ---------- هدر باریک ---------- */}
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
+        <div className="mx-auto flex h-14 max-w-3xl items-center gap-2.5 px-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/30 bg-primary/15">
+            <Dumbbell className="h-5 w-5 text-primary" aria-hidden="true" />
           </div>
-          <div className="hidden sm:flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={() => scrollTo("program")}>
-              برنامه
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => scrollTo("weight")}>
-              وزن
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => scrollTo("mobility")}>
-              کشش
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => scrollTo("health")}>
-              سلامت
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => scrollTo("sources")}>
-              منابع
-            </Button>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-extrabold leading-tight sm:text-base">
+              داشبورد فیتنس من
+            </p>
+            <p className="truncate text-[11px] leading-tight text-muted-foreground">
+              برنامه شناگر • اصول FST-7
+            </p>
           </div>
         </div>
       </header>
 
-      <main className="flex-1">
-        {/* ---------- هیرو ---------- */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="/hero.png"
-              alt="باشگاه تاریک با نورپردازی سینمایی"
-              className="w-full h-full object-cover opacity-40"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
+      {/* ---------- بدنه — نمای فعال ---------- */}
+      <main
+        className={`mx-auto w-full max-w-3xl flex-1 px-4 ${
+          view === "workout" ? "pb-10" : "pb-28"
+        }`}
+      >
+        {isError ? (
+          <div
+            role="alert"
+            className="mt-10 rounded-2xl border border-destructive/40 bg-destructive/10 p-6 text-center text-sm"
+          >
+            ارتباط با سرور برقرار نشد — صفحه را یک بار رفرش کن.
           </div>
+        ) : view === "home" ? (
+          <HomeView />
+        ) : view === "program" ? (
+          <ProgramView />
+        ) : view === "workout" ? (
+          <WorkoutView />
+        ) : view === "progress" ? (
+          <ProgressView />
+        ) : (
+          <ProfileView />
+        )}
 
-          <div className="relative max-w-6xl mx-auto px-4 py-12 sm:py-16">
-            <Badge className="mb-4 gap-1.5 h-auto py-1.5 px-3">
-              <Flame className="w-3.5 h-3.5" />
-              نسخه شخصی‌سازی‌شده — ۲۵ ساله • ۱۸۰ سانت • ۹۶ کیلو
-            </Badge>
-            <h1 className="text-3xl sm:text-5xl font-black leading-tight max-w-2xl">
-              مسیر تو به{" "}
-              <span className="text-primary">فرم شناگری</span> شروع شد 🏊‍♂️
-            </h1>
-            <p className="mt-4 text-muted-foreground leading-8 max-w-2xl">
-              برنامه ۳ روزه بر پایه اصول هانی رامبد (FST-7) با هدف V-Taper و
-              کاهش چربی. هر حرکت با عکس، نکات فرم، نسخه دستگاه و وزنه آزاد،
-              خطاهای رایج و لینک ویدیو آموزشی. وزنت رو ثبت کن و با ثبات جلو برو.
-            </p>
-
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
-              <div className="rounded-2xl bg-card/80 backdrop-blur border border-border p-4">
-                <Activity className="w-4 h-4 text-primary mb-2" />
-                <div className="text-2xl font-extrabold">{fa(bmi, 1)}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  شاخص توده بدنی (BMI)
-                </div>
-              </div>
-              <div className="rounded-2xl bg-card/80 backdrop-blur border border-border p-4">
-                <Activity className="w-4 h-4 text-primary mb-2" />
-                <div className="text-2xl font-extrabold">{fa(targetKcal)}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  کالری هدف روزانه
-                </div>
-              </div>
-              <div className="rounded-2xl bg-card/80 backdrop-blur border border-border p-4">
-                <Droplets className="w-4 h-4 text-primary mb-2" />
-                <div className="text-2xl font-extrabold">{fa(protein)} گرم</div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  پروتئین روزانه
-                </div>
-              </div>
-              <div className="rounded-2xl bg-card/80 backdrop-blur border border-border p-4">
-                <Dumbbell className="w-4 h-4 text-primary mb-2" />
-                <div className="text-2xl font-extrabold">
-                  {fa(totalExercises())} حرکت
-                </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
-                  در ۳ جلسه هفتگی
-                </div>
-              </div>
-            </div>
-
-            {today >= 0 && todayPlan && (
-              <div className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-primary/15 border border-primary/40 px-5 py-3 glow-emerald">
-                <Flame className="w-5 h-5 text-primary" />
-                <span className="text-sm font-bold">
-                  امروز {todayPlan.weekDay}ه — وقت {todayPlan.title} است! بزن بریم 💪
-                </span>
-              </div>
-            )}
-
-            <div className="mt-8">
-              <Button
-                onClick={() => scrollTo("program")}
-                className="gap-2 h-11 px-6"
-              >
-                برو به برنامه تمرینی
-                <ChevronDown className="w-4 h-4" />
-              </Button>
-            </div>
+        {/* اسکلت ملایم تا وقتی پروفایل نرسیده (فقط جلوی پرش آنبوردینگ) */}
+        {isPending && view === "home" && (
+          <div className="sr-only" aria-live="polite">
+            در حال بارگذاری
           </div>
-        </section>
-
-        {/* ---------- بدنه ---------- */}
-        <div className="max-w-6xl mx-auto px-4 space-y-10 pb-16">
-          <ScheduleStrip />
-
-          <section id="program" className="scroll-mt-20">
-            <ProgramTabs />
-          </section>
-
-          <section id="weight" className="scroll-mt-20 grid lg:grid-cols-2 gap-6 items-start">
-            <WeightTracker />
-            <WorkoutChecklist />
-          </section>
-
-          <ProgressionCard />
-          <NutritionPanel />
-
-          <section id="mobility" className="scroll-mt-20 grid lg:grid-cols-2 gap-6 items-start">
-            <MobilitySection />
-            <CardioSection />
-          </section>
-
-          <section id="health" className="scroll-mt-20">
-            <MedicalNotes />
-          </section>
-
-          <section id="creatine" className="scroll-mt-20">
-            <CreatineResearch />
-          </section>
-
-          <section id="hevy" className="scroll-mt-20">
-            <HevyGuide />
-          </section>
-
-          <section id="sources" className="scroll-mt-20">
-            <SourcesSection />
-          </section>
-        </div>
+        )}
       </main>
 
-      {/* ---------- فوتر چسبان ---------- */}
-      <footer className="mt-auto border-t border-border/60 bg-card/60">
-        <div className="max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Dumbbell className="w-4 h-4 text-primary" />
-            داشبورد فیتنس — ساخته‌شده برای مسیر فرم شناگری تو
-          </div>
-          <div className="text-center sm:text-left leading-5">
-            این برنامه توصیه عمومی است و جایگزین نظر پزشک نیست • ثبات = نتیجه
-          </div>
-        </div>
-      </footer>
+      {/* ---------- ناوبری پایین ---------- */}
+      <BottomNavigation />
+
+      {/* ---------- آنبوردینگ ---------- */}
+      {showOnboarding && (
+        <Onboarding
+          profile={profile}
+          onComplete={() =>
+            queryClient.invalidateQueries({ queryKey: ["profile"] })
+          }
+        />
+      )}
     </div>
+  );
+}
+
+export default function Page() {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: { refetchOnWindowFocus: false, retry: 1 },
+        },
+      })
+  );
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppShell />
+    </QueryClientProvider>
   );
 }

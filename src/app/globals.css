@@ -131,38 +131,75 @@
   --sidebar-ring: oklch(0.696 0.17 162.48);
 }
 
+/* تم تیره زمردی — با اضافه‌شدن next-themes، کلاس dark روی html قرار می‌گیرد؛
+   مقادیر .dark دقیقاً همان :root است تا ظاهر فعلی تغییری نکند */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.16 0.005 160);
+  --foreground: oklch(0.96 0.003 160);
+  --card: oklch(0.21 0.006 160);
+  --card-foreground: oklch(0.96 0.003 160);
+  --popover: oklch(0.21 0.006 160);
+  --popover-foreground: oklch(0.96 0.003 160);
+  --primary: oklch(0.696 0.17 162.48);
+  --primary-foreground: oklch(0.13 0.01 160);
+  --secondary: oklch(0.27 0.006 160);
+  --secondary-foreground: oklch(0.96 0.003 160);
+  --muted: oklch(0.27 0.006 160);
+  --muted-foreground: oklch(0.68 0.006 160);
+  --accent: oklch(0.27 0.006 160);
+  --accent-foreground: oklch(0.96 0.003 160);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.696 0.17 162.48);
   --chart-1: oklch(0.696 0.17 162.48);
   --chart-2: oklch(0.769 0.188 70.08);
   --chart-3: oklch(0.646 0.222 41.116);
   --chart-4: oklch(0.6 0.118 184.704);
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.21 0.006 160);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.96 0.003 160);
+  --sidebar-primary: oklch(0.696 0.17 162.48);
+  --sidebar-primary-foreground: oklch(0.13 0.01 160);
+  --sidebar-accent: oklch(0.27 0.006 160);
+  --sidebar-accent-foreground: oklch(0.96 0.003 160);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.696 0.17 162.48);
+}
+
+/* تم روشن — zinc روشن + زمردی‌۶۰۰؛ برای سوییچ تم در فازهای بعد */
+html.light {
+  --background: oklch(0.985 0 0); /* zinc-50 */
+  --foreground: oklch(0.141 0.005 285.823); /* zinc-900 */
+  --card: oklch(1 0 0); /* سفید */
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.596 0.145 163.225); /* زمردی-۶۰۰ */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.967 0.001 286.375); /* zinc-100 */
+  --secondary-foreground: oklch(0.141 0.005 285.823);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938); /* zinc-500 */
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.141 0.005 285.823);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32); /* zinc-200 */
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.596 0.145 163.225);
+  --chart-1: oklch(0.596 0.145 163.225);
+  --chart-2: oklch(0.769 0.188 70.08);
+  --chart-3: oklch(0.646 0.222 41.116);
+  --chart-4: oklch(0.6 0.118 184.704);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.596 0.145 163.225);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.596 0.145 163.225);
 }
 
 @layer base {
@@ -190,6 +227,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.45 0.02 162);
 }
+/* اسکرول‌بار نسخه روشن */
+html.light ::-webkit-scrollbar-track {
+  background: oklch(0.967 0.001 286.375);
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: oklch(0.705 0.015 286.067);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.596 0.145 163.225);
+}
 ::selection {
   background: oklch(0.696 0.17 162.48 / 35%);
 }
@@ -199,4 +246,31 @@
   box-shadow:
     0 0 0 1px oklch(0.696 0.17 162.48 / 25%),
     0 8px 40px -12px oklch(0.696 0.17 162.48 / 35%);
+}
+html.light .glow-emerald {
+  box-shadow:
+    0 0 0 1px oklch(0.596 0.145 163.225 / 25%),
+    0 8px 40px -12px oklch(0.596 0.145 163.225 / 25%);
+}
+
+/* احترام به کاهش موشن کاربر */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* کاهش موشن دستی — سوییچ «پروفایل ← ظاهر و تجربه»
+   کلاس reduce-motion روی html توسط ProfileView toggle می‌شود */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

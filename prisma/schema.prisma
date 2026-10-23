@@ -28,3 +28,68 @@ model WorkoutLog {
 
   @@unique([dayId, weekKey])
 }
+
+// پروفایل کاربر — تک‌کاربره (id ثابت = 1)
+model Profile {
+  id             Int      @id @default(1)
+  name           String?
+  goal           String   @default("muscle") // muscle | fatloss | strength | general
+  experience     String   @default("beginner") // beginner | intermediate | advanced
+  daysPerWeek    Int      @default(3)
+  equipment      String   @default("gym") // gym | home
+  limitations    String?
+  weightKg       Float?
+  heightCm       Float?
+  units          String   @default("metric") // metric | imperial
+  reducedMotion  Boolean  @default(false)
+  onboardingDone Boolean  @default(false)
+  weekSessionsGoal Int    @default(2)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// جلسه تمرین — از «شروع تمرین» تا ثبت نهایی
+model Session {
+  id        Int       @id @default(autoincrement())
+  date      String // YYYY-MM-DD
+  dayId     String // day1 | day2 | day3
+  status    String    @default("active") // active | completed | partial | abandoned
+  startedAt DateTime  @default(now())
+  endedAt   DateTime?
+  feeling   Int? // 1..5 اختیاری
+  note      String?
+  reason    String? // fatigue | pain | time | other
+  sets      SetEntry[]
+}
+
+// یک ست ثبت‌شده داخل جلسه (exerciseId از src/lib/program.ts)
+model SetEntry {
+  id            Int      @id @default(autoincrement())
+  sessionId     Int
+  session       Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exerciseId    String // کلید حرکت از program.ts
+  exerciseOrder Int
+  weight        Float? // kg
+  reps          Int?
+  skipped       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+// کشش روزانه — یک رکورد در روز
+model StretchLog {
+  id        Int      @id @default(autoincrement())
+  date      String   @unique // YYYY-MM-DD
+  itemsDone Int      @default(0)
+  minutes   Float?
+  createdAt DateTime @default(now())
+}
+
+// دوچرخه ثابت — warmup | liss | recovery
+model BikeLog {
+  id        Int      @id @default(autoincrement())
+  date      String
+  slot      String // warmup | liss | recovery
+  minutes   Float?
+  note      String?
+  createdAt DateTime @default(now())
+}
