@@ -22,7 +22,7 @@ const EXERCISES: Record<string, string> = {
   "cable-fly": "the person performs standing cable chest flys, bringing the handles together in front of the chest and opening back",
   "rope-pushdown": "the person performs a cable rope triceps pushdown, extending the arms down and controlling back up",
   "lateral-raise": "the person performs dumbbell lateral raises, raising the arms out to the sides to shoulder height and lowering",
-  "pull-up": "the person performs machine assisted pull ups, pulling the body up until the chin is above the handles and lowering slowly",
+  "pull-up": "the person performs pull ups on a straight pull-up bar, pulling the body up until the chin is above the bar and lowering slowly",
   "barbell-row": "the person performs a bent over barbell row, pulling the bar toward the lower chest and lowering with control",
   "lat-pulldown": "the person performs a lat pulldown, pulling the bar down to the upper chest and releasing up with control",
   "face-pull": "the person performs a cable face pull, pulling the rope toward the face with elbows high and returning",
