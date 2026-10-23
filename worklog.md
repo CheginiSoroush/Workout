@@ -84,3 +84,25 @@ Stage Summary:
 - فونت کاملاً آفلاین؛ هیچ CDN خارجی برای فونت
 - لینت پاک کامل؛ Agent Browser: فیلتر ناحیه، پخش ویدیوی گردن (VIDEO_OK)، رندر عکس‌ها، بدون خطای کنسول
 - در انتظار تأیید کاربر: پیشنهاد بازطراحی UI (گزینه A: نظم+ناوبری / گزینه B: کامل با گیمیفیکیشن و روتین‌محور)
+
+---
+Task ID: 5-a
+Agent: main (Z.ai Code)
+Task: بسته طراحی پیش از کد داشبورد نسخه ۲ (تیم UX/PD/UI/روان‌شناسی رفتار/FE/QA) — تحلیل محصول، فرضیات، پرسونا، فلوها، sitemap، کامپوننت‌ها، توکن‌ها، تکنولوژی، ریسک‌ها
+
+Work Log:
+- تأیید بسته‌شدن تسک ۴: ویدیوها ۱۱/۱۱ لوکال (calf/cat-cow/childs-pose/deadhang/doorway-pec/figure4/hamstring/neck/openbook/shoulder-cross/wall-lat)، عکس ۱۴/۱۴، فونت آفلاین
+- تحلیل محصول: مخاطب اصلی=کاربر خانه (خود کاربر)، ۶ مشکل اصلی→راه‌حل، ۶ شاخص موفقیت قابل اندازه‌گیری محلی
+- ۱۰ فرضیه با placeholder (روزهای تمرین، باشگاه/خانه، بکاپ، PWA، داده بدنی اختیاری)
+- ۳ پرسونا (اصلی+۲ ثانویه)، ۶ user flow (اولین ورود/روز تمرین/کشش/استراحت/بازگشت بعد غیبت/جلسه نیمه‌کاره)
+- Sitemap: ۵ نمای SPA داخل «/» (محدودیت محیط) + آنبوردینگ و ادامه جلسه؛ wireframe متنی خانه و اجرای تمرین
+- لیست کامپوننت‌ها با نگاشت shadcn (موجود: Button/Card/Dialog/Alert/Progress/Skeleton/sonner/Tabs) + سفارشی: BottomNavigation/SetLogger/RestTimer/SessionSummary/OnboardingWizard/EmptyState/StreakFlex
+- توکن‌ها: ادامه تم تیره زمردی (گزینه کهربایی هم ارائه شد)، وزیرمتن آفلاین 16px، اعداد fa-IR، هدف لمس ≥44px، موشن 150-250ms با reduced-motion
+- تکنولوژی: Next16+TS، Tailwind4+shadcn، Prisma/SQLite (تکامل WeightEntry/WorkoutLog با Profile/Exercise/PlanDay/Session/SetEntry/StretchLog/BikeLog)، Zustand+TanStack Query، next-themes، framer-motion، sonner، recharts
+- مدل داده: PR از SetEntry محاسبه؛ حالت دمو با داده نمونه قابل پاک‌سازی
+- نقشه ۵ فازی (فاز۲و۳ قابل موازی) + QA: RTL/WCAG 2.2 AA/responsive/perf با agent-browser
+- ۶ سؤال تأیید (رنگ، تم پیش‌فرض، روزهای تمرین، باشگاه/خانه، داده بدنی اختیاری، تیک کشش روزانه)
+
+Stage Summary:
+- AWAITING USER APPROVAL — طبق قانون کاربر، کدنویسی (فاز ۱) فقط بعد از تأیید شروع می‌شود
+- اصل مهاجرت: هیچ محتوای علمی فعلی حذف نمی‌شود؛ همه seed ساختار جدید می‌شوند
