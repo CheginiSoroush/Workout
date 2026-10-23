@@ -216,3 +216,65 @@ Stage Summary:
 - نسخه ۲ کامل: خانه/برنامه/پلیر تمرین/پیشرفت/پروفایل + آنبوردینگ + ۱۱ API
 - همه محتوای علمی حفظ شد (قانون طلایی)؛ الگوهای تاریک صفر
 - باقی برای نسخه بعد: PWA، یادآوری واقعی، صدای تایمر، ویرایش برنامه
+
+---
+Task ID: 6-a
+Agent: full-stack-developer
+Task: رسانه آفلاین قوی‌تر در «تمامی بخش‌ها» — MotionMedia (فلیپ‌بوک مرحله‌به‌مرحله + ویدیوی لوکال) با گارد فایل مفقود؛ هم‌زمان با خط تولید ۲۲ ویدیو
+
+Work Log:
+- NEW src/lib/media.ts: MotionMediaData {video, frames, phases} + EXERCISE_MEDIA (۱۹ id → /exercises/videos/<id>.mp4 + frames/_f1..f4 + فازهای شروع/میانه/انقباض/پایان) + STRETCH_MEDIA (۱۴ id → /stretches/videos + _f1..f3 + شروع/عمیق‌شدن/پایان) + getExerciseMedia/getStretchMedia undefined-safe + probeMedia (پروب HEAD با کش ماژول-سشن — fetch 404 نویز کنسول ندارد برخلاف <img> شکسته)
+- NEW src/components/app/media/MotionMedia.tsx — قلب کار: حالت کامل = صحنه (فریم‌های روی‌هم با crossfade 200ms) + سوییچ شیشه‌ای «مرحله‌به‌مرحله | ویدیو» (فقط وقتی ویدیو واقعاً هست) + لیبل فاز + نوار کنترل (پخش/توقف ۴۴px، فاز قبلی/بعدی ۴۴px، نقطه‌های پیشرفت)؛ حالت ویدیو = <video controls loop playsInline preload=metadata poster> + بج «لوکال و آفلاین»؛ حالت compact = فلیپ‌بوک بی‌کنترل روی عکس + نشان باز کردن → Dialog شاد با MotionMedia کامل (aspect-video)
+- گارد فایل مفقود سه‌لایه: (۱) پروب HEAD قبل از رندر هر ویدیو/گروه فریم‌ها (کش در طول سشن) → تب ویدیو/کنترل‌ها اصلاً رندر نمی‌شوند و صفر 404 در کنسول مرورگر؛ (۲) onError هر img/video → فال‌بک فوری به عکس اصلی؛ (۳) photoError → placeholder آیکونی. حالت «فریم نیست» = عکس اصلی + بج «رسانه در حال آماده‌سازی» + بدون نوار کنترل خالی
+- reduced-motion: useSyncExternalStore روی matchMedia + MutationObserver روی html.reduce-motion (سوییچ پروفایل) → پخش متوقف می‌شود (حتی live)، پیمایش دستی با قبلی/بعدی؛ CSS transition ها توسط globals خنثی می‌شوند
+- ExerciseCard.tsx: عکس ستون رسانه → MotionMedia کامل (h-full، rounded-none/border-0)؛ نشان FST-7 (بالا-شروع) و شماره (پایین-شروع) دست‌نخورده؛ دکمه یوتیوب → لینک متنی ثانویه «جستجوی بیشتر در یوتیوب (آنلاین)» با min-h-11
+- MobilitySection.tsx: عکس ۸۰/۹۶px هر کشش → MotionMedia compact (mini فلیپ‌بوک + Dialog)؛ openVideo/broken و دکمه «پخش ویدیوی حرکت» حذف شد (جایگزین: تب ویدیوی داخل MotionMedia)؛ فیلتر ناحیه و ساختار کارت‌ها دست‌نخورده
+- WorkoutView.tsx: فقط img کارت حرکت فعال → MotionMedia compact (media=getExerciseMedia) — کم‌ریسک‌ترین ادغام؛ بقیه پلیر دست نخورد
+- تصمیم چیدمان نشان‌ها برای عدم تداخل در ExerciseCard: لیبل فاز و بج «آماده‌سازی» پایین-انتها (mutually exclusive)، سوییچ حالت بالا-انتها، FST-7/شماره بیرونی در شروع — با rects تأیید شد
+- Verify با agent-browser (همه صفر خطای کنسول/صفحه): گارد اولیه (بدون فریم/ویدیو) → عکس + بج آماده‌سازی، بدون تب ویدیو و کنترل‌ها؛ با فایل تستی موقت (۴ فریم ffmpeg + mp4 از همان فریم‌ها): سواپ فریم هر ۹۰۰ms (میانه→انقباض→پایان + دو اسکرین‌شات متفاوت)، تب ویدیو → پخش واقعی (currentTime جلو می‌رود)، برگشت به فلیپ‌بوک؛ کشش: ۱۴ کارت compact، mini فلیپ‌بوک گردن سواپ می‌شود، Dialog گردن → ویدیوی neck.mp4 پخش (۵.۱ث) + بج آفلاین؛ hip-flexor (همه‌چیز غایب) → گارد کامل داخل Dialog؛ فیلتر ناحیه سالم (۲ کارت گردن)؛ پلیر تمرین: جلسه واقعی day1 → compact با فلیپ‌بوک + Dialog (پخش/توقف با freeze فاز، فاز بعدی، ویدیو)؛ reduce-motion live (کلاس html) → دکمه فوراً «پخش» و فاز منجمد؛ موبایل ۳۹۰px بدون overflow افقی، دکمه‌ها ۴۴×۴۴
+- پاک‌سازی: فایل‌های تستی فریم/ویدیو حذف شد (پوشه‌ها دست خط تولید)، جلسه تستی ۸ حذف (DELETE → sessions=0)، localStorage پاک → گارد دوباره فعال تأیید شد؛ اسکرین‌شات‌ها: p5_flipbook(+_b).png، p5_video.png، p5_guard_missing.png، p5_hipflexor_guard.png، p5_neck_video_dialog.png، p5_workout_dialog.png، p5_mobile_{program,flipbook,fst7,stretch}.png
+
+Stage Summary:
+- انحراف‌ها: (۱) پروب HEAD اضافه شد (خارج از حداقل spec) چون ۱۱۸ فریم غایب هنگام رندر، ۴۰۴-console می‌ساخت و شرط «صفر خطای کنسول» را می‌شکست — onError تنها لایه دوم شد؛ (۲) در compact بج «آماده‌سازی» گذاشته نشد (فضای ۸۰px؛ سکوت محترمانه — Dialog کامل بج را دارد)؛ (۳) پیمایش دستی قبلی/بعدی پخش را pause نمی‌کند (seek ماننده)؛ (۴) lint: ۳ خطای set-state-in-effect ابتدایی با الگوی useSyncExternalStore + state مشتق‌شده (playOverride ?? !reduced) و init از props رفع شد — پاک نهایی
+- WorkoutView دست خورد: بله، فقط یک img → MotionMedia compact (کم‌ریسک، تست شد)
+- نکته برای خط تولید ویدیو: کش پروب تا reload صفحه می‌ماند — فایل‌های جدید بعد از هر ریفرش دیده می‌شوند؛ اگر فایل‌ها وسط سشن کاربر آماده شوند، ریفرش کافی است
+- رسانه حالا در ۳ نما زنده است: تب برنامه (۱۹ کارت)، تب کشش (۱۴ کارت + Dialog)، پلیر تمرین — با فال‌بک همیشگی به عکس اصلی؛ آماده برای وقتی که ۲۲ ویدیو + فریم‌ها از خط تولید برسند (بدون هیچ تغییر کد)
+
+---
+Task ID: 6-b
+Agent: main (Z.ai Code)
+Task: خط تولید رسانه آفلاین نسخه ۲ — ویدیو ۱۰ثانیه‌ای برای ۱۹ حرکت باشگاه + ۳ کشش AI + فریم‌های فلیپ‌بوک
+
+Work Log:
+- کشف کلیدی: z-ai video با base64 data-uri لوکال کار می‌کند (CLI: ARG_MAX crash → SDK bun: موفق) → ۳ کشش بدون ویدیو (hip-flexor/mckenzie/quad) هم قابل شد
+- duration 10s پشتیبانی می‌شود (کاربر گفته اگر می‌شود بیشتر از ۵ث) — همه با -d 10 -q speed
+- نرخ واقعی API: تک‌واحدی، هر ~۵.۵ دقیقه یک ویدیو (429 در حین پردازش) → اورکستراتور serial با poll 15s + fire right-after-completion (spacing 90)
+- research/gen_media_sdk.ts (bun/SDK) + research/extract_frames.py (ffmpeg: تمرین ۴ فریم 8/38/63/88%، کشش ۳ فریم)
+- پیشرفت این تورن: ۶/۱۹ تمرین (bench-press, incline-db-press, db-shoulder-press, cable-fly, rope-pushdown, lateral-raise) + pull-up در راه + فریم‌های استخراج‌شده؛ ۱۱/۱۱ کشش قبلی
+- audit کامل: ۴۸ فایل رسانه (۱۹ عکس تمرین، ۱۴+۳ عکس کشش، hero، ۱۷ ویدیو) همه HTTP 200 — صفر فایل خراب
+- UI فاز 6-a: MotionMedia (فلیپ‌بوک ۹۰۰ms + لیبل فاز + تب ویدیو + دیالوگ + گارد سه‌لایه probe/onError/fallback) در ExerciseCard + MobilitySection + WorkoutView
+
+Stage Summary:
+- ۱۷/۲۲ ویدیو آماده؛ ۱۵ تمرین + ۳ کشش در صف (~۹۰ دقیقه)؛ resume-safe: با هر چانک بعدی ادامه
+- فریم‌های فلیپ‌بوک برای همه ویدیوهای آماده؛ UI بدون تغییر کد با آمدن فایل‌ها کامل می‌شود
+
+---
+Task ID: 6-c
+Agent: main (Z.ai Code)
+Task: بازبینی کامل رسانه‌ها (درخواست کاربر: «چک کن ببین تمامی فیلم‌ها و تصاویر آموزشی درست هستند») + جایگزینی عکس‌های خراب
+
+Work Log:
+- ممیزی بصری تک‌تک ۱۹ عکس حرکات باشگاه + نمونه ویدیوها (استخراج فریم ffmpeg) + هر ۱۴ عکس کشش + فریم‌های ویدیوی کشش
+- کشف: ۱۱ عکس باشگاه نامناسب بودند (thumbnail یوتیوب با متن WIDER/THICKER، کلاژ GRAVITUS، عنوان FITTR، واترمارک depositphotos، تصویر وکتور شکسته، اینفوگرافیک ۹مرحله‌ای، پک دک مشابه حرکت دیگر، فرم پشت‌گردن پرریسک) — ۴ ویدیوی ساخته‌شده قبلی هم متن را داخل ویدیو نشان می‌دادند
+- pull-up و cable-fly و rope-pushdown و leg-press و calf-raise و hanging-leg-raise و lateral-raise: ابتدا image-search → فقط ۵تا تمیز؛ ۶تای مابقی با z-ai image (CLI, 1344x768, پرامپت دقیق) ساخته شد — چند retry برای pull-up (داب‌بار اشتباه→ hanging درست)، calf-raise (۵ تلاش AI ناموفق → راه‌حل نهایی: crop حذف جعبه‌متن از عکس اصلی smith machine)
+- db-shoulder-press/cable-fly/rope-pushdown/lateral-raise: ویدیوهای قبلی حذف شد تا با عکس تمیز دوباره ساخته شوند
+- gen_media_sdk.ts: پچ polling ملایم (هر تسک هر ۹۰ث، cooldown سراسری ۱۲۰ث روی 429، backoff ۱۵۰ث روی fire) — API از ~۱۹:۴۵ تا ~۲۰:۵۰ کامل 429 می‌داد (کوتای ساعتی)
+- gen_media_v3.py هم پچ شد تا فقط پسوند تصویری بگیرد (.url نشود)
+- پیشرفت ویدیو: pull-up دانلود شد (از تسک قدیمی — ولی از عکس قدیمی متن‌دار ساخته شده بود → حذف شد تا دوباره ساخته شود)، db-shoulder-press ✓ (۶.۵MB تمیز)، cable-fly ✓ (۱۵MB تمیز)؛ rope-pushdown در صف پردازش سرور
+- وریفای مرورگر: Dialog کشش (فلیپ‌بوک خودکار + فاز + نقطه‌های پیشرفت)، تب ویدیو → پخش واقعی neck.mp4 (t=2.5s با muted-play، بج «لوکیل و آفلاین»)، کارت پرس سینه با سوییچ حالت + آمار + نکات، صفر خطای کنسول، ۴ کارت با تب ویدیو (دقیقاً ۴ ویدیوی موجود)
+- اسکرین‌شات‌ها: research/audit/p6_*.png؛ عکس‌های خراب بایگانی: research/audit/bad-photos/
+
+Stage Summary:
+- ۱۹/۱۹ عکس باشگاه الان تمیز و بی‌متن؛ ۱۴/۱۴ عکس کشش سالم بودند
+- ۴/۱۹ ویدیوی باشگاه تمیز + ۱۱/۱۱ ویدیوی کشش قبلی سالم
+- ۱۷ ویدیو باقی (۱۴ تمرین + ۳ کشش) — صف ادامه دارد؛ کوتای 429 ساعتی گلوگاه اصلی است

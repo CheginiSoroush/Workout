@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import type { Exercise, ExerciseMode, ExerciseVariant } from "@/lib/program";
 import { PROGRAM } from "@/lib/program";
+import { getExerciseMedia } from "@/lib/media";
 import { faNum } from "@/lib/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,6 +39,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import EmptyState from "@/components/app/EmptyState";
+import MotionMedia from "@/components/app/media/MotionMedia";
 import SetLogger from "@/components/app/workout/SetLogger";
 import RestTimer from "@/components/app/workout/RestTimer";
 import SessionSummary from "@/components/app/workout/SessionSummary";
@@ -150,12 +152,13 @@ function CurrentExerciseCard({ exercise }: { exercise: Exercise }) {
           </span>
         </div>
 
-        {/* عکس حرکت */}
-        <img
-          src={exercise.image}
+        {/* رسانه فشرده — فلیپ‌بوک + Dialog بزرگ (گارد فایل مفقود داخل MotionMedia) */}
+        <MotionMedia
+          compact
+          photo={exercise.image}
           alt={`نحوه اجرای ${displayName}`}
-          className="h-44 w-full rounded-xl object-cover sm:h-52"
-          loading="lazy"
+          media={getExerciseMedia(exercise.id)}
+          className="h-44 w-full rounded-xl sm:h-52"
         />
 
         {/* سوییچ نسخه — فقط نمایشی (توضیح نسخه جایگزین) */}

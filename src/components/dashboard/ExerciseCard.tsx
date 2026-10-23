@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { Exercise, ExerciseMode, ExerciseVariant } from "@/lib/program";
+import { getExerciseMedia } from "@/lib/media";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import MotionMedia from "@/components/app/media/MotionMedia";
 import {
   CheckCircle2,
   XCircle,
-  Play,
   Repeat,
   Timer,
   Dumbbell,
@@ -18,6 +18,7 @@ import {
   Cog,
   Lightbulb,
   Sparkles,
+  Youtube,
 } from "lucide-react";
 
 export default function ExerciseCard({
@@ -63,13 +64,13 @@ export default function ExerciseCard({
       }`}
     >
       <div className="grid md:grid-cols-[240px_1fr]">
-        {/* تصویر */}
+        {/* رسانه — فلیپ‌بوک مرحله‌به‌مرحله + ویدیوی لوکال (گارد فایل مفقود داخل MotionMedia) */}
         <div className="relative h-44 md:h-full min-h-44 bg-muted">
-          <img
-            src={exercise.image}
+          <MotionMedia
+            photo={exercise.image}
             alt={`نحوه اجرای ${current?.faName ?? exercise.faName}`}
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
+            media={getExerciseMedia(exercise.id)}
+            className="h-full rounded-none border-0"
           />
           {exercise.fst7 && (
             <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-amber-500 text-amber-950 text-xs font-bold px-2.5 py-1 shadow-lg">
@@ -191,16 +192,16 @@ export default function ExerciseCard({
             ))}
           </div>
 
-          {/* ویدیو */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full sm:w-auto"
-            onClick={() => window.open(videoUrl, "_blank", "noopener")}
+          {/* مرجع بیرونی — ثانویه؛ اول رسانه لوکال (فلیپ‌بوک/ویدیو) بالای کارت */}
+          <a
+            href={videoUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-flex min-h-11 items-center gap-1.5 self-start px-1 text-xs text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <Play className="w-4 h-4 ml-1" />
-            ویدیو آموزش اجرای صحیح
-          </Button>
+            <Youtube className="h-4 w-4 shrink-0" />
+            جستجوی بیشتر در یوتیوب (آنلاین)
+          </a>
         </CardContent>
       </div>
     </Card>
