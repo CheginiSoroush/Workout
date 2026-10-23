@@ -1,18 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { PROGRAM, FST7_NOTES } from "@/lib/program";
+import { PROGRAM, FST7_NOTES, MACHINE_FIRST_NOTE } from "@/lib/program";
 import ExerciseCard from "./ExerciseCard";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Flame, Clock, Wind, Info } from "lucide-react";
+import { Flame, Clock, Wind, Info, Cog, ExternalLink } from "lucide-react";
 
 export default function ProgramTabs() {
   const [tab, setTab] = useState("day1");
 
   return (
     <Tabs value={tab} onValueChange={setTab} className="w-full">
+      {/* بنر چرایی شروع دستگاه‌محور */}
+      <Card className="mb-6 border-primary/30 bg-primary/5">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center shrink-0">
+              <Cog className="w-4.5 h-4.5 text-primary" />
+            </div>
+            <div className="text-sm leading-7">
+              <span className="font-bold">{MACHINE_FIRST_NOTE.title} — </span>
+              <span className="text-muted-foreground">{MACHINE_FIRST_NOTE.text}</span>{" "}
+              <a
+                href={MACHINE_FIRST_NOTE.linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline"
+              >
+                {MACHINE_FIRST_NOTE.linkLabel}
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <TabsList className="grid grid-cols-3 w-full max-w-xl mx-auto h-auto p-1">
         {PROGRAM.map((day) => (
           <TabsTrigger

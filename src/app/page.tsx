@@ -8,6 +8,9 @@ import WeightTracker from "@/components/dashboard/WeightTracker";
 import WorkoutChecklist from "@/components/dashboard/WorkoutChecklist";
 import NutritionPanel from "@/components/dashboard/NutritionPanel";
 import MedicalNotes from "@/components/dashboard/MedicalNotes";
+import CreatineResearch from "@/components/dashboard/CreatineResearch";
+import HevyGuide from "@/components/dashboard/HevyGuide";
+import SourcesSection from "@/components/dashboard/SourcesSection";
 import ProgressionCard from "@/components/dashboard/ProgressionCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -75,6 +78,9 @@ export default function Dashboard() {
             <Button variant="ghost" size="sm" onClick={() => scrollTo("health")}>
               سلامت
             </Button>
+            <Button variant="ghost" size="sm" onClick={() => scrollTo("sources")}>
+              منابع
+            </Button>
           </div>
         </div>
       </header>
@@ -102,8 +108,8 @@ export default function Dashboard() {
             </h1>
             <p className="mt-4 text-muted-foreground leading-8 max-w-2xl">
               برنامه ۳ روزه بر پایه اصول هانی رامبد (FST-7) با هدف V-Taper و
-              کاهش چربی. هر حرکت با عکس، نکات فرم، خطاهای رایج و لینک ویدیو
-              آموزشی. وزنت رو ثبت کن، جلسات رو تیک بزن و با ثبات جلو برو.
+              کاهش چربی. هر حرکت با عکس، نکات فرم، نسخه دستگاه و وزنه آزاد،
+              خطاهای رایج و لینک ویدیو آموزشی. وزنت رو ثبت کن و با ثبات جلو برو.
             </p>
 
             <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
@@ -178,6 +184,18 @@ export default function Dashboard() {
 
           <section id="health" className="scroll-mt-20">
             <MedicalNotes />
+          </section>
+
+          <section id="creatine" className="scroll-mt-20">
+            <CreatineResearch />
+          </section>
+
+          <section id="hevy" className="scroll-mt-20">
+            <HevyGuide />
+          </section>
+
+          <section id="sources" className="scroll-mt-20">
+            <SourcesSection />
           </section>
         </div>
       </main>

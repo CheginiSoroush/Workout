@@ -3,6 +3,14 @@
 // ۳ روز در هفته + هدف کاهش وزن و فرم V-Taper
 // ============================================================
 
+export interface ExerciseVariant {
+  faName: string;
+  hevyName: string;
+  note: string;
+}
+
+export type ExerciseMode = "machine" | "free";
+
 export interface Exercise {
   id: string;
   hevyName: string; // نام دقیق در کتابخانه Hevy
@@ -17,6 +25,16 @@ export interface Exercise {
   tips: string[]; // نکات فرم صحیح
   mistakes: string[]; // خطاهای رایج
   fst7?: boolean; // حرکت FST-7 (۷ ست پیاپی)
+
+  // ---- نسخه‌های جایگزین: دستگاه ↔ وزنه آزاد ----
+  // حرکت پایه کدام نسخه است؟ (پیش‌فرض: machine یعنی دستگاه/کابل)
+  baseMode?: ExerciseMode;
+  // نسخه دستگاهی جایگزین — وقتی حرکت اصلی وزنه آزاد است
+  machineAlt?: ExerciseVariant;
+  // نسخه وزنه آزاد جایگزین — وقتی حرکت اصلی دستگاه است
+  freeAlt?: ExerciseVariant;
+  // نسخه پیشنهادی برای شروع تازه‌کار (پیش‌فرض: baseMode)
+  startMode?: ExerciseMode;
 }
 
 export interface WorkoutDay {
@@ -71,6 +89,13 @@ export const DAY1: WorkoutDay = {
         "پاها محکم رو زمین — اولین فشار از پاها میاد، بعد پرس",
       ],
       mistakes: ["لگد زدن هالتر از سینه (bounce)", "بالا اومدن باسن از نیمکت"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "پرس سینه دستگاه",
+        hevyName: "Chest Press (Machine)",
+        note: "مسیر ثابت و بدون ریسک گیر کردن زیر وزنه — تمرکزت می‌مونه روی سینه. از هفته ۳–۴ پرس هالتر رو با میله خالی اضافه کن.",
+      },
     },
     {
       id: "incline-db-press",
@@ -89,6 +114,13 @@ export const DAY1: WorkoutDay = {
         "در پایین حرکت کشش رو حس کن، شونه‌ها رو نکش روون",
       ],
       mistakes: ["قوس شدید کمر", "برخورد دمبل‌ها به هم بالای سر (فقط نزدیک کن)"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "پرس بالاسینه دستگاه",
+        hevyName: "Incline Chest Press (Machine)",
+        note: "همون الگوی حرکتی، بدون دغدغه کنترل دو دمبل جدا — عالی برای هفته‌های یادگیری.",
+      },
     },
     {
       id: "db-shoulder-press",
@@ -107,6 +139,13 @@ export const DAY1: WorkoutDay = {
         "مچ‌ها صاف و در امتداد ساعد باشن",
       ],
       mistakes: ["قوس زیاد کمر برای بلند کردن وزنه سنگین‌تر", "باز کردن بیش از حد دمبل‌ها به پهلو"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "پرس سرشانه دستگاه",
+        hevyName: "Shoulder Press (Machine)",
+        note: "پشتی دستگاه قوس کمر رو کنترل می‌کنه — ریسک کمتر، تمرکز بیشتر روی دلتوئید.",
+      },
     },
     {
       id: "cable-fly",
@@ -125,6 +164,11 @@ export const DAY1: WorkoutDay = {
         "یک پا جلو بذار و تنه رو کمی مایل کن برای ثبات",
       ],
       mistakes: ["تبدیل‌شدن به پرس با خم کردن آرنج‌ها", "کشیدن وزنه با کمر و سوئینگ بدن"],
+      freeAlt: {
+        faName: "قفسه سینه دمبل",
+        hevyName: "Dumbbell Fly",
+        note: "وقتی دستگاه شلوغه — کشش عمیق‌تر ولی کنترلش سخت‌تره؛ وزنه سبک انتخاب کن.",
+      },
     },
     {
       id: "rope-pushdown",
@@ -162,6 +206,13 @@ export const DAY1: WorkoutDay = {
       ],
       mistakes: ["سوئینگ و پرتاب دمبل با کمر", "بالاتر از شانه بردن با ترپس"],
       fst7: true,
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "نشر جانب سیم‌کش",
+        hevyName: "Cable Lateral Raise",
+        note: "تغییر وزنه بین ست‌ها با یک پیچ — برای ست‌های ۷گانه FST-7 ایده‌آله؛ خود رامبد هم برای FST-7 اغلب کابل/دستگاه استفاده می‌کنه.",
+      },
     },
   ],
 };
@@ -194,6 +245,13 @@ export const DAY2: WorkoutDay = {
         "اگه کمتر از ۵ تا می‌زنی: Lat Pulldown با وزنه کم یا Assisted Pull-Up — افتادن از تکرار نداریم!",
       ],
       mistakes: ["کیک زدن با پا", "نصفه دامنه (چانه فقط تا میله بدون اسکوییز لت)"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "بارفیکس کمکی دستگاه",
+        hevyName: "Assisted Pull-Up",
+        note: "فنر/وزنه متعادل‌کننده تا وقتی ۵ تکرار تمیز بدون کمک بزنی — هر هفته کمک رو کم کن.",
+      },
     },
     {
       id: "barbell-row",
@@ -212,6 +270,13 @@ export const DAY2: WorkoutDay = {
         "تیغه‌های شانه رو در انتهای حرکت به هم نزدیک کن",
       ],
       mistakes: ["دم کردن با کمر (بالا اومدن تنه هر ست)", "کشش با بازو به جای پشت"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "زیربغل سیم‌کش نشسته",
+        hevyName: "Seated Cable Row",
+        note: "ستون فقرات اتکا داره و فشار می‌مونه روی پشت. اگه دستگاه زیربغل سینه‌اتکایی (مثل هامر استرنث که دوریان ییتس می‌زد) بود، همون بهترینه.",
+      },
     },
     {
       id: "lat-pulldown",
@@ -266,6 +331,13 @@ export const DAY2: WorkoutDay = {
         "دستگيره رو کمی بچرخون (supinate) بالای حرکت برای اسکوییز بیشتر",
       ],
       mistakes: ["سوئینگ کمر و پرتاب هالتر", "جلو آوردن آرنج‌ها هنگام بالا بردن"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "جلوبازو سیم‌کش",
+        hevyName: "Cable Curl",
+        note: "کشش بیسپس در کل دامنه + سوئینگ کمر عملاً غیرممکن — فرم تمیز از روز اول.",
+      },
     },
     {
       id: "straight-arm-pulldown",
@@ -317,6 +389,11 @@ export const DAY3: WorkoutDay = {
         "بالا ارنج رو کامل قفل نکن — فشار همیشه روی عضله بمونه",
       ],
       mistakes: ["نصفه دامنه با وزنه خیلی سنگین", "بالا اومدن باسن و گردن‌انداختن کمر"],
+      freeAlt: {
+        faName: "اسکات گلابی دمبل",
+        hevyName: "Goblet Squat",
+        note: "برای تنوع یا تمرین در خانه/سفر — دمبل رو کنار سینه بگیر و عمیق پایین برو.",
+      },
     },
     {
       id: "rdl",
@@ -335,6 +412,13 @@ export const DAY3: WorkoutDay = {
         "در پایین کشش همسترینگ رو حس کن، کمر صاف و سینه باز",
       ],
       mistakes: ["خم شدن کمر و گردنی شدن هالتر جلو", "زانوی زیاد خم → تبدیل به اسکات"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "بک اکستنشن دستگاه (۴۵ درجه)",
+        hevyName: "Back Extension",
+        note: "همون زنجیره پشتی (همسترینگ/باسن/فیله) با محافظت کامل کمر — RDL رو بعد هفته ۲–۳ با دمبل سبک برگردون.",
+      },
     },
     {
       id: "bulgarian-split-squat",
@@ -353,6 +437,13 @@ export const DAY3: WorkoutDay = {
         "زانوی جلو در امتداد پنجه پا حرکت کنه، نه داخل‌تر",
       ],
       mistakes: ["گام خیلی کوتاه → فشار روی زانو", "اتکا و پرش با پای عقبی"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "پرس پا تک‌پا",
+        hevyName: "Single Leg Press",
+        note: "همون کار یک‌پا بدون دغدغه تعادل — هر پا جداگانه ثبت کن.",
+      },
     },
     {
       id: "leg-curl",
@@ -407,6 +498,13 @@ export const DAY3: WorkoutDay = {
         "اگه سخته: زانوها خم (knee raise) — افتادن از فرم نداریم",
       ],
       mistakes: ["تاب خوردن از شانه‌ها", "پا رفت بالا ولی لگن ثابت موند → شکم کار نکرد"],
+      baseMode: "free",
+      startMode: "machine",
+      machineAlt: {
+        faName: "بالانش با صندلی کاپیتان",
+        hevyName: "Captain's Chair Leg Raise",
+        note: "پشتی از کمر حمایت می‌کنه و تاب خوردن حذف می‌شه — تمرکز روی چرخش لگن.",
+      },
     },
     {
       id: "cable-crunch",
@@ -540,3 +638,120 @@ export function getExerciseById(id: string): Exercise | undefined {
 export function totalExercises(): number {
   return PROGRAM.reduce((acc, d) => acc + d.exercises.length, 0);
 }
+
+// ---------- چرایی شروع دستگاه‌محور (سوییچ هر حرکت) ----------
+export const MACHINE_FIRST_NOTE = {
+  title: "چرا هفته‌های اول دستگاه‌محور؟",
+  text: "هر دو نسخه عضله می‌سازن — متاآنالیز ۲۰۲۳ هیچ تفاوت معناداری در رشد عضله بین دستگاه و وزنه آزاد پیدا نکرد. دستگاه برای تازه‌کار یعنی: یادگیری سریع‌تر الگو، امنیت بدون اسپاتر و تمرکز کامل روی عضله. از هفته سوم، نسخه وزنه آزاد رو کم‌کم وارد کن (سوییچ داخل هر کارت). خود دوریان ییتس هم زیربغلش رو با دستگاه می‌زد!",
+  linkLabel: "متاآنالیز Haugen ۲۰۲۳ (PMC)",
+  linkUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10426227",
+};
+
+// ---------- ریشه هر اصل (Traceability) ----------
+export interface SourceItem {
+  principle: string;
+  origin: string; // مربی / مکتب / منبع اصلی
+  science: string; // پشتوانه علمی
+  links: { label: string; url: string }[];
+}
+
+export const SOURCES: SourceItem[] = [
+  {
+    principle: "۷ ست پایانی هر عضله با استراحت ۳۰–۴۵ ثانیه (FST-7)",
+    origin: "هانی رامبد — مربی ۱۹+ قهرمان المپیا (فیث هیت، کریس بامستید، جی کاتلر)",
+    science: "استرس متابولیک و پامپ به‌عنوان یکی از مکانیسم‌های رشد عضله (Schoenfeld، ۲۰۱۰)",
+    links: [
+      { label: "سایت رسمی رامبد — FST-7", url: "https://www.hanyrambod.com/fst7" },
+      { label: "Schoenfeld 2010 (PMID 20802478)", url: "https://pubmed.ncbi.nlm.nih.gov/20802478/" },
+    ],
+  },
+  {
+    principle: "شدت کنترل‌شده: RPE ۷–۹ بدون رسیدن به ناتوانی مطلق",
+    origin: "دوریان ییتس — ۶ بار مستر المپیا؛ مکتب Blood & Guts",
+    science: "ست‌های نزدیک ناتوانی مؤثرن، اما نگه‌داشتن ۱–۳ تکرار در مخزن رشد مشابهی با خستگی و ریسک آسیب کمتر می‌ده",
+    links: [],
+  },
+  {
+    principle: "حجم معقول + دیلود منظم — ریکاوری مقدس است",
+    origin: "مایک منزر — بنیان‌گذار Heavy Duty؛ مربی خودِ دوریان ییتس در سال‌های اول",
+    science: "عضله در زمان ریکاوری ساخته می‌شه؛ تمرینِ بیش از ظرفیت بازیابی = رکود و آسیب",
+    links: [{ label: "Mike Mentzer (Wikipedia)", url: "https://en.wikipedia.org/wiki/Mike_Mentzer" }],
+  },
+  {
+    principle: "شروع دستگاه‌محور برای تازه‌کار + سوییچ تدریجی به وزنه آزاد",
+    origin: "سفارشی‌سازی برای تو: تازه‌کار، تمرین بدون اسپاتر، سابقه اضطراب",
+    science: "متاآنالیز ۲۰۲۳ و RCT ۲۰۲۰: رشد عضله برابر است — دستگاه یادگیری سریع‌تر و امنیت بیشتری داره",
+    links: [
+      { label: "Haugen 2023 (PMC10426227)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10426227" },
+      { label: "Schwanbeck 2020 (PMID 32358310)", url: "https://pubmed.ncbi.nlm.nih.gov/32358310/" },
+    ],
+  },
+  {
+    principle: "کراتین ۳–۵ گرم روزانه از روز اول",
+    origin: "ISSN — انجمن بین‌المللی تغذیه ورزشی (Position Stand 2017)",
+    science: "۳ گرم × ۲۸ روز ذخایر را ۲۰–۴۰٪ بالا می‌بره؛ در متاآنالیز ۲۰۲۵ تازه‌کارها هم پاسخ دادن (+۱.۲۳ کیلو FFM)",
+    links: [
+      { label: "ISSN 2017 (PMC5469049)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049" },
+      { label: "متاآنالیز ۲۰۲۵ (PMC12777911)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12777911" },
+    ],
+  },
+  {
+    principle: "پروتئین ۱۶۰–۱۸۰ گرم در روز (۲ گرم × وزن هدف)",
+    origin: "استاندارد علم تغذیه ورزشی",
+    science: "متاآنالیز Morton 2018: نقطه اشباع رشد عضله حدود ۱.۶ گرم/کیلو — در کسری کالری تا ۲.۲ توصیه می‌شه",
+    links: [{ label: "Morton 2018 (PMID 28675001)", url: "https://pubmed.ncbi.nlm.nih.gov/28675001/" }],
+  },
+  {
+    principle: "جلسه زیر ۷۵ دقیقه + LISS به‌جای HIIT روزانه",
+    science: "کنترل استرس تمرینی و حفظ بازیابی در کسری کالری — پیشرفت پایدار > سرعت لنگ",
+    links: [],
+  },
+  {
+    origin: "توصیه‌های رسمی اطلاعات دارویی (NHS)",
+  },
+];
+
+// ---------- خلاصه تحقیق کراتین ----------
+export const CREATINE_RESEARCH = {
+  title: "تحقیق کراتین: تازه‌کار از روز اول؟ یا بعد از ۶ ماه؟",
+  subtitle: "خلاصه پژوهش‌های معتبر بین‌المللی — و جواب نهایی برای شرایط تو",
+  cards: [
+    {
+      title: "تازه‌کار vs تمرین‌دیده — متاآنالیز ۲۰۲۵ (۶۱ کارآزمایی)",
+      text: "تمرین‌دیده‌ها به‌طور میانگین ۱.۸۲ کیلو توده بدون چربی گرفتن، تازه‌کارها ۱.۲۳ کیلو؛ سریع‌تر هم: ۶.۱ هفته vs ۱۳.۳ هفته. ولی تفاوت آماری معنادار نبود — یعنی کراتین برای هر دو کار می‌کنه؛ برای تازه‌کار شاید کمی کندتر و کمتر.",
+      linkLabel: "PMC12777911",
+      linkUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12777911",
+    },
+    {
+      title: "دوز و ایمنی — ISSN Position Stand 2017",
+      text: "۳ گرم در روز × ۲۸ روز ذخایر رو ۲۰ تا ۴۰٪ بالا می‌بره؛ دوز نگهدارنده ۳–۵ گرم؛ تا ۳۰ گرم در روز × ۵ سال بدون اثر مضر ثبت شده. نیازی به دوره لودینگ نیست.",
+      linkLabel: "PMC5469049",
+      linkUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5469049",
+    },
+    {
+      title: "پاسخ‌دهنده‌ها و رژیم غذایی",
+      text: "۲۰ تا ۳۰٪ افراد «پاسخ‌دهنده کم» هستن. گیاه‌خوارها ذخیره پایه پایین‌تری دارن و معمولاً بزرگ‌ترین جهش رو می‌گیرن. اگه بعد ۴ هفته فرقی حس نکردی، معنیش بی‌اثربودن کراتین نیست — اول تمرین و تغذیه رو چک کن.",
+      linkLabel: "PMC7455984",
+      linkUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7455984",
+    },
+    {
+      title: "نتیجه برای تو — شروع از امروز",
+      text: "۳ گرم هر روز، حتی روزهای استراحت، با آب زیاد. وزن آبیِ اول ماه (+۱ تا ۱.۵ کیلو) طبیعیه و چربی نیست. در کسری کالری، کراتین قدرت و عضله رو حفظ می‌کنه — دقیقاً هدف فعلی تو.",
+    },
+  ],
+};
+
+// ---------- راهنمای Hevy ----------
+export const HEVY_GUIDE = {
+  title: "ثبت برنامه در Hevy — قدم به قدم",
+  subtitle: "یک‌بار ۵ دقیقه وقت می‌بره؛ بعدش فقط ثبت و پیشرفت",
+  steps: [
+    { title: "۳ Routine بساز", text: "با اسم‌های «FST-7 D1 Push»، «FST-7 D2 Pull» و «FST-7 D3 Legs»." },
+    { title: "حرکات رو با اسم انگلیسی سرچ کن", text: "اسم دقیق Hevy هر حرکت روی کارتش نوشته شده — با سوییچ دستگاه/وزنه آزاد، اسم هم عوض می‌شه." },
+    { title: "ست، تکرار و استراحت رو ست کن", text: "اعداد روی هر کارت نوشته شده؛ Rest Timer رو فعال کن تا بین ست‌ها هشدار بده." },
+    { title: "RPE رو در Notes بنویس", text: "مثلاً «RPE 8 — ۱–۳ تکرار در مخزن». بعداً متوجه می‌شی چقدر نزدیک ناتوانی رفتی." },
+    { title: "ست‌های FST-7: استراحت ۴۵ ثانیه", text: "هفت ست پیاپی با تایمر — پامپ مهم‌تر از سنگینی‌ست، وزنه متوسط نگه دار." },
+    { title: "یادآور بذار", text: "شنبه، دوشنبه، چهارشنبه — اعلان Hevy رو روشن کن تا هیچ جلسه‌ای جا نمونه." },
+    { title: "بعد هر جلسه اینجا تیک بزن", text: "چک‌لیست هفتگی داشبورد رو پر کن تا روندت رو با هم ببینیم و برنامه رو در مسیر تنظیم کنیم." },
+  ],
+};

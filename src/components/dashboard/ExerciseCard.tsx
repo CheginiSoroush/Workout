@@ -1,6 +1,7 @@
 "use client";
 
-import { Exercise } from "@/lib/program";
+import { useState } from "react";
+import { Exercise, ExerciseMode, ExerciseVariant } from "@/lib/program";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +15,9 @@ import {
   Gauge,
   Flame,
   Target,
+  Cog,
+  Lightbulb,
+  Sparkles,
 } from "lucide-react";
 
 export default function ExerciseCard({
@@ -23,9 +27,34 @@ export default function ExerciseCard({
   exercise: Exercise;
   index: number;
 }) {
+  const baseMode: ExerciseMode = exercise.baseMode ?? "machine";
+  const startMode: ExerciseMode = exercise.startMode ?? baseMode;
+  const [mode, setMode] = useState<ExerciseMode>(startMode);
+
+  // نسخه‌های موجود برای نمایش
+  const machineVersion: ExerciseVariant | null =
+    baseMode === "machine"
+      ? { faName: exercise.faName, hevyName: exercise.hevyName, note: "" }
+      : exercise.machineAlt ?? null;
+  const freeVersion: ExerciseVariant | null =
+    baseMode === "free"
+      ? { faName: exercise.faName, hevyName: exercise.hevyName, note: "" }
+      : exercise.freeAlt ?? null;
+
+  const hasToggle = !!(exercise.machineAlt || exercise.freeAlt);
+  const current = mode === "machine" ? machineVersion : freeVersion;
+  const isBase = mode === baseMode;
+
   const videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
     exercise.videoQuery
   )}`;
+
+  const optionClass = (active: boolean) =>
+    `inline-flex items-center gap-1.5 h-9 px-3.5 text-xs font-bold transition-all cursor-pointer ${
+      active
+        ? "bg-primary text-primary-foreground"
+        : "text-muted-foreground hover:text-foreground"
+    }`;
 
   return (
     <Card
@@ -38,7 +67,7 @@ export default function ExerciseCard({
         <div className="relative h-44 md:h-full min-h-44 bg-muted">
           <img
             src={exercise.image}
-            alt={`نحوه اجرای ${exercise.faName}`}
+            alt={`نحوه اجرای ${current?.faName ?? exercise.faName}`}
             className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
           />
@@ -57,9 +86,9 @@ export default function ExerciseCard({
           {/* عنوان و عضلات */}
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-lg font-bold">{exercise.faName}</h3>
+              <h3 className="text-lg font-bold">{current?.faName}</h3>
               <Badge variant="secondary" className="text-[11px] font-mono">
-                {exercise.hevyName}
+                {current?.hevyName}
               </Badge>
             </div>
             <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
@@ -67,6 +96,52 @@ export default function ExerciseCard({
               {exercise.muscles}
             </p>
           </div>
+
+          {/* سوییچ دستگاه ↔ وزنه آزاد */}
+          {hasToggle && (
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex rounded-xl border border-border bg-secondary/40 p-0.5">
+                {machineVersion && (
+                  <button
+                    type="button"
+                    onClick={() => setMode("machine")}
+                    aria-pressed={mode === "machine"}
+                    className={optionClass(mode === "machine")}
+                  >
+                    <Cog className="w-3.5 h-3.5" />
+                    دستگاه / کابل
+                    {startMode === "machine" && <Sparkles className="w-3 h-3 text-amber-400" />}
+                  </button>
+                )}
+                {freeVersion && (
+                  <button
+                    type="button"
+                    onClick={() => setMode("free")}
+                    aria-pressed={mode === "free"}
+                    className={optionClass(mode === "free")}
+                  >
+                    <Dumbbell className="w-3.5 h-3.5" />
+                    وزنه آزاد
+                    {startMode === "free" && <Sparkles className="w-3 h-3 text-amber-400" />}
+                  </button>
+                )}
+              </div>
+              <span className="text-[11px] text-muted-foreground">
+                نسخه شروع پیشنهادی تو:{" "}
+                <span className="font-bold text-foreground">
+                  {startMode === "machine" ? "دستگاه" : "وزنه آزاد"}
+                </span>
+              </span>
+            </div>
+          )}
+
+          {/* توضیح نسخه جایگزین */}
+          {!isBase && current?.note && (
+            <div className="rounded-lg bg-primary/10 border border-primary/25 px-3 py-2.5 flex items-start gap-2">
+              <Lightbulb className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+              <p className="text-sm leading-6">{current.note}</p>
+            </div>
+          )}
 
           {/* مشخصات ست‌ها */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
