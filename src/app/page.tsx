@@ -12,6 +12,8 @@ import CreatineResearch from "@/components/dashboard/CreatineResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import SourcesSection from "@/components/dashboard/SourcesSection";
 import ProgressionCard from "@/components/dashboard/ProgressionCard";
+import MobilitySection from "@/components/dashboard/MobilitySection";
+import CardioSection from "@/components/dashboard/CardioSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Flame, Dumbbell, Activity, Droplets, ChevronDown } from "lucide-react";
@@ -74,6 +76,9 @@ export default function Dashboard() {
             </Button>
             <Button variant="ghost" size="sm" onClick={() => scrollTo("weight")}>
               وزن
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => scrollTo("mobility")}>
+              کشش
             </Button>
             <Button variant="ghost" size="sm" onClick={() => scrollTo("health")}>
               سلامت
@@ -181,6 +186,11 @@ export default function Dashboard() {
 
           <ProgressionCard />
           <NutritionPanel />
+
+          <section id="mobility" className="scroll-mt-20 grid lg:grid-cols-2 gap-6 items-start">
+            <MobilitySection />
+            <CardioSection />
+          </section>
 
           <section id="health" className="scroll-mt-20">
             <MedicalNotes />

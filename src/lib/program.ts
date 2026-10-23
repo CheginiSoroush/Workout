@@ -618,7 +618,7 @@ export const MEDICAL_NOTES = [
 // ---------- تقویم هفتگی ----------
 export const WEEK_SCHEDULE = [
   { day: "شنبه", type: "workout", label: "جلسه ۱ — Push", dayId: "day1" },
-  { day: "یکشنبه", type: "rest", label: "پیاده‌روی ۸–۱۰ قدم" },
+  { day: "یکشنبه", type: "rest", label: "پیاده‌روی ۸–۱۰ هزار قدم + کشش" },
   { day: "دوشنبه", type: "workout", label: "جلسه ۲ — Pull", dayId: "day2" },
   { day: "سه‌شنبه", type: "rest", label: "پیاده‌روی / شنا" },
   { day: "چهارشنبه", type: "workout", label: "جلسه ۳ — پا + شکم", dayId: "day3" },
