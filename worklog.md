@@ -555,3 +555,28 @@ Work Log:
 Stage Summary:
 - دارایی‌ها و فونت‌ها با basePath سازگار شدند؛ APIها در حالت Pages با localStorage معادل سرور پاسخ می‌گیرند؛ دادهٔ کاربر روی همان دستگاه می‌ماند (فلسفهٔ اپ حفظ شد)
 - URL مقصد: https://cheginisoroush.github.io/Workout/
+
+---
+Task ID: 7-b
+Agent: Z.ai Code (main)
+Task: فعال‌سازی Pages، رفع اشکال استقرار و وریفای مرورگری سایت زنده
+
+Work Log:
+- کشف محدودیت: Pages رایگان فقط ریپو public — اسکن امنیتی تاریخچه (بدون توکن/رمز) و پاک‌سازی db/custom.db و .env از کل تاریخچه با filter-branch + force push (دادهٔ شخصی وزن/جلسات لو نرود)
+- PATCH ریپو → public، POST /pages با build_type=workflow → 201
+- اجرای اول workflow موفق؛ سایت در https://cheginisoroush.github.io/Workout/ بالا آمد
+- 🔍 دیباگ عمیق مرورگری (agent-browser): آنبوردینگ برای بازدیدکنندهٔ تازه ظاهر نمی‌شد → از طریق React fiber حقیقت کش react-query خوانده شد → ریشه: **باگ رِیس از قبل موجود** — HomeView queryFn با همان کلید ["profile"] شکل bare برمی‌گرداند و با page.tsx (شکل wrapped) ریس می‌کند → گیت آنبوردینگ بی‌ثبات
+- فیکس: HomeView حالا مثل بقیه پاسخ کامل {profile} را کش می‌کند (در سندباکس هم باگ را می‌رفع)
+- 🔍 کشف 404 فونت: CSS مینیفای‌شده url() بدون نقل‌قالو دارد → sed قبلاً فقط نقل‌قول‌دار را می‌گرفت → اسکریپت حالا url(/fonts/ … را هم بازنویسی می‌کند
+- push دوم → CI موفق → وریفای کامل مرورگری سایت زنده:
+  • بازدید تازه: آنبوردینگ نمایش داده شد ✓ (مرحله ۱→۲، هدف/وزن/قد، PUT موفق، توست «خوش اومدی»)
+  • شروع جلسه → ثبت ست ۶۰×۱۰ → پایان با feeling=5 → session completed + WorkoutLog خودکار (2026-W43) دقیقاً مثل سرور ✓
+  • پیشرفت: totals 1 جلسه/1 ست/600 حجم + PR پرس سینه ✓
+  • weights POST، export کامل، data?mode=logs با شمارش درست ✓
+  • موبایل 390px بدون overflow، دسکتاپ 1440 تمیز، فونت‌ها 5/5 لود، صفر خطای کنسول، صفر 404
+- سندباکس محلی دست‌نخورده سالم (HTTP 200)
+
+Stage Summary:
+- سایت روی GitHub Pages زنده و کاملاً کاربردی: https://cheginisoroush.github.io/Workout/
+- ریپو public است؛ دادهٔ شخصی از تاریخچه حذف شده؛ CI خودکار هر push را دیپلوی می‌کند
+- باگ رِیس کش پروفایل (pre-existing) در کل اپ رفع شد
