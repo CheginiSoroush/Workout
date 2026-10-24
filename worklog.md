@@ -439,3 +439,24 @@ Stage Summary:
 - محدودیت شناخته‌شده: کششی‌ها در Liftosaur حرکت قابل‌ردیابی نیستند (دیتابیس ندارد) — به‌صورت یادداشت هنگام تمرین + روتین کامل در سایت
 - کاربر باید برنامه قبلی را در Liftosaur با نسخه v2 جایگزین کند (کپی دوباره از کارت سایت)
 - رسانه Task 6: watchdog همچنان روی 429
+
+---
+Task ID: 7
+Agent: main (Z.ai Code)
+Task: خروجی برنامه برای ۵ اپ دیگر (Hevy, Lyfta, Fitbod, openGym, GymMane) — کل روتین هفتگی + نوت‌ها، کنار کارت Liftosaur
+
+Work Log:
+- تحقیق رسمی با مرورگر: Hevy (help center API) → ایمپورت روال ندارد، فقط تاریخچه ورزش؛ Lyfta (صفحه ai-instructions) → فقط import تاریخچه از اپ‌ها، برنامه دستی؛ Fitbod → الگوریتمی، بدون import برنامه؛ openGym → چند اپ هم‌نام (معتبرترین در Play: pro.filonov.npng)؛ GymMane → در Play و وب پیدا نشد (نزدیک‌ترین: Gymmate/Gymie/Gymmie)
+- ساخت research/gen_app_exports.ts (اجرا با bun): تک‌منبع حقیقت از program.ts + mobility.ts — استراحت‌ها به ثانیه (هماهنگ با Liftosaur v2)، تکرارها به فرمت انگلیسی، گرم‌کردن ست اول هر روز، FST-7 فینیشرها، سرد کردن اختصاصی هر روز (کشش‌های هماهنگ با عضلات)، برنامه دوچرخه، قواعد پیشرفت، FST-7، تغذیه، پزشکی
+- تولید ۴ فایل در public/exports/: weekly-routine-full.md (برگهٔ جامع ~۲۰K کاراکتر با جدول ۱۴ کششی)، build-hevy.txt (نام‌های دقیق کتابخانه Hevy)، build-lyfta.txt، build-generic.txt (Fitbod/openGym/GymMane)
+- تولید src/lib/appExports.ts (خودکار توسط ژنراتور): ۵ کارت اپ + برگه جامع با copyText امبدشده
+- کامپوننت src/components/dashboard/AppExports.tsx: برگه جامع (کپی/دانلود/دیدن pre) + گرید ۵ کارت (آیکون اختصاصی، badge واقع‌بینانه، مراحل شماره‌دار فارسی، نوت‌ها، کپی/دانلود/سایت) + نوت صادقانه پایانی — درج در تب دانش و منابع بعد از LiftosaurGuide (#app-exports)
+- 🐛 باگ سیستمیک کشف و رفع شد: layout فقط Toaster (radix) را mount کرده بود اما LiftosaurGuide/HomeView/useTodaySession توست sonner صدا می‌زدند که هرگز mount نشده بود → همهٔ آن توست‌ها بی‌صدا بودند. رفع: mount SonnerToaster (top-center, richColors, closeButton) در layout
+- 🐛 باگ دکمه کپی AppExports: حتی در شکست clipboard «کپی شد!» می‌زد → copyToClipboard اکنون boolean برمی‌گرداند و state فقط در موفقیت آپدیت می‌شود
+- وریفای مرورگر: ۵ کارت + برگه جامع رندر شد؛ pre برگه ۱۹,۸۹۶ کاراکتر (هفته/۱۹ حرکت/کششی/پزشکی ✓)؛ کپی Hevy → توست سبز «برگهٔ ساخت Hevy کپی شد» ظاهر شد؛ ۴ فایل export همه 200؛ موبایل 390px تمیز؛ کنسول پاک؛ lint پاک
+
+Stage Summary:
+- کاربر حالا برای هر ۵ اپ برگهٔ ساخت دقیق + برگهٔ جامع هفتگی دارد؛ حقیقت ایمیپورت در کارت‌ها صادقانه نوشته شده (فقط Liftosaur خودکار است)
+- توست‌های sonner در کل اپ زنده شدند (فیکس سیستمیک)
+- ژنراتور قابل اجرای مجدد: bun run research/gen_app_exports.ts (برای همگام‌سازی بعدی با program.ts)
+- رسانه Task 6: watchdog هنوز 429 (09:36)

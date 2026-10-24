@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
@@ -33,6 +34,8 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          {/* توست‌های sonner — LiftosaurGuide/AppExports/HomeView از این سیستم استفاده می‌کنند */}
+          <SonnerToaster position="top-center" richColors closeButton />
         </ThemeProvider>
       </body>
     </html>

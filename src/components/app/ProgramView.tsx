@@ -29,6 +29,7 @@ import MedicalNotes from "@/components/dashboard/MedicalNotes";
 import CreatineResearch from "@/components/dashboard/CreatineResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import LiftosaurGuide from "@/components/dashboard/LiftosaurGuide";
+import AppExports from "@/components/dashboard/AppExports";
 import SourcesSection from "@/components/dashboard/SourcesSection";
 import { useAppStore } from "@/lib/store/app";
 import { PROGRAM } from "@/lib/program";
@@ -245,6 +246,9 @@ export default function ProgramView() {
           </div>
           <div id="liftosaur">
             <LiftosaurGuide />
+          </div>
+          <div id="app-exports">
+            <AppExports />
           </div>
           <div id="sources">
             <SourcesSection />
