@@ -57,9 +57,9 @@ export default function ExerciseCard({
         exercise.fst7 ? "border-amber-500/40" : ""
       }`}
     >
-      <div className="grid md:grid-cols-[240px_1fr]">
-        {/* رسانه — فلیپ‌بوک مرحله‌به‌مرحله + ویدیوی لوکال (گارد فایل مفقود داخل MotionMedia) */}
-        <div className="relative h-44 md:h-full min-h-44 bg-muted">
+      <div className="grid md:grid-cols-[320px_1fr]">
+        {/* رسانه — بزرگ: ستون اصلی کارت (فلیپ‌بوک مرحله‌به‌مرحله + ویدیوی لوکال) */}
+        <div className="relative aspect-[16/10] w-full bg-muted md:aspect-auto md:h-full md:min-h-[300px]">
           <MotionMedia
             key={mode}
             photo={getVariantPhoto(exercise.id, mode) ?? exercise.image}

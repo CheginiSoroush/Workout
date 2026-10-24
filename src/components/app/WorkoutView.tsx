@@ -160,7 +160,7 @@ function CurrentExerciseCard({ exercise }: { exercise: Exercise }) {
           fallbackPhoto={exercise.image}
           alt={`نحوه اجرای ${displayName}`}
           media={getExerciseMedia(exercise.id, mode)}
-          className="h-44 w-full rounded-xl sm:h-52"
+          className="aspect-video w-full rounded-xl sm:aspect-auto sm:h-60"
         />
 
         {/* سوییچ نسخه — فقط نمایشی (توضیح نسخه جایگزین) */}

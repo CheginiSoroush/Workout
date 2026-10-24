@@ -488,7 +488,7 @@ function CompactMedia({ photo, fallbackPhoto, alt, media, className }: MotionMed
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md gap-3 p-4 sm:p-5">
+        <DialogContent className="max-w-3xl gap-3 p-4 sm:max-w-3xl sm:p-5">
           <DialogTitle className="text-base font-bold">{alt}</DialogTitle>
           <DialogDescription className="sr-only">
             رسانه آموزشی: پیمایش مرحله‌به‌مرحله و ویدیوی لوکال و آفلاین
