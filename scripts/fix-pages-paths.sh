@@ -14,15 +14,17 @@ OUT_DIR="$ROOT/out"
 
 # تشخیص پوشهٔ خروجی export — Next 16 با distDir سفارشی (.next-static)
 # خروجی را داخل خود distDir می‌نویسد؛ با distDir پیش‌فرض به out/ می‌رود.
+# .next-static همیشه تازه‌ترین بیلد است → اگر هست، out/ از نو از آن ساخته
+# می‌شود (وگرنه out/ قدیمی می‌ماند و خروجی استیل دیپلوی می‌شود!)؛
 # در هر دو حالت خروجی نهایی در out/ نرمالایز می‌شود تا downstream
 # (artifact upload و گاردها) همیشه یک مسیر ثابت داشته باشند.
 EXP_DIR=""
-if [ -f "$OUT_DIR/index.html" ]; then
-  EXP_DIR="$OUT_DIR"
-elif [ -f "$ROOT/.next-static/index.html" ]; then
+if [ -f "$ROOT/.next-static/index.html" ]; then
   EXP_DIR="$ROOT/.next-static"
   rm -rf "$OUT_DIR"
   cp -a "$EXP_DIR" "$OUT_DIR"
+elif [ -f "$OUT_DIR/index.html" ]; then
+  EXP_DIR="$OUT_DIR"
 fi
 
 if [ -z "$EXP_DIR" ]; then

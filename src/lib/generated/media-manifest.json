@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-10-24T14:51:09.009Z",
+  "exerciseVideos": [
+    "bench-press",
+    "cable-fly",
+    "db-shoulder-press",
+    "incline-db-press"
+  ],
+  "exerciseFrameCounts": {
+    "bench-press": 4,
+    "cable-fly": 4,
+    "db-shoulder-press": 4,
+    "incline-db-press": 4
+  },
+  "exercisePhotos": [
+    "barbell-row.jpg",
+    "bench-press.jpg",
+    "bulgarian-split-squat.jpg",
+    "cable-crunch.jpg",
+    "cable-fly.png",
+    "calf-raise.jpg",
+    "db-shoulder-press.jpg",
+    "ez-curl.jpg",
+    "face-pull.jpg",
+    "hanging-leg-raise.png",
+    "incline-db-press.jpg",
+    "lat-pulldown.jpg",
+    "lateral-raise.jpg",
+    "leg-curl.jpg",
+    "leg-press.png",
+    "pull-up.png",
+    "rdl.jpg",
+    "rope-pushdown.png",
+    "straight-arm-pulldown.jpg"
+  ],
+  "stretchVideos": [
+    "calf",
+    "cat-cow",
+    "childs-pose",
+    "deadhang",
+    "doorway-pec",
+    "figure4",
+    "hamstring",
+    "neck",
+    "openbook",
+    "shoulder-cross",
+    "wall-lat"
+  ],
+  "stretchFrameCounts": {
+    "calf": 3,
+    "cat-cow": 3,
+    "childs-pose": 3,
+    "deadhang": 3,
+    "doorway-pec": 3,
+    "figure4": 3,
+    "hamstring": 3,
+    "neck": 3,
+    "openbook": 3,
+    "shoulder-cross": 3,
+    "wall-lat": 3
+  },
+  "stretchPhotos": [
+    "calf.png",
+    "cat-cow.png",
+    "childs-pose.jpg",
+    "deadhang.png",
+    "doorway-pec.jpg",
+    "figure4.jpg",
+    "hamstring.jpg",
+    "hip-flexor.jpg",
+    "mckenzie.jpg",
+    "neck.jpg",
+    "openbook.jpeg",
+    "quad.jpg",
+    "shoulder-cross.jpg",
+    "wall-lat.png"
+  ]
+}

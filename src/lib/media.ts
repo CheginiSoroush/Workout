@@ -12,12 +12,21 @@
 // ============================================================
 
 import { PROGRAM, type ExerciseMode } from "@/lib/program";
+import manifest from "./generated/media-manifest.json";
 
 // پایهٔ مسیر دارایی‌های public — در بیلد استاتیک (GitHub Pages) "‎/Workout"
 // است و در توسعه/سندباکس رشتهٔ خالی؛ در زمان build اینلاین می‌شود.
-// (پیش‌تر این مسیرها رشتهٔ تکی بودند و اسکریپت rewrite آن‌ها را از دست
-// می‌داد — ریشهٔ باگ «رسانه در حال آماده‌سازی» روی Pages)
 const ASSET_BASE = process.env.NEXT_PUBLIC_ASSET_BASE ?? "";
+
+// ---- دسترس‌پذیری واقعی رسانه (از مانیفست build-time) ----
+// مانیفست از محتوای واقعی public/ ساخته می‌شود (scripts/gen-media-manifest.mjs)
+// تا به‌جای پروب‌های ۴۰۴ و نشان «آماده‌سازی» ابدی، UI از همان اول بداند
+// چه رسانه‌ای وجود دارد و برای نسخه‌های خالی به رسانهٔ پایه فال‌بک کند.
+const EXERCISE_VIDEOS = new Set<string>(manifest.exerciseVideos);
+const EXERCISE_FRAME_COUNTS: Record<string, number> = manifest.exerciseFrameCounts;
+const EXERCISE_PHOTOS = new Set<string>(manifest.exercisePhotos);
+const STRETCH_VIDEOS = new Set<string>(manifest.stretchVideos);
+const STRETCH_FRAME_COUNTS: Record<string, number> = manifest.stretchFrameCounts;
 
 export interface MotionMediaData {
   /** مسیر ویدیوی لوکال mp4 */
@@ -156,10 +165,26 @@ for (const day of PROGRAM) {
   }
 }
 
+/** آیا برای این شناسه رسانهٔ قابل‌نمایشی هست؟ (ویدیو یا فلیپ‌بوک کامل) */
+function exerciseMediaAvailable(id: string): boolean {
+  return (
+    EXERCISE_VIDEOS.has(id) ||
+    (EXERCISE_FRAME_COUNTS[id] ?? 0) >= EXERCISE_PHASES.length
+  );
+}
+
+function stretchMediaAvailable(id: string): boolean {
+  return (
+    STRETCH_VIDEOS.has(id) ||
+    (STRETCH_FRAME_COUNTS[id] ?? 0) >= STRETCH_PHASES.length
+  );
+}
+
 /**
  * رسانه حرکت باشگاه — نسخه‌آگاه.
- * اگر mode با نسخه پایه فرق کند، رسانه اختصاصی همان نسخه برمی‌گردد
- * (undefined اگر هنوز تولید نشده — UI به عکس نسخه فال‌بک می‌کند).
+ * اگر نسخهٔ درخواستی رسانهٔ واقعی نداشته باشد (تولیدنشده)، رسانهٔ نسخهٔ
+ * پایه برمی‌گردد — حرکت یکی است و بهتر از نشان «آماده‌سازی» ابدی است.
+ * undefined یعنی هیچ رسانه‌ای نیست → UI فقط عکس را نشان می‌دهد.
  */
 export function getExerciseMedia(
   id: string,
@@ -168,10 +193,13 @@ export function getExerciseMedia(
   if (mode) {
     const base = BASE_MODE[id];
     if (base && mode !== base) {
-      return EXERCISE_MEDIA[`${id}__${mode}`];
+      const variantId = `${id}__${mode}`;
+      if (exerciseMediaAvailable(variantId)) {
+        return EXERCISE_MEDIA[variantId];
+      }
     }
   }
-  return EXERCISE_MEDIA[id];
+  return exerciseMediaAvailable(id) ? EXERCISE_MEDIA[id] : undefined;
 }
 
 /** عکس اختصاصی نسخه جایگزین — null یعنی از عکس اصلی حرکت استفاده شود */
@@ -179,12 +207,14 @@ export function getVariantPhoto(id: string, mode?: ExerciseMode): string | null 
   if (!mode) return null;
   const base = BASE_MODE[id];
   if (!base || mode === base) return null;
+  // فقط اگر عکس نسخه واقعاً موجود است (وگرنه ۴۰۴ و فلاش عکس شکسته)
+  if (!EXERCISE_PHOTOS.has(`${id}__${mode}.png`)) return null;
   return `${ASSET_BASE}/exercises/${id}__${mode}.png`;
 }
 
-/** رسانه کشش — undefined اگر id ناشناخته باشد */
+/** رسانه کشش — undefined اگر شناسه ناشناخته یا بدون رسانه باشد */
 export function getStretchMedia(id: string): MotionMediaData | undefined {
-  return STRETCH_MEDIA[id];
+  return stretchMediaAvailable(id) ? STRETCH_MEDIA[id] : undefined;
 }
 
 // ------------------------------------------------------------

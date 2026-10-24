@@ -159,7 +159,13 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
     : (media?.stepPhases ?? []);
   const hasVideo = !!media && videoReady === true && !videoError;
   const showVideo = hasVideo && mode === "video";
-  const preparing = !!media && !flipActive && !showVideo;
+  // نشان آماده‌سازی فقط بعد از قطعی نتیجهٔ پروب‌ها (نه در حین پروب اولیه)
+  const probing =
+    (media && media.frames.length > 0 && framesReady === null) ||
+    (media && media.steps.length > 0 && stepsReady === null) ||
+    (media && media.video && videoReady === null);
+  const preparing =
+    !!media && !flipActive && !showVideo && !probing;
 
   // چرخه فلیپ‌بوک — پاک‌سازی در unmount/توقف
   useEffect(() => {
