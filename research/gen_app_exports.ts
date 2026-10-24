@@ -86,7 +86,8 @@ const LISS_LINE =
   "بعد از ست آخر: LISS دوچرخه ۱۵ تا ۲۰ دقیقه (ضربان ۱۱۵ تا ۱۳۵) — جایگزین تردمیل شیب‌دار";
 
 // ---------- برگهٔ ساخت برای هر روز ----------
-function daySheet(dayId: string, appName: string): string {
+// mode = "base" (وزنهٔ آزاد/پایه) | "machine" (نسخهٔ دستگاهی — همان منطق سوییچ کارت‌های سایت)
+function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "base"): string {
   const day = PROGRAM.find((d) => d.id === dayId)!;
   const cd = COOLDOWN[dayId];
   const lines: string[] = [];
@@ -96,15 +97,31 @@ function daySheet(dayId: string, appName: string): string {
   lines.push(`[${WARMUP_LINE}]`);
   lines.push("");
   day.exercises.forEach((ex, i) => {
+    const mach = mode === "machine" ? ex.machineAlt : null;
+    const name = mach ? mach.hevyName : ex.hevyName;
+    const faName = mach ? mach.faName : ex.faName;
     const warm = WARMUP_FIRST[ex.id] ? `\n  ★ گرم‌کردن این حرکت: ${WARMUP_FIRST[ex.id]}` : "";
     const fst = ex.fst7 ? " — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)" : "";
-    const perLeg = ex.id === "bulgarian-split-squat" ? " (هر پا جدا)" : "";
+    const perLeg =
+      ex.id === "bulgarian-split-squat" && !mach ? " (هر پا جدا)" : "";
     lines.push(
-      `${i + 1}. ${ex.hevyName} — ${ex.sets} × ${repsEn(ex.reps)}${perLeg} — rest ${REST_SEC[ex.id]}s — RPE ${fa2en(ex.rpe).replace("پامپ", "9 (pump)")}${fst}`
+      `${i + 1}. ${name} — ${mach ? faName + " — " : ""}${ex.sets} × ${repsEn(ex.reps)}${perLeg} — rest ${REST_SEC[ex.id]}s — RPE ${fa2en(ex.rpe).replace("پامپ", "9 (pump)")}${fst}`
     );
-    lines.push(`  Notes: ${ex.tips[0] || ex.faName}${warm}`);
-    const alt = ex.machineAlt?.hevyName || ex.freeAlt?.hevyName;
-    if (alt) lines.push(`  نسخهٔ جایگزین (همان تمرین): ${alt}`);
+    lines.push(`  Notes: ${ex.tips[0] || faName}${mach && mach.note ? ` — ${mach.note}` : ""}${warm}`);
+    // نسخهٔ جایگزین — در حالت دستگاهی جهت سوییچ برعکس می‌شود
+    const alt =
+      mode === "machine"
+        ? ex.hevyName
+        : ex.machineAlt?.hevyName || ex.freeAlt?.hevyName;
+    if (alt) {
+      const altLabel =
+        mode === "machine"
+          ? "نسخهٔ وزنهٔ آزاد (هفتهٔ ۳+)"
+          : ex.machineAlt?.hevyName
+            ? "نسخهٔ دستگاهی (هفتهٔ ۱–۲)"
+            : "نسخهٔ جایگزین (همان تمرین)";
+      lines.push(`  ${altLabel}: ${alt}`);
+    }
   });
   lines.push("");
   lines.push(`[${LISS_LINE}]`);
@@ -113,18 +130,25 @@ function daySheet(dayId: string, appName: string): string {
 }
 
 // ---------- برگهٔ ساخت کامل برای یک اپ ----------
-function buildSheet(appName: string, accent: string): string {
+const MODE_LABEL: Record<"base" | "machine", string> = {
+  base: "وزنهٔ آزاد — از هفتهٔ ۳",
+  machine: "دستگاهی — هفتهٔ ۱ تا ۲ (شروع)",
+};
+
+function buildSheet(appName: string, accent: string, mode: "base" | "machine" = "base"): string {
   const parts: string[] = [];
   parts.push("=====================================================");
   parts.push(`FST-7 SWIMMER — ${appName} — برگهٔ ساخت کامل`);
+  parts.push(`نسخه: ${MODE_LABEL[mode]}`);
   parts.push(`تولید: ${TODAY} | منبع: داشبورد شناگر FST-7`);
   parts.push("=====================================================");
   parts.push("");
   parts.push("هفته: شنبه Push | دوشنبه Pull | چهارشنبه پا+شکم | بقیه روزها استراحت/کششی/دوچرخه");
   parts.push(`پروفایل: ${PROFILE.age} ساله، ${faNum(PROFILE.height)} سانتی‌متر، هدف ${PROFILE.targetWeight} کیلو — ${PROFILE.goal}`);
+  parts.push(`حجم دو نسخه یکسان است — فقط ابزار عوض می‌شود، نه ساختار. ${MACHINE_FIRST_NOTE.text}`);
   parts.push("");
   PROGRAM.forEach((d) => {
-    parts.push(daySheet(d.id, appName));
+    parts.push(daySheet(d.id, appName, mode));
     parts.push("");
   });
   parts.push("--- برنامهٔ دوچرخه ثابت (خانه) ---");
@@ -174,6 +198,21 @@ function weeklySheet(): string {
   p.push("6. سرد کردن: کشش‌های همان روز (~۵ دقیقه) — جدول پایین");
   p.push("");
   p.push(`> ${MACHINE_FIRST_NOTE.title} ${MACHINE_FIRST_NOTE.text}`);
+  p.push("");
+  // جدول دو نسخه — سوییچ دستگاه ↔ وزنهٔ آزاد برای هر اسلات
+  p.push("## 🔀 دو نسخهٔ برنامه — دستگاه (هفتهٔ ۱–۲) ↔ وزنهٔ آزاد (هفتهٔ ۳+)");
+  p.push("");
+  p.push("| روز | حرکت (اسلات) | نسخهٔ دستگاهی | نسخهٔ وزنهٔ آزاد |");
+  p.push("|---|---|---|---|");
+  PROGRAM.forEach((day) => {
+    day.exercises.forEach((ex) => {
+      const baseIsFree = (ex.baseMode ?? "machine") === "free";
+      const machName = baseIsFree ? ex.machineAlt?.faName ?? ex.faName : ex.faName;
+      const freeName = baseIsFree ? ex.faName : ex.freeAlt?.faName ?? ex.faName;
+      const same = machName === freeName ? " (هر دو نسخه یکسان)" : "";
+      p.push(`| ${day.weekDay} | ${ex.faName} | ${machName}${same} | ${freeName} |`);
+    });
+  });
   p.push("");
   PROGRAM.forEach((day, di) => {
     p.push(`## ${day.title} — ${day.weekDay} (${day.duration})`);
@@ -524,21 +563,267 @@ const OPENGYM_PLAN = {
   routines: [OG_PUSH, OG_PULL, OG_LEGS],
 };
 
+// ---------- نسخهٔ دستگاهی openGym (هفتهٔ ۱–۲) ----------
+// idها از کاتالوگ رسمی: 0576 lever chest press | 1299 lever incline chest press |
+// 0603 lever shoulder press | 0178 cable lateral raise | 0017 assisted pull-up |
+// 0861 cable seated row | 0868 cable curl | 0573 lever back extension |
+// 9387 lever angled single leg press | 5107 captains chair leg raise
+const W3_LINE = "از هفتهٔ ۳ نسخهٔ وزنهٔ آزاد را وارد کن (برنامهٔ دستگاهی و آزاد در سایت)";
+
+const OG_PUSH_M: OgRoutine = {
+  id: "r-push-m",
+  name: "Push Machines — شنبه",
+  emoji: "🏋️",
+  ex: [
+    ogEx({
+      id: "0576", // lever chest press
+      sets: 4,
+      reps: 8,
+      repsMin: 5,
+      restSec: 180,
+      prog: "double",
+      inc: 2.5,
+      warmupSets: 3,
+      tips:
+        "گرم‌کردن خودکار ۳ ست رمپ فعال است. RPE ۸ (۱–۳ تکرار در مخزن). مسیر ثابت — تمرکز کامل روی سینه. " +
+        W3_LINE +
+        ". " +
+        LISS_FA +
+        " (سینه/شانه)",
+    }),
+    ogEx({
+      id: "1299", // lever incline chest press
+      sets: 3,
+      reps: 12,
+      repsMin: 8,
+      restSec: 120,
+      prog: "double",
+      inc: 2,
+      tips: "RPE ۸. زاویهٔ نیمکت ۳۰ درجه، آرنج زیر مچ. " + W3_LINE,
+    }),
+    ogEx({
+      id: "0603", // lever shoulder press
+      sets: 3,
+      reps: 12,
+      repsMin: 8,
+      restSec: 120,
+      prog: "double",
+      inc: 2,
+      tips: "RPE ۸. پشتی دستگاه قوس کمر را کنترل می‌کند — تمرکز روی دلتوئید. " + W3_LINE,
+    }),
+    ogEx({
+      id: "8141", // cable standing crossover
+      sets: 3,
+      reps: 15,
+      repsMin: 10,
+      restSec: 90,
+      prog: "double",
+      inc: 2.5,
+      tips: "RPE ۹. اسکوییز ۱ ثانیه در انتها، برگشت کنترل‌شده. جایگزین: قفسه سینه دمبل",
+    }),
+    ogEx({
+      id: "0200", // cable pushdown (with rope attachment)
+      sets: 3,
+      reps: 15,
+      repsMin: 10,
+      restSec: 75,
+      prog: "double",
+      inc: 2.5,
+      tips: "RPE ۹. آرنج چسبیده به بدن، فقط ساعد حرکت کند؛ انتها طناب کمی باز",
+    }),
+    ogEx({
+      id: "0178", // cable lateral raise — FST-7
+      sets: 7,
+      reps: 15,
+      repsMin: 10,
+      restSec: 45,
+      prog: "double",
+      inc: 1,
+      tips: FST7_FA + ". تغییر وزنه با یک پیچ — خود رامبد هم برای FST-7 کابل می‌زند. " + LISS_FA,
+    }),
+  ],
+};
+
+const OG_PULL_M: OgRoutine = {
+  id: "r-pull-m",
+  name: "Pull Machines — دوشنبه",
+  emoji: "🧲",
+  ex: [
+    ogEx({
+      id: "0017", // assisted pull-up
+      sets: 4,
+      reps: 10,
+      repsMin: 5,
+      restSec: 180,
+      tips:
+        "گرم‌کردن: اسکاپولار پول + ۵ تکرار سبک با کش. پیشرفت دستی: هر هفته وزنهٔ کمک را کم کن (کمتر = سخت‌تر). چانه بالای میله",
+    }),
+    ogEx({
+      id: "0861", // cable seated row ⭐
+      sets: 3,
+      reps: 10,
+      repsMin: 6,
+      restSec: 180,
+      prog: "double",
+      inc: 2.5,
+      tips:
+        "⭐ حرکت اصلی روز Pull — ستون فقرات اتکا دارد و فشار می‌ماند روی پشت. سینه بالا، دستهٔ V تا بالای سینه، تیغه‌ها جمع در انتها. " +
+        W3_LINE,
+    }),
+    ogEx({
+      id: "2291", // cable wide grip lat pulldown
+      sets: 3,
+      reps: 12,
+      repsMin: 10,
+      restSec: 120,
+      prog: "double",
+      inc: 2.5,
+      tips: "سینه باز، بار را با آرنج به پایین بکش نه با دست؛ ۱ ثانیه نگه‌داشتن پایین",
+    }),
+    ogEx({
+      id: "5656", // cable standing face pull (with rope)
+      sets: 3,
+      reps: 15,
+      repsMin: 12,
+      restSec: 90,
+      prog: "double",
+      inc: 2.5,
+      tips: "طناب به سمت پیشانی، انگشتان به بیرون باز شود — سلامت شانه و پوست سر شانه",
+    }),
+    ogEx({
+      id: "0868", // cable curl
+      sets: 3,
+      reps: 12,
+      repsMin: 8,
+      restSec: 90,
+      prog: "double",
+      inc: 1.25,
+      tips: "آرنج ثابت کنار بدن؛ سوئینگ کمر عملاً غیرممکن — فرم تمیز از روز اول. " + W3_LINE,
+    }),
+    ogEx({
+      id: "0238", // cable straight arm pulldown — FST-7
+      sets: 7,
+      reps: 15,
+      repsMin: 10,
+      restSec: 45,
+      prog: "double",
+      inc: 2.5,
+      tips: FST7_FA + ". " + LISS_FA + " (کشش لت روی دیوار، آویزان‌شدن، گربه–گاو)",
+    }),
+  ],
+};
+
+const OG_LEGS_M: OgRoutine = {
+  id: "r-legs-m",
+  name: "Legs + Abs Machines — چهارشنبه",
+  emoji: "🦵",
+  ex: [
+    ogEx({
+      id: "8375", // lever angled leg press
+      sets: 4,
+      reps: 12,
+      repsMin: 8,
+      restSec: 180,
+      prog: "double",
+      inc: 5,
+      warmupSets: 3,
+      tips:
+        "گرم‌کردن خودکار ۳ ست رمپ فعال است. پاها عرض شانه؛ تا ۹۰ درجه پایین، زانو در بالا قفل نشود. جایگزین: اسکات گلابی دمبل",
+    }),
+    ogEx({
+      id: "0573", // lever back extension
+      sets: 3,
+      reps: 10,
+      repsMin: 8,
+      restSec: 180,
+      prog: "double",
+      inc: 2.5,
+      tips:
+        "همان زنجیرهٔ پشتی RDL با محافظت کامل کمر — لولا از ران، کمر صاف. " + W3_LINE,
+    }),
+    ogEx({
+      id: "9387", // lever angled single leg press
+      sets: 3,
+      reps: 12,
+      repsMin: 8,
+      restSec: 90,
+      prog: "double",
+      inc: 2,
+      side: true,
+      tips:
+        "هر پا جدا ثبت می‌شود — همان کار اسکات بلغاری بدون دغدغهٔ تعادل. " + W3_LINE,
+    }),
+    ogEx({
+      id: "0586", // lever lying leg curl
+      sets: 3,
+      reps: 15,
+      repsMin: 10,
+      restSec: 75,
+      prog: "double",
+      inc: 2.5,
+      tips: "لگن تمام مدت چسبیده به دستگاه، پنجه به سمت ساق؛ برگشت ۲–۳ ثانیه",
+    }),
+    ogEx({
+      id: "0605", // lever standing calf raise
+      sets: 4,
+      reps: 15,
+      repsMin: 10,
+      restSec: 60,
+      prog: "double",
+      inc: 2.5,
+      tips: "دامنهٔ کامل: پایین کشش ۲ ثانیه، بالا اسکوییز ۱ ثانیه؛ زانو صاف و ثابت",
+    }),
+    ogEx({
+      id: "5107", // captains chair leg raise
+      sets: 3,
+      reps: 15,
+      restSec: 90,
+      tips:
+        "کلید حرکت چرخش لگن به عقب (pelvic tilt) — پشتی از کمر حمایت می‌کند و تاب حذف می‌شود. ساده‌تر: زانوها خم",
+    }),
+    ogEx({
+      id: "0175", // cable kneeling crunch — FST-7
+      sets: 7,
+      reps: 15,
+      repsMin: 12,
+      restSec: 45,
+      prog: "double",
+      inc: 2.5,
+      tips: FST7_FA + ". دسته کنار گردن، ستون فقرات جمع شود — نه خم از لگن. " + OG_DAY3_LISS,
+    }),
+  ],
+};
+
+const OPENGYM_PLAN_MACHINE = {
+  opengym_plan: 1,
+  exported: TODAY,
+  name: "FST-7 Swimmer — PPL (Machines, W1-2)",
+  unit: "kg",
+  week: { "6": ["r-push-m"], "1": ["r-pull-m"], "3": ["r-legs-m"] },
+  routines: [OG_PUSH_M, OG_PULL_M, OG_LEGS_M],
+};
+
 // ---------- برگهٔ ساخت openGym (راهنمای ایمپورت + جدول احتیاطی) ----------
-function openGymSheet(): string {
+function openGymSheet(variant: "machine" | "free" = "free"): string {
+  const mach = variant === "machine";
+  const fileName = mach ? "opengym-plan-machine.json" : "opengym-plan.json";
+  const routineNames = mach
+    ? "Push Machines / Pull Machines / Legs + Abs Machines"
+    : "Push/Pull/Legs";
   const p: string[] = [];
   p.push("=====================================================");
-  p.push("FST-7 SWIMMER — OPENGYM (opengym.ch) — ایمپورت خودکار");
+  p.push(`FST-7 SWIMMER — OPENGYM (opengym.ch) — ایمپورت خودکار`);
+  p.push(`نسخه: ${MODE_LABEL[mach ? "machine" : "base"]}`);
   p.push(`تولید: ${TODAY} | فرمت رسمی: opengym_plan 1 (plan-share.js)`);
   p.push("=====================================================");
   p.push("");
   p.push("مهم‌ترین نکته: openGym برنامه را به‌صورت فایل JSON می‌فهمد — برخلاف Hevy/Lyfta/Fitbod.");
-  p.push("فایل opengym-plan.json (همین پوشهٔ exports) را ایمپورت کن، نه دستی بساز:");
+  p.push(`فایل ${fileName} (همین پوشهٔ exports) را ایمپورت کن، نه دستی بساز:`);
   p.push("");
   p.push("مراحل ایمپورت (زیر ۱ دقیقه):");
-  p.push("  1. فایل opengym-plan.json را دانلود کن (کارت openGym در سایت → دکمهٔ دانلود)");
+  p.push(`  1. فایل ${fileName} را دانلود کن (کارت openGym در سایت → سوییچ نسخه → دکمهٔ دانلود)`);
   p.push("  2. اپ openGym → تب Plan → منوی سه‌نقطه → «Import a plan file»");
-  p.push("  3. فایل را انتخاب کن — ۳ روال جدید (Push/Pull/Legs) به روال‌هایت اضافه می‌شود؛ چیزی خراب نمی‌شود (merge)");
+  p.push(`  3. فایل را انتخاب کن — ۳ روال جدید (${routineNames}) به روال‌هایت اضافه می‌شود؛ چیزی خراب نمی‌شود (merge)`);
   p.push("  4. در همان صفحه سوییچ «Use this weekly schedule» را روشن کن:");
   p.push("     شنبه Push | دوشنبه Pull | چهارشنبه پا+شکم — بقیه روزها استراحت");
   p.push("  5. Import را بزن. در هر حرکت وزنهٔ شروع را اولین جلسه بزن — پیشرفت دوگانه (double)");
@@ -548,24 +833,30 @@ function openGymSheet(): string {
   p.push("  • ۱۹ حرکت با id کاتالوگ رسمی (نام، انیمیشن و عضله درست)");
   p.push("  • استراحت‌ها به ثانیه (FST-7 = ۴۵ ثانیه، پایه = ۱۸۰/۱۲۰/۹۰/۷۵/۶۰)");
   p.push("  • بازهٔ تکرار هر حرکت (۵–۸، ۸–۱۲، ۱۰–۱۵، ۱۲–۱۵) با قاعدهٔ پیشرفت دوگانه");
-  p.push("  • گرم‌کردن خودکار ۳ ست رمپ روی پرس سینه و پرس پا (۵۰٪/۷۵٪/۸۷.۵٪)");
-  p.push("  • اسکات بلغاری per-side (هر پا جدا ثبت می‌شود)");
-  p.push("  • نوت فارسی هر حرکت: RPE، جایگزین دستگاه، FST-7، یادآور LISS و کشش");
+  p.push("  • گرم‌کردن خودکار ۳ ست رمپ روی حرکت اول Push و پرس پا (۵۰٪/۷۵٪/۸۷.۵٪)");
+  p.push(mach
+    ? "  • بارفیکس کمکی بدون پیشرفت خودکار — هر هفته وزنهٔ کمک را کم کن"
+    : "  • اسکات بلغاری per-side (هر پا جدا ثبت می‌شود)");
+  p.push("  • نوت فارسی هر حرکت: RPE، سوییچ نسخهٔ بعدی، FST-7، یادآور LISS و کشش");
   p.push("");
   p.push("محدودیت‌ها (صادقانه):");
   p.push("  • رابط کاربری openGym فارسی ندارد (۱۹ زبان دارد؛ عربی RTL هست، فارسی نه) — نام‌های حرکت انگلیسی‌اند؛ نوت‌ها فارسی‌اند");
   p.push("  • LISS دوچرخه و کشش‌ها داخل فایل نیستند (حرکت قابل‌ردیابی نیستند) — در نوت حرکت آخر هر روز آمده‌اند؛ روتین کامل در برگهٔ جامع سایت");
   p.push("  • نسخهٔ وب: opengym.ch/demo بدون نصب باز می‌شود — همان ایمپورت آنجا هم کار می‌کند");
   p.push("");
+  p.push("هر دو نسخه (دستگاهی و آزاد) را می‌توانی کنار هم ایمپورت کنی — نام روال‌ها فرق دارند و merge خراب نمی‌شود.");
+  p.push("");
   p.push("لینک‌ها: سایت opengym.ch | کد github.com/DuarteSantos8/openGym (AGPL-3.0) | Android APK + iOS App Store + self-host Docker");
   return p.join("\n");
 }
 
 // ---------- برگهٔ ساخت GymMane (رابط فارسی کامل) ----------
-function gymmaneSheet(): string {
+function gymmaneSheet(mode: "base" | "machine" = "base"): string {
+  const mach = mode === "machine";
   const parts: string[] = [];
   parts.push("=====================================================");
   parts.push("FST-7 SWIMMER — GYMMANE (رابط فارسی) — برگهٔ ساخت کامل");
+  parts.push(`نسخه: ${MODE_LABEL[mode]}`);
   parts.push(`تولید: ${TODAY} | منبع: داشبورد شناگر FST-7`);
   parts.push("=====================================================");
   parts.push("");
@@ -580,18 +871,27 @@ function gymmaneSheet(): string {
   parts.push("  3. واحد: کیلوگرم؛ هفته از شنبه شروع شود (تنظیمات تقویم)");
   parts.push("");
   parts.push("ساخت ۳ روال: تب Routines → + → نام و ایموجی:");
-  parts.push("  «Push — شنبه» 🏋️ | «Pull — دوشنبه» 🧲 | «Legs + Abs — چهارشنبه» 🦵");
+  parts.push(mach
+    ? "  «Push دستگاهی — شنبه» 🏋️ | «Pull دستگاهی — دوشنبه» 🧲 | «پا+شکم دستگاهی — چهارشنبه» 🦵"
+    : "  «Push — شنبه» 🏋️ | «Pull — دوشنبه» 🧲 | «Legs + Abs — چهارشنبه» 🦵");
   parts.push("");
   PROGRAM.forEach((d) => {
-    parts.push(daySheet(d.id, "GYMMANE"));
+    parts.push(daySheet(d.id, "GYMMANE", mode));
     parts.push("");
   });
   parts.push("--- تنظیم Progression هر حرکت (بعد از اولین جلسهٔ لاگ‌شده) ---");
   parts.push("هر حرکت را باز کن → Progression: بازهٔ تکرار برگه + پلهٔ وزن:");
-  parts.push("  پرس سینه ۵–۸ (+۲.۵) | پرس بالاسینه/سرشانه ۸–۱۲ (+۲) | کراس اور/پوش‌داون ۱۰–۱۵ (+۲.۵)");
-  parts.push("  بارفیکس ۵–۱۰ (+۲.۵ وزنهٔ آویز) | زیربغل ۶–۱۰ (+۲.۵) | پول‌داون ۱۰–۱۲ (+۲.۵)");
-  parts.push("  فیس پول ۱۲–۱۵ (+۲.۵) | جلوبازو ۸–۱۲ (+۱.۲۵) | پرس پا ۸–۱۲ (+۵) | RDL ۸–۱۰ (+۲.۵)");
-  parts.push("  بلغاری ۸–۱۲ هر پا (+۲) | پشت‌پا ۱۰–۱۵ (+۲.۵) | ساق ۱۰–۱۵ (+۲.۵) | شکم سیم‌کش ۱۲–۱۵ (+۲.۵)");
+  if (mach) {
+    parts.push("  پرس سینه دستگاه ۵–۸ (+۲.۵) | پرس بالاسینه/سرشانهٔ دستگاه ۸–۱۲ (+۲) | کراس اور/پوش‌داون ۱۰–۱۵ (+۲.۵)");
+    parts.push("  نشر جانب سیم‌کش ۱۰–۱۵ (+۱) | بارفیکس کمکی ۵–۱۰ (پیشرفت دستی: کم کردن وزنهٔ کمک) | زیربغل سیم‌کش نشسته ۶–۱۰ (+۲.۵)");
+    parts.push("  پول‌داون ۱۰–۱۲ (+۲.۵) | فیس پول ۱۲–۱۵ (+۲.۵) | جلوبازو سیم‌کش ۸–۱۲ (+۱.۲۵) | پرس پا ۸–۱۲ (+۵)");
+    parts.push("  بک اکستنشن ۸–۱۰ (+۲.۵) | پرس پا تک‌پا ۸–۱۲ هر پا (+۲) | پشت‌پا ۱۰–۱۵ (+۲.۵) | ساق ۱۰–۱۵ (+۲.۵) | صندلی کاپیتان ۸–۱۵ | شکم سیم‌کش ۱۲–۱۵ (+۲.۵)");
+  } else {
+    parts.push("  پرس سینه ۵–۸ (+۲.۵) | پرس بالاسینه/سرشانه ۸–۱۲ (+۲) | کراس اور/پوش‌داون ۱۰–۱۵ (+۲.۵)");
+    parts.push("  بارفیکس ۵–۱۰ (+۲.۵ وزنهٔ آویز) | زیربغل ۶–۱۰ (+۲.۵) | پول‌داون ۱۰–۱۲ (+۲.۵)");
+    parts.push("  فیس پول ۱۲–۱۵ (+۲.۵) | جلوبازو ۸–۱۲ (+۱.۲۵) | پرس پا ۸–۱۲ (+۵) | RDL ۸–۱۰ (+۲.۵)");
+    parts.push("  بلغاری ۸–۱۲ هر پا (+۲) | پشت‌پا ۱۰–۱۵ (+۲.۵) | ساق ۱۰–۱۵ (+۲.۵) | شکم سیم‌کش ۱۲–۱۵ (+۲.۵)");
+  }
   parts.push("");
   parts.push("--- نکات خاص GymMane ---");
   parts.push("• ست‌های FST-7 را Superset نزن — ۷ ست عادی با Rest Timer ۴۵ ثانیه");
@@ -618,16 +918,27 @@ fs.mkdirSync(outDir, { recursive: true });
 const weekly = weeklySheet();
 fs.writeFileSync(path.join(outDir, "weekly-routine-full.md"), weekly, "utf8");
 
-const hevySheet = buildSheet("HEVY", "hevy");
+// نسخهٔ وزنهٔ آزاد (پایه) — نام فایل‌های قبلی حفظ شد
+const hevySheet = buildSheet("HEVY", "hevy", "base");
 fs.writeFileSync(path.join(outDir, "build-hevy.txt"), hevySheet, "utf8");
 
-const lyftaSheet = buildSheet("LYFTA", "lyfta");
+const lyftaSheet = buildSheet("LYFTA", "lyfta", "base");
 fs.writeFileSync(path.join(outDir, "build-lyfta.txt"), lyftaSheet, "utf8");
 
-const genericSheet = buildSheet("GENERIC APP", "generic");
+const genericSheet = buildSheet("GENERIC APP", "generic", "base");
 fs.writeFileSync(path.join(outDir, "build-generic.txt"), genericSheet, "utf8");
 
-const openGymSheetText = openGymSheet();
+// نسخهٔ دستگاهی — هفتهٔ ۱ تا ۲ (همان ساختار، حرکات دستگاهی)
+const hevyMachine = buildSheet("HEVY", "hevy", "machine");
+fs.writeFileSync(path.join(outDir, "build-hevy-machine.txt"), hevyMachine, "utf8");
+
+const lyftaMachine = buildSheet("LYFTA", "lyfta", "machine");
+fs.writeFileSync(path.join(outDir, "build-lyfta-machine.txt"), lyftaMachine, "utf8");
+
+const genericMachine = buildSheet("GENERIC APP", "generic", "machine");
+fs.writeFileSync(path.join(outDir, "build-generic-machine.txt"), genericMachine, "utf8");
+
+const openGymSheetText = openGymSheet("free");
 fs.writeFileSync(path.join(outDir, "build-opengym.txt"), openGymSheetText, "utf8");
 fs.writeFileSync(
   path.join(outDir, "opengym-plan.json"),
@@ -635,8 +946,54 @@ fs.writeFileSync(
   "utf8"
 );
 
-const gymmaneSheetText = gymmaneSheet();
+const openGymMachineSheetText = openGymSheet("machine");
+fs.writeFileSync(
+  path.join(outDir, "build-opengym-machine.txt"),
+  openGymMachineSheetText,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(outDir, "opengym-plan-machine.json"),
+  JSON.stringify(OPENGYM_PLAN_MACHINE, null, 2),
+  "utf8"
+);
+
+const gymmaneSheetText = gymmaneSheet("base");
 fs.writeFileSync(path.join(outDir, "build-gymmane.txt"), gymmaneSheetText, "utf8");
+
+const gymmaneMachineText = gymmaneSheet("machine");
+
+// ---------- دو نسخهٔ هر کارت (سوییچ دستگاهی/آزاد) ----------
+const VARIANT_LABELS = {
+  machine: "دستگاهی — هفتهٔ ۱ تا ۲",
+  free: "وزنهٔ آزاد — از هفتهٔ ۳",
+};
+
+const hevyVariants = [
+  { id: "machine" as const, label: VARIANT_LABELS.machine, file: "/exports/build-hevy-machine.txt", copyText: hevyMachine },
+  { id: "free" as const, label: VARIANT_LABELS.free, file: "/exports/build-hevy.txt", copyText: hevySheet },
+];
+const lyftaVariants = [
+  { id: "machine" as const, label: VARIANT_LABELS.machine, file: "/exports/build-lyfta-machine.txt", copyText: lyftaMachine },
+  { id: "free" as const, label: VARIANT_LABELS.free, file: "/exports/build-lyfta.txt", copyText: lyftaSheet },
+];
+const genericVariants = [
+  { id: "machine" as const, label: VARIANT_LABELS.machine, file: "/exports/build-generic-machine.txt", copyText: genericMachine },
+  { id: "free" as const, label: VARIANT_LABELS.free, file: "/exports/build-generic.txt", copyText: genericSheet },
+];
+const openGymVariants = [
+  { id: "machine" as const, label: VARIANT_LABELS.machine, file: "/exports/opengym-plan-machine.json", copyText: openGymMachineSheetText },
+  { id: "free" as const, label: VARIANT_LABELS.free, file: "/exports/opengym-plan.json", copyText: openGymSheetText },
+];
+const gymmaneVariants = [
+  { id: "machine" as const, label: VARIANT_LABELS.machine, file: "/exports/build-gymmane-machine.txt", copyText: gymmaneMachineText },
+  { id: "free" as const, label: VARIANT_LABELS.free, file: "/exports/build-gymmane.txt", copyText: gymmaneSheetText },
+];
+fs.writeFileSync(
+  path.join(outDir, "build-gymmane-machine.txt"),
+  gymmaneMachineText,
+  "utf8"
+);
 
 // ---------- تولید ماژول TS برای UI ----------
 const mod = `// ============================================================
@@ -644,6 +1001,13 @@ const mod = `// ============================================================
 // دستی ویرایش نکن! منبع: src/lib/program.ts + src/lib/mobility.ts
 // اعتبار: ${TODAY} — openGym: فرمت رسمی plan-share.js v1.4
 // ============================================================
+
+export interface AppExportVariant {
+  id: "machine" | "free";
+  label: string;
+  file: string;
+  copyText: string;
+}
 
 export interface AppExportCard {
   id: string;
@@ -657,6 +1021,8 @@ export interface AppExportCard {
   notes: string[];
   file: string;
   copyText: string;
+  // دو نسخه: دستگاهی (هفتهٔ ۱–۲) و وزنهٔ آزاد (هفتهٔ ۳+) — پیش‌فرض: دستگاهی
+  variants: AppExportVariant[];
 }
 
 export const WEEKLY_SHEET = {
@@ -674,7 +1040,7 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
         badge: "manual",
         badgeText: "ساخت دستی دقیق — ~۵ دقیقه",
         summary:
-          "Hevy ایمپورتِ روال ندارد (فقط تاریخچهٔ ورزش CSV) — ولی نام ۱۹ حرکت برنامه دقیقاً با کتابخانه‌اش تطبیق داده شده؛ برگه را باز کن و هر روال را در ۲ دقیقه بساز.",
+          "Hevy ایمپورتِ روال ندارد (فقط تاریخچهٔ ورزش CSV) — ولی نام حرکات برنامه دقیقاً با کتابخانه‌اش تطبیق داده شده؛ برگه را باز کن و هر روال را در ۲ دقیقه بساز. سوییچ بالای کارت: نسخهٔ دستگاهی (هفتهٔ ۱–۲) یا وزنهٔ آزاد (هفتهٔ ۳+).",
         steps: [
           "اپ Hevy → تب Workout → New Routine (۳ روال بساز: Push / Pull / پا+شکم)",
           "حرکت را با نام انگلیسی برگه سرچ کن — همان را انتخاب کن (نام‌ها دقیق‌اند)",
@@ -685,8 +1051,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "فولدر بساز به نام FST-7 و هر ۳ روال را داخلش بگذار",
           "ست‌های FST-7 را Superset نزن — فقط استراحت ۴۵ ثانیه",
         ],
-        file: "/exports/build-hevy.txt",
-        copyText: hevySheet,
+        file: "/exports/build-hevy-machine.txt",
+        copyText: hevyMachine,
+        variants: hevyVariants,
       },
       {
         id: "lyfta",
@@ -706,8 +1073,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "اگر از Hevy لاگ داشتی، History Import آن جدا انجام می‌شود",
           "Rest Timer هر حرکت را روی ثانیه‌های برگه تنظیم کن — مخصوصاً FST-7 (۴۵ ثانیه)",
         ],
-        file: "/exports/build-lyfta.txt",
-        copyText: lyftaSheet,
+        file: "/exports/build-lyfta-machine.txt",
+        copyText: lyftaMachine,
+        variants: lyftaVariants,
       },
       {
         id: "fitbod",
@@ -727,8 +1095,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "Fitbod پیشرفت را خودش محاسبه می‌کند — قاعدهٔ دوگانهٔ ما آنجا خودکار نیست، پس برگه را مرجع نگه دار",
           "روتین کششی/دوچرخه در Fitbod جایی ندارد — فقط باشگاه",
         ],
-        file: "/exports/build-generic.txt",
-        copyText: genericSheet,
+        file: "/exports/build-generic-machine.txt",
+        copyText: genericMachine,
+        variants: genericVariants,
       },
       {
         id: "opengym",
@@ -738,9 +1107,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
         badge: "auto",
         badgeText: "ایمپورت خودکار JSON — زیر ۱ دقیقه",
         summary:
-          "تنها اپ بعد از Liftosaur که برنامهٔ ما را فایل می‌فهمد: opengym-plan.json را دانلود کن و در Plan → Import a plan file بده — ۳ روال + تقویم هفته + استراحت‌ها + پیشرفت دوگانه یک‌جا می‌نشیند. AGPL، بدون تبلیغ و اشتراک؛ Android/iOS/self-host.",
+          "تنها اپ بعد از Liftosaur که برنامهٔ ما را فایل می‌فهمد: فایل JSON نسخهٔ انتخابی (سوییچ بالای کارت) را دانلود کن و در Plan → Import a plan file بده — ۳ روال + تقویم هفته + استراحت‌ها + پیشرفت دوگانه یک‌جا می‌نشیند. هر دو نسخه را کنار هم می‌شود ایمپورت کرد. AGPL، بدون تبلیغ و اشتراک؛ Android/iOS/self-host.",
         steps: [
-          "فایل opengym-plan.json را از دکمهٔ دانلود همین کارت بگیر",
+          "نسخه را از سوییچ بالای کارت انتخاب کن (دستگاهی هفتهٔ ۱–۲ / آزاد هفتهٔ ۳+) و فایل JSON را از دکمهٔ دانلود بگیر",
           "اپ → تب Plan → منوی سه‌نقطه → Import a plan file → فایل را بده",
           "۳ روال Push/Pull/Legs اضافه می‌شود (merge — چیزی خراب نمی‌شود)",
           "سوییچ «Use this weekly schedule» را روشن کن: شنبه Push، دوشنبه Pull، چهارشنبه پا+شکم",
@@ -751,8 +1120,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "رابط کاربری فارسی ندارد (عربی RTL دارد) — نام حرکات انگلیسی، نوت‌های هر حرکت فارسی‌اند",
           "LISS و کشش‌ها در نوت حرکت آخر هر روز؛ بدون نصب: opengym.ch/demo",
         ],
-        file: "/exports/opengym-plan.json",
-        copyText: openGymSheetText,
+        file: "/exports/opengym-plan-machine.json",
+        copyText: openGymMachineSheetText,
+        variants: openGymVariants,
       },
       {
         id: "gymmane",
@@ -775,8 +1145,9 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "ست‌های FST-7 را Superset نزن — ۷ ست عادی با استراحت ۴۵ ثانیه",
           "تاریخچهٔ ورزش را بعداً از openGym/Hevy/Strong/Lyfta/FitNotes هم import می‌کند",
         ],
-        file: "/exports/build-gymmane.txt",
-        copyText: gymmaneSheetText,
+        file: "/exports/build-gymmane-machine.txt",
+        copyText: gymmaneMachineText,
+        variants: gymmaneVariants,
       },
     ],
     null,
@@ -787,11 +1158,11 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
 fs.writeFileSync(path.join(ROOT, "src", "lib", "appExports.ts"), mod, "utf8");
 
 console.log("generated:");
-console.log(" - public/exports/weekly-routine-full.md", weekly.length, "chars");
-console.log(" - public/exports/build-hevy.txt", hevySheet.length, "chars");
-console.log(" - public/exports/build-lyfta.txt", lyftaSheet.length, "chars");
-console.log(" - public/exports/build-generic.txt", genericSheet.length, "chars");
-console.log(" - public/exports/opengym-plan.json", JSON.stringify(OPENGYM_PLAN).length, "bytes (auto-import)");
-console.log(" - public/exports/build-opengym.txt", openGymSheetText.length, "chars");
-console.log(" - public/exports/build-gymmane.txt", gymmaneSheetText.length, "chars");
+console.log(" - public/exports/weekly-routine-full.md", weekly.length, "chars (با جدول دو نسخه)");
+console.log(" - public/exports/build-hevy.txt", hevySheet.length, "+ build-hevy-machine.txt", hevyMachine.length);
+console.log(" - public/exports/build-lyfta.txt", lyftaSheet.length, "+ build-lyfta-machine.txt", lyftaMachine.length);
+console.log(" - public/exports/build-generic.txt", genericSheet.length, "+ build-generic-machine.txt", genericMachine.length);
+console.log(" - public/exports/opengym-plan.json", JSON.stringify(OPENGYM_PLAN).length, "+ opengym-plan-machine.json", JSON.stringify(OPENGYM_PLAN_MACHINE).length, "bytes (auto-import)");
+console.log(" - public/exports/build-opengym.txt", openGymSheetText.length, "+ build-opengym-machine.txt", openGymMachineSheetText.length);
+console.log(" - public/exports/build-gymmane.txt", gymmaneSheetText.length, "+ build-gymmane-machine.txt", gymmaneMachineText.length);
 console.log(" - src/lib/appExports.ts");

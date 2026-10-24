@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { APP_EXPORTS, WEEKLY_SHEET, type AppExportCard } from "@/lib/appExports";
+import {
+  APP_EXPORTS,
+  WEEKLY_SHEET,
+  type AppExportCard,
+  type AppExportVariant,
+} from "@/lib/appExports";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,6 +15,7 @@ import {
   Bot,
   Check,
   ChevronDown,
+  Cog,
   Copy,
   Dumbbell,
   Download,
@@ -47,12 +53,21 @@ async function copyToClipboard(
 
 function AppCard({ app }: { app: AppExportCard }) {
   const [copied, setCopied] = useState(false);
+  const [vid, setVid] = useState<AppExportVariant["id"]>("machine");
   const Icon = APP_ICONS[app.id] ?? Smartphone;
+
+  const variant: AppExportVariant =
+    app.variants.find((v) => v.id === vid) ?? {
+      id: vid,
+      label: "",
+      file: app.file,
+      copyText: app.copyText,
+    };
 
   const onCopy = async () => {
     const ok = await copyToClipboard(
-      app.copyText,
-      `برگهٔ ساخت ${app.name} کپی شد`
+      variant.copyText,
+      `برگهٔ ${variant.label || "ساخت"} ${app.name} کپی شد`
     );
     if (ok) {
       setCopied(true);
@@ -95,6 +110,39 @@ function AppCard({ app }: { app: AppExportCard }) {
 
         <p className="text-xs leading-6 text-muted-foreground">{app.summary}</p>
 
+        {/* سوییچ نسخه — دستگاهی (هفتهٔ ۱–۲) ↔ وزنهٔ آزاد (هفتهٔ ۳+) */}
+        {app.variants.length > 1 && (
+          <div
+            role="group"
+            aria-label={`انتخاب نسخهٔ برنامه برای ${app.name}`}
+            className="grid grid-cols-2 gap-1.5 rounded-xl border border-border bg-secondary/40 p-1.5"
+          >
+            {app.variants.map((v) => {
+              const active = v.id === vid;
+              return (
+                <button
+                  key={v.id}
+                  type="button"
+                  onClick={() => setVid(v.id)}
+                  aria-pressed={active}
+                  className={`flex min-h-9 items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-colors ${
+                    active
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {v.id === "machine" ? (
+                    <Cog className="h-3.5 w-3.5" aria-hidden="true" />
+                  ) : (
+                    <Dumbbell className="h-3.5 w-3.5" aria-hidden="true" />
+                  )}
+                  {v.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* مراحل */}
         <ol className="space-y-1.5" aria-label={`مراحل ساخت برنامه در ${app.name}`}>
           {app.steps.map((s, i) => (
@@ -126,7 +174,7 @@ function AppCard({ app }: { app: AppExportCard }) {
             variant="secondary"
             onClick={onCopy}
             className="min-h-9 gap-1.5 text-xs font-bold"
-            aria-label={`کپی برگهٔ ساخت برنامه برای ${app.name}`}
+            aria-label={`کپی برگهٔ ${variant.label || "ساخت"} برنامه برای ${app.name}`}
           >
             {copied ? (
               <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -136,10 +184,10 @@ function AppCard({ app }: { app: AppExportCard }) {
             {copied ? "کپی شد!" : "کپی برگهٔ ساخت"}
           </Button>
           <a
-            href={app.file}
+            href={variant.file}
             download
             className="inline-flex min-h-9 items-center gap-1.5 rounded-md border border-border px-3 text-xs font-bold transition-colors hover:bg-secondary"
-            aria-label={`دانلود فایل ساخت برای ${app.name}`}
+            aria-label={`دانلود فایل نسخهٔ ${variant.label || "ساخت"} برای ${app.name}`}
           >
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
             دانلود
@@ -273,8 +321,9 @@ export default function AppExports() {
             <span className="font-bold text-foreground">واقعیت صادقانه:</span> دو اپ برنامه را
             خودکار می‌فهمند — Liftosaur (متن Liftoscript) و openGym (فایل JSON رسمی‌اش، تقویم هفته +
             استراحت‌ها + پیشرفت دوگانه). GymMane ایمپورت برنامه ندارد ولی رابط فارسی کامل دارد؛
-            Hevy/Lyfta/Fitbod هم فقط دستی (بررسی رسمی مستنداتشان). برگه‌ها طوری چیده شده‌اند که ساخت
-            هر روال دستی زیر ۲ دقیقه طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
+            Hevy/Lyfta/Fitbod هم فقط دستی (بررسی رسمی مستنداتشان). هر کارت سوییچ «دستگاهی (هفتهٔ ۱–۲)
+            ↔ وزنهٔ آزاد (هفتهٔ ۳+)» دارد و برگه‌ها طوری چیده شده‌اند که ساخت هر روال دستی زیر ۲ دقیقه
+            طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
           </p>
         </CardContent>
       </Card>

@@ -508,3 +508,29 @@ Stage Summary:
 - نکتهٔ باز: اکسپورت‌های openGym/Hevy/Lyfta/Fitbod فعلاً نسخهٔ آزاد/پایه را می‌دهند — در صورت درخواست کاربر، ژنراتور باید نسخهٔ دستگاهی را هم خروجی بدهد
 - درس ماندگار: اعتبارسنجی Liftoscript در planner = هرگز از fill روی CodeMirror استفاده نکن؛ Ctrl+A+Delete + type چندتکه
 - رسانهٔ Task 6: همچنان 429
+
+---
+Task ID: 10
+Agent: main (Z.ai Code)
+Task: کاربر: «هرکاری که لازمه بکن» — نسخهٔ دستگاهی (هفتهٔ ۱–۲) برای همهٔ خروجی‌های اپ‌ها (Hevy/Lyfta/Fitbod/openGym/GymMane) + سوییچ نسخه در UI
+
+Work Log:
+- ژنراتور research/gen_app_exports.ts ارتقا یافت:
+  • daySheet(dayId, app, mode: base|machine) — حالت دستگاهی: machineAlt.hevyName/faName/note به‌عنوان حرکت اصلی، خط «نسخهٔ وزنهٔ آزاد (هفتهٔ ۳+)» به‌جای جایگزین، per-leg فقط برای بلغاریِ آزاد
+  • buildSheet/gymmaneSheet با mode + خط «نسخه:» در هدر؛ بلاک Progression مخصوص هر نسخه (بارفیکس کمکی = دستی، زیربغل سیم‌کش نشسته ۶–۱۰...)
+  • openGymSheet(variant) — نام فایل/روال‌ها/نکات per-variant + جملهٔ «هر دو نسخه کنار هم ایمپورت می‌شوند»
+  • weeklySheet: جدول «🔀 دو نسخهٔ برنامه» (اسلات × دستگاهی × آزاد) از روی baseMode/machineAlt/freeAlt برنامه
+- openGym نسخهٔ دستگاهی: idهای کاتالوگ رسمی از /tmp/og/catalogue استخراج و تأیید شد — 0576 lever chest press، 1299 lever incline chest press، 0603 lever shoulder press، 0178 cable lateral raise، 0017 assisted pull-up، 0861 cable seated row ⭐، 0868 cable curl، 0573 lever back extension، 9387 lever angled single leg press (side:true)، 5107 captains chair leg raise؛ بقیه از v1 (8141/0200/2291/5656/0238/8375/0586/0605/0175)؛ OG_PUSH_M/OG_PULL_M/OG_LEGS_M + OPENGYM_PLAN_MACHINE (نام: FST-7 Swimmer — PPL (Machines, W1-2))، بارفیکس کمکی بدون prog (منطق کم کردن کمک)
+- ۸ فایل جدید در public/exports/: build-hevy-machine.txt، build-lyfta-machine.txt، build-generic-machine.txt، build-gymmane-machine.txt، build-opengym-machine.txt، opengym-plan-machine.json (+ بازتولید پایه‌ها و weekly با جدول)
+- مدل داده appExports.ts: AppExportVariant {id: machine|free, label, file, copyText} + variants روی هر کارت؛ file/copyText کارت = دستگاهی (پیش‌فرض)؛ weekly-routine-full.md جدول دو نسخه دارد
+- 🐛 فیکس خودم: اول variant constها داخل template literal ماژول نوشتم → ReferenceError در زمان اجرای ژنراتور؛ منتقل شد به اسکوپ ژنراتور (قبل از mod) و از طریق JSON.stringify کارت‌ها سریالایز می‌شوند
+- ✅ اعتبارسنجی رسمی openGym با کد خودش (bun + plan-share.js از /tmp/og): parsePlan هر دو فایل = ۳ روال × ۱۹ حرکت + هفته درست؛ شبیه‌سازی واقعی ایمپورت پشت‌سرهم (mergePlan ×۲ با schedule) = ۶ روال همزیست (Push vs Push Machines)، ۳۸ ارجاع حرکت همگی id کاتالوگ معتبر (0 غیرمعتبر)، 0861 حاضر
+- AppExports.tsx: سوییچ دو نسخه‌ای در هر کارت (Cog/Dumbbell، aria-pressed، پیش‌فرض دستگاهی)، کپی/دانلود variant-aware، توست با نام نسخه؛ متن پایانی به‌روز (سوییچ دستگاهی↔آزاد در هر کارت)
+- وریفای مرورگر: ۵ کارت + LiftosaurGuide همه سوییچ دارند؛ سوییچ Hevy → آزاد: لیبل کپی/دانلود عوض شد؛ کپی Hevy دستگاهی → توست «برگهٔ دستگاهی — هفتهٔ ۱ تا ۲ Hevy کپی شد»؛ ۶ فایل machine همه 200؛ موبایل 390px بدون overflow؛ کنسول پاک؛ lint پاک
+- 404های HEAD در dev.log (frames/steps/videos با پسوند __machine) رفتار از پیش طراحی‌شدهٔ MotionMedia است (onError فال‌بک بی‌صدا) — رگرسیون نیست
+
+Stage Summary:
+- حالا هر ۶ مسیر خروجی (Liftosaur + ۵ اپ) دو نسخهٔ کامل دارند: دستگاهی هفتهٔ ۱–۲ (شامل زیربغل سیم‌کش نشسته) و وزنهٔ آزاد هفتهٔ ۳+ — تک‌منبع حقیقت همچنان program.ts، ژنراتور قابل اجرای مجدد: bun run research/gen_app_exports.ts
+- openGym machine JSON با پارسر رسمی خود اپ تأیید شد (parse + merge همزیست)
+- برگهٔ جامع هفتگی جدول «دو نسخه» دارد و برای ساخت هر نسخه در هر اپ کافی است
+- رسانهٔ Task 6: همچنان 429
