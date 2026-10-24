@@ -34,12 +34,13 @@ PREFIXES=(
 
 # فایل‌های متنی خروجی (html/css/js + payloadهای RSC و manifestها)
 for prefix in "${PREFIXES[@]}"; do
-  # فقط نقل‌قول‌دارها (رشته‌های JS/HTML) — جلوگیری از خرابکاری تصادفی
+  # نقل‌قول‌دارها (رشته‌های JS/HTML) و بدون نقل‌قول (url() فشرده‌شده در CSS)
   find . -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
     -o -name "*.txt" -o -name "*.json" -o -name "*.xml" \
     -o -name "*.webmanifest" \) -exec sed -i \
     -e "s|\"/$prefix|\"/Workout/$prefix|g" \
     -e "s|'/$prefix|'/Workout/$prefix|g" \
+    -e "s|url(/$prefix|url(/Workout/$prefix|g" \
     {} +
 done
 

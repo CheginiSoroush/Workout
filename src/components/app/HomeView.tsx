@@ -144,13 +144,16 @@ export default function HomeView() {
   const todayPlan = hydrated ? getTodayPlan(jsDay) : undefined;
 
   // ---------- کوئری‌ها ----------
+  // ⚠️ شکل کش ["profile"] باید همه‌جا یکسان باشد (پاسخ کامل { profile }) —
+  // page.tsx و profile-shared همین شکل را می‌سازند؛ اگر این queryFn
+  // مستقیم profile برگرداند، با آن‌ها رِیس می‌شود و گیت آنبوردینگ
+  // بسته به برندهٔ رِیس، بی‌ثبات می‌شود.
   const { data: profileData } = useQuery({
     queryKey: ["profile"],
-    queryFn: async (): Promise<ProfileDto> => {
+    queryFn: async (): Promise<{ profile: ProfileDto }> => {
       const res = await fetch("/api/profile");
       if (!res.ok) throw new Error("profile-failed");
-      const json = (await res.json()) as { profile: ProfileDto };
-      return json.profile;
+      return (await res.json()) as { profile: ProfileDto };
     },
     staleTime: 60_000,
     retry: 1,
@@ -217,14 +220,14 @@ export default function HomeView() {
   });
 
   // ---------- مشتق‌ها ----------
-  const name = profileData?.name?.trim();
+  const name = profileData?.profile?.name?.trim();
   const greeting =
     hour < 0
       ? "سلام!"
       : `${hour < 12 ? "صبح بخیر" : hour < 17 ? "ظهر بخیر" : "شب بخیر"}${name ? `، ${name}` : ""}!`;
 
   const weekly = progressQuery.data?.weekly ?? [];
-  const weekGoal = profileData?.weekSessionsGoal ?? 2;
+  const weekGoal = profileData?.profile?.weekSessionsGoal ?? 2;
   const currentWeek = weekly.find((w) => w.weekKey === getWeekKey());
   const weekDone = currentWeek?.completedCount ?? 0;
   const weekRemaining = Math.max(0, weekGoal - weekDone);
