@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import type { Exercise, ExerciseMode, ExerciseVariant } from "@/lib/program";
 import { PROGRAM } from "@/lib/program";
-import { getExerciseMedia } from "@/lib/media";
+import { getExerciseMedia, getVariantPhoto } from "@/lib/media";
 import { faNum } from "@/lib/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -154,10 +154,12 @@ function CurrentExerciseCard({ exercise }: { exercise: Exercise }) {
 
         {/* رسانه فشرده — فلیپ‌بوک + Dialog بزرگ (گارد فایل مفقود داخل MotionMedia) */}
         <MotionMedia
+          key={mode}
           compact
-          photo={exercise.image}
+          photo={getVariantPhoto(exercise.id, mode) ?? exercise.image}
+          fallbackPhoto={exercise.image}
           alt={`نحوه اجرای ${displayName}`}
-          media={getExerciseMedia(exercise.id)}
+          media={getExerciseMedia(exercise.id, mode)}
           className="h-44 w-full rounded-xl sm:h-52"
         />
 

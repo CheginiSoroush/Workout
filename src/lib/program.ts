@@ -156,7 +156,7 @@ export const DAY1: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۷۵–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/cable-fly.jpg",
+      image: "/exercises/cable-fly.png",
       videoQuery: "cable chest fly form tutorial",
       tips: [
         "قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت",
@@ -179,7 +179,7 @@ export const DAY1: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۶۰–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/rope-pushdown.jpg",
+      image: "/exercises/rope-pushdown.png",
       videoQuery: "cable rope triceps pushdown form tutorial",
       tips: [
         "آرنج‌ها چسبیده به بدن و ثابت — فقط ساعد حرکت می‌کنه",
@@ -237,7 +237,7 @@ export const DAY2: WorkoutDay = {
       reps: "۵ تا ۱۰",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/pull-up.jpg",
+      image: "/exercises/pull-up.png",
       videoQuery: "pull up proper form tutorial",
       tips: [
         "دست‌ها کمی بازتر از عرض شانه، سینه به سمت میله",
@@ -262,7 +262,7 @@ export const DAY2: WorkoutDay = {
       reps: "۶ تا ۱۰",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/barbell-row.png",
+      image: "/exercises/barbell-row.jpg",
       videoQuery: "barbell bent over row form tutorial",
       tips: [
         "تنه حدود ۴۵ درجه، کمر صاف و هسته سفت",
@@ -381,7 +381,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۲",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/leg-press.jpg",
+      image: "/exercises/leg-press.png",
       videoQuery: "leg press machine form tutorial",
       tips: [
         "پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه",
@@ -490,7 +490,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۵",
       rest: "۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/hanging-leg-raise.jpg",
+      image: "/exercises/hanging-leg-raise.png",
       videoQuery: "hanging leg raise form tutorial",
       tips: [
         "کلید حرکت چرخش لگنه (posterior pelvic tilt) — نه فقط بالا بردن پا",

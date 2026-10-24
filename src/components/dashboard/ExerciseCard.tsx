@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Exercise, ExerciseMode, ExerciseVariant } from "@/lib/program";
-import { getExerciseMedia } from "@/lib/media";
+import { getExerciseMedia, getVariantPhoto } from "@/lib/media";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import MotionMedia from "@/components/app/media/MotionMedia";
@@ -18,7 +18,6 @@ import {
   Cog,
   Lightbulb,
   Sparkles,
-  Youtube,
 } from "lucide-react";
 
 export default function ExerciseCard({
@@ -45,11 +44,6 @@ export default function ExerciseCard({
   const hasToggle = !!(exercise.machineAlt || exercise.freeAlt);
   const current = mode === "machine" ? machineVersion : freeVersion;
   const isBase = mode === baseMode;
-
-  const videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
-    exercise.videoQuery
-  )}`;
-
   const optionClass = (active: boolean) =>
     `inline-flex items-center gap-1.5 h-9 px-3.5 text-xs font-bold transition-all cursor-pointer ${
       active
@@ -67,9 +61,11 @@ export default function ExerciseCard({
         {/* رسانه — فلیپ‌بوک مرحله‌به‌مرحله + ویدیوی لوکال (گارد فایل مفقود داخل MotionMedia) */}
         <div className="relative h-44 md:h-full min-h-44 bg-muted">
           <MotionMedia
-            photo={exercise.image}
+            key={mode}
+            photo={getVariantPhoto(exercise.id, mode) ?? exercise.image}
+            fallbackPhoto={exercise.image}
             alt={`نحوه اجرای ${current?.faName ?? exercise.faName}`}
-            media={getExerciseMedia(exercise.id)}
+            media={getExerciseMedia(exercise.id, mode)}
             className="h-full rounded-none border-0"
           />
           {exercise.fst7 && (
@@ -192,16 +188,7 @@ export default function ExerciseCard({
             ))}
           </div>
 
-          {/* مرجع بیرونی — ثانویه؛ اول رسانه لوکال (فلیپ‌بوک/ویدیو) بالای کارت */}
-          <a
-            href={videoUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="inline-flex min-h-11 items-center gap-1.5 self-start px-1 text-xs text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <Youtube className="h-4 w-4 shrink-0" />
-            جستجوی بیشتر در یوتیوب (آنلاین)
-          </a>
+          {/* آموزش کاملاً لوکال است — فلیپ‌بوک مرحله‌به‌مرحله و ویدیوی آفلاین بالای کارت */}
         </CardContent>
       </div>
     </Card>

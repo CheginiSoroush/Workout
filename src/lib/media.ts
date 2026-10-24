@@ -4,7 +4,14 @@
 // می‌شوند؛ ممکن است هنگام رندر هنوز موجود نباشند.
 // MotionMedia با onError هر مسیر غایب را بی‌صدا فال‌بک می‌کند —
 // این فایل فقط «مسیر مورد انتظار» را نگه می‌دارد.
+//
+// نسخه ۲: رسانه مستقل برای نسخه‌های دستگاه ↔ وزنه آزاد
+// هر حرکت با mode متفاوت، ویدیو/فریم مخصوص خودش را می‌گیرد
+// (الگوی نام: {id}__machine یا {id}__free) — عکس اختصاصی نسخه هم
+// در public/exercises/{id}__{mode}.png.
 // ============================================================
+
+import { PROGRAM, type ExerciseMode } from "@/lib/program";
 
 export interface MotionMediaData {
   /** مسیر ویدیوی لوکال mp4 */
@@ -35,6 +42,22 @@ const EXERCISE_IDS = [
   "calf-raise",
   "hanging-leg-raise",
   "cable-crunch",
+] as const;
+
+/** نسخه‌های جایگزین — هر کدام رسانه مستقل خود را دارند */
+const VARIANT_IDS = [
+  "bench-press__machine",
+  "incline-db-press__machine",
+  "db-shoulder-press__machine",
+  "lateral-raise__machine",
+  "pull-up__machine",
+  "barbell-row__machine",
+  "ez-curl__machine",
+  "rdl__machine",
+  "bulgarian-split-squat__machine",
+  "hanging-leg-raise__machine",
+  "cable-fly__free",
+  "leg-press__free",
 ] as const;
 
 const STRETCH_IDS = [
@@ -76,10 +99,10 @@ function buildMedia(
   };
 }
 
-/** رسانه ۱۹ حرکت باشگاه — ویدیو: /exercises/videos ، فریم: /exercises/frames */
+/** رسانه ۱۹ حرکت باشگاه + ۱۲ نسخه جایگزین — ویدیو: /exercises/videos ، فریم: /exercises/frames */
 export const EXERCISE_MEDIA: Record<string, MotionMediaData> =
   Object.fromEntries(
-    EXERCISE_IDS.map((id) => [
+    [...EXERCISE_IDS, ...VARIANT_IDS].map((id) => [
       id,
       buildMedia("/exercises", id, EXERCISE_PHASES.length, EXERCISE_PHASES),
     ])
@@ -94,9 +117,39 @@ export const STRETCH_MEDIA: Record<string, MotionMediaData> =
     ])
   );
 
-/** رسانه حرکت باشگاه — undefined اگر id ناشناخته باشد */
-export function getExerciseMedia(id: string): MotionMediaData | undefined {
+// ---- حالت پایه هر حرکت — منبع واحد حقیقت از داده‌های برنامه ----
+
+const BASE_MODE: Record<string, ExerciseMode> = {};
+for (const day of PROGRAM) {
+  for (const ex of day.exercises) {
+    BASE_MODE[ex.id] = ex.baseMode ?? "machine";
+  }
+}
+
+/**
+ * رسانه حرکت باشگاه — نسخه‌آگاه.
+ * اگر mode با نسخه پایه فرق کند، رسانه اختصاصی همان نسخه برمی‌گردد
+ * (undefined اگر هنوز تولید نشده — UI به عکس نسخه فال‌بک می‌کند).
+ */
+export function getExerciseMedia(
+  id: string,
+  mode?: ExerciseMode
+): MotionMediaData | undefined {
+  if (mode) {
+    const base = BASE_MODE[id];
+    if (base && mode !== base) {
+      return EXERCISE_MEDIA[`${id}__${mode}`];
+    }
+  }
   return EXERCISE_MEDIA[id];
+}
+
+/** عکس اختصاصی نسخه جایگزین — null یعنی از عکس اصلی حرکت استفاده شود */
+export function getVariantPhoto(id: string, mode?: ExerciseMode): string | null {
+  if (!mode) return null;
+  const base = BASE_MODE[id];
+  if (!base || mode === base) return null;
+  return `/exercises/${id}__${mode}.png`;
 }
 
 /** رسانه کشش — undefined اگر id ناشناخته باشد */

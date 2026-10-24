@@ -38,6 +38,8 @@ type MediaMode = "flipbook" | "video";
 export interface MotionMediaProps {
   /** عکس اصلی حرکت — فال‌بک همیشگی */
   photo: string;
+  /** فال‌بک دوم (مثلاً عکس نسخه پایه وقتی عکس نسخه جایگزین غایب است) */
+  fallbackPhoto?: string;
   alt: string;
   media?: MotionMediaData;
   /** حالت فشرده: فلیپ‌بوک بی‌کنترل روی عکس + باز کردن نسخه کامل در Dialog */
@@ -102,13 +104,20 @@ const focusRing =
 // حالت کامل — صحنه + کنترل فلیپ‌بوک/ویدیو
 // ------------------------------------------------------------
 
-function FullMedia({ photo, alt, media, className }: MotionMediaProps) {
+function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaProps) {
   const reduced = useReducedMotion();
   const [mode, setMode] = useState<MediaMode>("flipbook");
   const [idx, setIdx] = useState(0);
   const [frameError, setFrameError] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [photoError, setPhotoError] = useState(false);
+  const [fallbackError, setFallbackError] = useState(false);
+
+  // عکس مؤثر — اگر عکس اصلی شکست خورد، فال‌بک دوم (سپس جای‌نگهدار)
+  const effectivePhoto =
+    photoError && fallbackPhoto && !fallbackError ? fallbackPhoto : photo;
+  const onPhotoError = () =>
+    effectivePhoto === photo ? setPhotoError(true) : setFallbackError(true);
 
   const frames = media?.frames ?? [];
   const phases = media?.phases ?? [];
@@ -203,17 +212,17 @@ function FullMedia({ photo, alt, media, className }: MotionMediaProps) {
               )}
             />
           ))
-        ) : photoError ? (
+        ) : photoError && effectivePhoto === photo ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-muted-foreground">
             <ImageIcon className="h-8 w-8" aria-hidden="true" />
             <span className="text-xs">تصویر در دسترس نیست</span>
           </div>
         ) : (
           <img
-            src={photo}
+            src={effectivePhoto}
             alt={alt}
             loading="lazy"
-            onError={() => setPhotoError(true)}
+            onError={onPhotoError}
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
@@ -357,12 +366,18 @@ function FullMedia({ photo, alt, media, className }: MotionMediaProps) {
 // حالت فشرده — فلیپ‌بوک بی‌کنترل روی عکس + باز کردن نسخه کامل در Dialog
 // ------------------------------------------------------------
 
-function CompactMedia({ photo, alt, media, className }: MotionMediaProps) {
+function CompactMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaProps) {
   const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [frameError, setFrameError] = useState(false);
   const [photoError, setPhotoError] = useState(false);
+  const [fallbackError, setFallbackError] = useState(false);
+
+  const effectivePhoto =
+    photoError && fallbackPhoto && !fallbackError ? fallbackPhoto : photo;
+  const onPhotoError = () =>
+    effectivePhoto === photo ? setPhotoError(true) : setFallbackError(true);
 
   const frames = media?.frames ?? [];
   const framesReady = useFramesReady(media);
@@ -411,16 +426,16 @@ function CompactMedia({ photo, alt, media, className }: MotionMediaProps) {
               )}
             />
           ))
-        ) : photoError ? (
+        ) : photoError && effectivePhoto === photo ? (
           <span className="flex h-full w-full items-center justify-center text-muted-foreground">
             <ImageIcon className="h-5 w-5" aria-hidden="true" />
           </span>
         ) : (
           <img
-            src={photo}
+            src={effectivePhoto}
             alt={alt}
             loading="lazy"
-            onError={() => setPhotoError(true)}
+            onError={onPhotoError}
             className="h-full w-full object-cover"
           />
         )}

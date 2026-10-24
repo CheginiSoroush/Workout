@@ -297,3 +297,44 @@ Stage Summary:
 - خروجی امروز: ممیزی کامل رسانه، ۱۱ عکس جایگزین، ۲ ویدیوی تمیز جدید، حذف ویدیوهای آلوده به متن
 - UI هیچ تغییر کدی لازم ندارد — ویدیوهای جدید با رسیدن فایل و یک refresh خودکار ظاهر می‌شوند (probe کش سشن)
 - گلوگاه: کوتای روزانه API تولید ویدیو؛ ادامه تولید در سشن بعدی
+
+---
+Task ID: 6-a
+Agent: main (Z.ai Code)
+Task: Task 6 part 1 — audit ALL instructional media; find why gym section "only has YouTube"; fix broken assets
+
+Work Log:
+- Audited all 19 exercise photos visually (main agent Read — subagents cannot see images in this sandbox) → 19/19 PASS
+- Spot-checked 3 AI stretch photos (hip-flexor/mckenzie/quad) + 2 stretch frames → PASS
+- ffprobe all 15 existing videos (4 exercise 10.3s + 11 stretch 5.1s) → all decode cleanly
+- FOUND + FIXED 7 broken image paths (extension mismatches, broken fallbacks in UI):
+  program.ts: barbell-row→.jpg, cable-fly→.png, hanging-leg-raise→.png, leg-press→.png, pull-up→.png, rope-pushdown→.png
+  mobility.ts: calf→.png
+- Deleted 14 leftover .url bookmark files from public/stretches
+- Extracted variant structure from program.ts: 12 exercises have second variant (10 machineAlt, 2 freeAlt) — 31 media sets total needed
+
+Stage Summary:
+- Media audit verdict: content correct, the real bug was broken paths (now 33/33 resolve)
+- YouTube links existed only as secondary link in ExerciseCard (local flipbook was already primary)
+- Generation blocked: z-ai gateway global 429 lockout (even chat endpoint) since first parallel image-search burst; retrying with long spacing
+
+---
+Task ID: 6-b
+Agent: main (Z.ai Code)
+Task: Task 6 part 2 — per-variant media architecture (دستگاه ↔ وزنه آزاد), YouTube removal, UI wiring, browser verification
+
+Work Log:
+- Rewrote src/lib/media.ts: variant-aware getExerciseMedia(id, mode) + getVariantPhoto(id, mode); 12 variant ids added (bench-press__machine … leg-press__free); BASE_MODE derived from PROGRAM (single source of truth)
+- ExerciseCard.tsx: media+photo+alt now switch with the دستگاه/وزنه آزاد toggle (key={mode} remount), YouTube search link REMOVED entirely, unused imports cleaned
+- WorkoutView.tsx CurrentExerciseCard: same variant-aware media wiring
+- MotionMedia.tsx: new fallbackPhoto prop — if a variant photo is missing, silently falls back to base photo then placeholder (no broken images ever)
+- research/gen_variant_photos.py: 12-variant photo generator (style-matched to existing AI photos, serial, resume-safe)
+- research/gen_media_v4.py: merged orchestrator (15 base + 3 stretch + 12 variant videos) with PIL downscale fix for "Argument list too long" CLI bug + try/except around fire
+- Browser verification (agent-browser): variant toggle switches title+media+flipbook correctly (bench-press machine→free flipbook ok), 0 YouTube links on page, 0 console errors, graceful "رسانه در حال آماده‌سازی" state for pending media; screenshot research/t6_program_toggle.png
+- bun run lint: clean
+
+Stage Summary:
+- CODE COMPLETE: app fully supports per-variant offline media (photos + 10s videos + 4-phase flipbooks) for BOTH دستگاه and وزنه آزاد, and no longer depends on YouTube at all
+- BLOCKED: z-ai gateway global 429 lockout (all endpoints incl. chat) since ~02:20, persisted through ~04:05 despite 10 spaced probes — media QUOTA exhausted; NOT a code issue
+- Pending when quota recovers: 12 variant photos + 15 base/3 stretch/12 variant videos + frame extraction
+- Resume path: bash research/RESUME_TASK6.sh photos|videos|frames (all resume-safe)

@@ -191,7 +191,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "دست‌ها روی دیوار، پای عقب صاف با پاشنه چسبیده به زمین؛ به جلو خم شو تا ساق کشیده شود. زانوی پای عقب صاف.",
     why: "ساق سفت روی قوس کمر و مچ پا اثر می‌گذارد — برای سلامت اسکوات هم مهم.",
-    photo: "/stretches/calf.jpg",
+    photo: "/stretches/calf.png",
     video: "/stretches/videos/calf.mp4",
   },
   {
