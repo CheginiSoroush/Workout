@@ -338,3 +338,25 @@ Stage Summary:
 - BLOCKED: z-ai gateway global 429 lockout (all endpoints incl. chat) since ~02:20, persisted through ~04:05 despite 10 spaced probes — media QUOTA exhausted; NOT a code issue
 - Pending when quota recovers: 12 variant photos + 15 base/3 stretch/12 variant videos + frame extraction
 - Resume path: bash research/RESUME_TASK6.sh photos|videos|frames (all resume-safe)
+
+---
+Task ID: 6-f
+Agent: main (Z.ai Code)
+Task: ادامه سشن — ممیزی مجدد موجودی رسانه، وریفای مرورگر UI نسخه‌ها، راه‌اندازی watchdog خودکار برای ادامه تولید پس از رفع محدودیت API
+
+Work Log:
+- شمارش دقیق موجودی با اسکریپت inventory (اصلاح مسیر videos/frames):
+  * 19/19 عکس پایه باشگاه ✓ | 14/14 عکس کشش ✓ (openbook.jpeg تأیید)
+  * 4/19 ویدیوی پایه + فریم 4/4 (bench-press, incline-db, db-shoulder, cable-fly)
+  * 11/14 ویدیوی کشش + فریم 3/3 (ناقص: hip-flexor, quad, mckenzie)
+  * 0/12 عکس نسخه جایگزین + 0 ویدیوی نسخه + rope-pushdown در صف (task فایر شده)
+- پروب API: همچنان 429 (ساعت 06:12 UTC)
+- research/watchdog.sh ساخته و اجرا شد (nohup، PID 1538): هر 480 ثانیه پروب؛ بعد از رفع قید خودکار اجرا می‌کند: gen_variant_photos → gen_media_v4 (تا خالی شدن صف، 8 راند) → extract_frames — همه resume-safe
+- وریفای مرورگر (agent-browser): برنامه → کارت پرس سینه؛ سوییچ دستگاه/وزنه آزاد عنوان+رسانه را عوض می‌کند (پرس سینه هالتر ↔ پرس سینه دستگاه)، عکس نسخه غایب بی‌صدا به عکس پایه فال‌بک می‌شود، فلیپ‌بوک ۴ فریمی ۴ ویدیوی موجود کار می‌کند، صفر خطای کنسول
+- dev.log: فقط 404های موردانتظارِ عکس‌های نسخه در انتظار تولید — نویز سرور، بدون خطای کلاینت
+- اسکرین‌شات: research/t6_variant_toggle.png
+
+Stage Summary:
+- کد و UI صددرصد آماده است؛ تنها گلوگاه باقی‌مانده سهمیه روزانه API تولید رسانه است
+- watchdog تا کامل شدن خط تولید زنده می‌ماند: 12 عکس نسخه + 15+12 ویدیوی باشگاه + 3 ویدیوی کشش + فریم‌ها
+- مسیر دستی در صورت نیاز: bash research/RESUME_TASK6.sh photos|videos|frames
