@@ -460,3 +460,29 @@ Stage Summary:
 - توست‌های sonner در کل اپ زنده شدند (فیکس سیستمیک)
 - ژنراتور قابل اجرای مجدد: bun run research/gen_app_exports.ts (برای همگام‌سازی بعدی با program.ts)
 - رسانه Task 6: watchdog هنوز 429 (09:36)
+
+---
+Task ID: 8
+Agent: main (Z.ai Code)
+Task: کاربر دو لینک واقعی فرستاد (github.com/InlitX/GymMane + opengym.ch) — تحقیق عمیق هر دو اپ و ارتقای کارت‌های AppExports از placeholder به خروجی واقعی
+
+Work Log:
+- تحقیق GymMane (InlitX/GymMane، GPLv3+term، Flutter): لاگر آفلاین اندروید از F-Droid — بدون مجوز اینترنت، نقشه عضلانی بدن، ۵۰۰+ حرکت با انیمیشن، progression per-exercise، CSV/ZIP export، **رابط فارسی کامل (app_fa.arb)** ⭐ — ایمپورت برنامه ندارد؛ فقط تاریخچه از Hevy/Strong/Lyfta/FitNotes/**openGym**
+- تحقیق openGym (opengym.ch → DuarteSantos8/openGym، AGPL-3.0، توسط Duarte Santos سوئیس): کشف کلیدی در docs.html → «Importing plans»: روال‌ها با فایل JSON مستقل جابجا می‌شوند (Plan → Share your plan → Export/Import plan file)
+- کلون هر دو ریپو در /tmp و مطالعه سورس: فرمت رسمی از frontend/src/lib/plan-share.js — { opengym_plan:1, name, unit, week (کلیدها = getDay)، routines, customEx } + cleanEx (sets/reps/repsMin/restSec/prog/inc/warmupSets≤5/side/sg/note/intensifier/dropset/restpause)
+- اتصال قواعد سایت به openGym: prog:'double' = پیشرفت دوگانه ما (POLICIES شامل off/linear/greyskull/double/triple)؛ warmupSets = رمپ خودکار ۵۰/۷۵/۸۷.۵٪ (تطبیق گرم‌کردن پرس سینه/پرس پا)
+- تطبیق ۱۹ حرکت با کاتالوگ رسمی openGym (۵۶۳۲ حرکت، catalogue/exercises/<id>.json): 0025 bench، 0314 incline DB، 0405 seated DB press، 8141 cable crossover، 0200 rope pushdown، 0334 lateral raise، 0652 pull-up، 0027 bent-over row، 2291 wide-grip pulldown، 5656 face pull، 0447 EZ curl، 0238 straight-arm pulldown، 8375 leg press، 0085 RDL، 2290 bulgarian، 0586 lying leg curl، 0605 standing calf، 0472 hanging leg raise، 0175 kneeling crunch
+- ژنراتور research/gen_app_exports.ts ارتقا یافت: OPENGYM_PLAN کامل (۳ روال، week = شنبه6/دوشنبه1/چهارشنبه3، استراحت‌ها به ثانیه هماهنگ با Liftosaur v2، bulgarian side:true، FST-7 = ۷ ست restSec 45، نوت فارسی هر حرکت) → public/exports/opengym-plan.json
+- 🐛 فیکس خودم: اول نوشته بودم "tips" — فرمت رسمی فیلد "note" است؛ ogEx حالا tips→note مپ می‌کند
+- ✅ **اعتبارسنجی واقعی با کد خود openGym**: bun import { parsePlan, mergePlan } از /tmp/og/frontend/src/lib/plan-share.js → parsePlan: 19 حرکت، 0 dropped، 3 scheduled days؛ mergePlan با schedule:true: ۳ روال + هفته درست نشست؛ bench/ warmupSets 3 + bulgarian side + FST-7 7-set همگی سالم
+- برگه‌های جدید: build-opengym.txt (راهنمای ایمپورت ۵ مرحله‌ای + محدودیت‌های صادقانه)، build-gymmane.txt (رابط فارسی، F-Droid، progression table، نکات body map)؛ build-generic.txt فقط برای Fitbod
+- کارت‌ها: openGym = badge جدید "auto" (نوع default با آیکون FileJson، لینک opengym.ch، فایل JSON قابل دانلود)؛ GymMane = badge "manual" (github + F-Droid، رابط فارسی ⭐)؛ AppExportCard.badge = "auto"|"manual"|"unknown"؛ آیکون‌ها Globe/PersonStanding
+- AppExports.tsx: variant منطق سه‌گانه badge + نوت پایانی اصلاح شد («دو اپ خودکار: Liftosaur و openGym؛ GymMane فارسی دارد ولی دستی»)
+- وریفای مرورگر: هر دو کارت رندر، badge auto با آیکون JSON مشخص، لینک‌ها درست (opengym.ch / github.com/InlitX/GymMane)، /exports/opengym-plan.json = 200 + application/json (8214B)، build-gymmane.txt = 200 (12439B)، lint پاک، کنسول پاک، موبایل 390px بدون overflow، فوتر/ناوبری سالم
+- نوت: کپی کلیپ‌بورد در headless محدودیت مجوز دارد → مسیر خطای صادقانه (توست «کپی نشد») درست کار می‌کند؛ مسیر موفق قبلاً برای Hevy وریفای شده
+
+Stage Summary:
+- openGym: تنها اپ بعد از Liftosaur که برنامهٔ سایت را **خودکار** می‌گیرد — کاربر فقط opengym-plan.json را دانلود و در Plan → Import a plan file می‌دهد؛ تقویم هفته (شنبه Push/دوشنبه Pull/چهارشنبه پا) + استراحت‌ها + dp + گرم‌کردن خودکار یک‌جا می‌نشیند
+- GymMane: جایگزین فارسی‌زبان برای کسی که رابط فارسی می‌خواهد — ساخت دستی با برگه، ولی رابط کامل RTL فارسی + آفلاین مطلق
+- ژنراتور همچنان تک‌منبع: هر تغییر program.ts → bun run research/gen_app_exports.ts → فایل JSON هم به‌روز می‌شود
+- رسانه Task 6: همچنان در انتظار رفع 429

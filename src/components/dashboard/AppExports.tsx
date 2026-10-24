@@ -8,15 +8,16 @@ import { Button } from "@/components/ui/button";
 import {
   Activity,
   Bot,
-  Building2,
   Check,
   ChevronDown,
   Copy,
   Dumbbell,
   Download,
   ExternalLink,
+  FileJson,
   FileText,
-  Search,
+  Globe,
+  PersonStanding,
   Smartphone,
 } from "lucide-react";
 import { faNum } from "@/lib/fa";
@@ -26,8 +27,8 @@ const APP_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   hevy: Dumbbell,
   lyfta: Activity,
   fitbod: Bot,
-  opengym: Building2,
-  gymmane: Search,
+  opengym: Globe,
+  gymmane: PersonStanding,
 };
 
 async function copyToClipboard(
@@ -76,9 +77,18 @@ function AppCard({ app }: { app: AppExportCard }) {
             </div>
           </div>
           <Badge
-            variant={app.badge === "unknown" ? "outline" : "secondary"}
+            variant={
+              app.badge === "unknown"
+                ? "outline"
+                : app.badge === "auto"
+                  ? "default"
+                  : "secondary"
+            }
             className="shrink-0 text-[10px]"
           >
+            {app.badge === "auto" && (
+              <FileJson className="ml-1 h-3 w-3" aria-hidden="true" />
+            )}
             {app.badgeText}
           </Badge>
         </div>
@@ -260,11 +270,11 @@ export default function AppExports() {
       <Card className="border-primary/30 bg-primary/5">
         <CardContent className="p-4">
           <p className="text-xs leading-6 text-muted-foreground">
-            <span className="font-bold text-foreground">واقعیت صادقانه:</span> فقط Liftosaur
-            ایمپورت خودکار متن دارد — بقیهٔ این اپ‌ها برنامه را فقط دستی قبول می‌کنند (بررسی رسمی
-            مستنداتشان). برگه‌ها طوری چیده شده‌اند که ساخت هر روال در هر اپ زیر ۲ دقیقه طول بکشد:
-            نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده. اپی که import داشت را بگو تا
-            خروجی اختصاصی‌اش را هم بسازم.
+            <span className="font-bold text-foreground">واقعیت صادقانه:</span> دو اپ برنامه را
+            خودکار می‌فهمند — Liftosaur (متن Liftoscript) و openGym (فایل JSON رسمی‌اش، تقویم هفته +
+            استراحت‌ها + پیشرفت دوگانه). GymMane ایمپورت برنامه ندارد ولی رابط فارسی کامل دارد؛
+            Hevy/Lyfta/Fitbod هم فقط دستی (بررسی رسمی مستنداتشان). برگه‌ها طوری چیده شده‌اند که ساخت
+            هر روال دستی زیر ۲ دقیقه طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
           </p>
         </CardContent>
       </Card>
