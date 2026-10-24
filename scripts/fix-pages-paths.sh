@@ -9,21 +9,37 @@
 # ============================================================
 set -euo pipefail
 
-OUT_DIR="$(cd "$(dirname "$0")/.." && pwd)/out"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+OUT_DIR="$ROOT/out"
 
-if [ ! -d "$OUT_DIR" ]; then
-  echo "خطا: پوشه out/ پیدا نشد — اول بیلد استاتیک را اجرا کن." >&2
+# تشخیص پوشهٔ خروجی export — Next 16 با distDir سفارشی (.next-static)
+# خروجی را داخل خود distDir می‌نویسد؛ با distDir پیش‌فرض به out/ می‌رود.
+# در هر دو حالت خروجی نهایی در out/ نرمالایز می‌شود تا downstream
+# (artifact upload و گاردها) همیشه یک مسیر ثابت داشته باشند.
+EXP_DIR=""
+if [ -f "$OUT_DIR/index.html" ]; then
+  EXP_DIR="$OUT_DIR"
+elif [ -f "$ROOT/.next-static/index.html" ]; then
+  EXP_DIR="$ROOT/.next-static"
+  rm -rf "$OUT_DIR"
+  cp -a "$EXP_DIR" "$OUT_DIR"
+fi
+
+if [ -z "$EXP_DIR" ]; then
+  echo "خطا: خروجی export پیدا نشد (out/ یا .next-static/) — اول بیلد استاتیک را اجرا کن." >&2
   exit 1
 fi
 
 cd "$OUT_DIR"
 
 # پیشوندهای public که در کد با مسیر مطلق استفاده شده‌اند
+# (بدون اسلش انتهایی — تا رشته‌های تکی مثل "/exercises" که با ترکیب
+#  ساخته می‌شوند هم گرفته شوند، نه فقط مسیرهای کامل)
 PREFIXES=(
-  "fonts/"
-  "exercises/"
-  "stretches/"
-  "exports/"
+  "fonts"
+  "exercises"
+  "stretches"
+  "exports"
   "liftosaur-"
   "day-"
   "bike.png"
@@ -34,12 +50,14 @@ PREFIXES=(
 
 # فایل‌های متنی خروجی (html/css/js + payloadهای RSC و manifestها)
 for prefix in "${PREFIXES[@]}"; do
-  # نقل‌قول‌دارها (رشته‌های JS/HTML) و بدون نقل‌قول (url() فشرده‌شده در CSS)
+  # نقل‌قول‌دارها (رشته‌های JS/HTML — با اسلش یا تکی)، بک‌تیک (template literal)
+  # و بدون نقل‌قول (url() فشرده‌شده در CSS)
   find . -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \
     -o -name "*.txt" -o -name "*.json" -o -name "*.xml" \
     -o -name "*.webmanifest" \) -exec sed -i \
     -e "s|\"/$prefix|\"/Workout/$prefix|g" \
     -e "s|'/$prefix|'/Workout/$prefix|g" \
+    -e "s|\`/$prefix|\`/Workout/$prefix|g" \
     -e "s|url(/$prefix|url(/Workout/$prefix|g" \
     {} +
 done

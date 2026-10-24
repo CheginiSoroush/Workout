@@ -56,3 +56,6 @@ server.log
 db/
 *.db
 *.db-journal
+
+# static export build (custom distDir)
+.next-static/

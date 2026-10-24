@@ -42,6 +42,18 @@ jobs:
       - name: Rewrite absolute asset paths for /Workout/
         run: bash scripts/fix-pages-paths.sh
 
+      # گارد رگرسیون: اگر مسیر public بدون پیشوند /Workout در خروجی مانده
+      # باشد (مثل رشتهٔ تکی "/exercises" که قبلاً از دست می‌رفت)، بیلد شکست
+      # بخورد تا نسخهٔ خراب هرگز منتشر نشود
+      - name: Guard — no unprefixed public asset paths
+        run: |
+          if grep -rEq "\"/(exercises|stretches|fonts|exports)|'/(exercises|stretches|fonts|exports)|url\(/(exercises|stretches|fonts|exports)" out --include="*.js" --include="*.html" --include="*.css"; then
+            echo "::error::Unprefixed public asset paths found in build output — /Workout rewrite missed them"
+            grep -rEn "\"/(exercises|stretches|fonts|exports)" out --include="*.js" | head -5 || true
+            exit 1
+          fi
+          echo "✅ همهٔ مسیرهای public پیشوند /Workout دارند"
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

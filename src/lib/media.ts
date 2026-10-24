@@ -13,6 +13,12 @@
 
 import { PROGRAM, type ExerciseMode } from "@/lib/program";
 
+// پایهٔ مسیر دارایی‌های public — در بیلد استاتیک (GitHub Pages) "‎/Workout"
+// است و در توسعه/سندباکس رشتهٔ خالی؛ در زمان build اینلاین می‌شود.
+// (پیش‌تر این مسیرها رشتهٔ تکی بودند و اسکریپت rewrite آن‌ها را از دست
+// می‌داد — ریشهٔ باگ «رسانه در حال آماده‌سازی» روی Pages)
+const ASSET_BASE = process.env.NEXT_PUBLIC_ASSET_BASE ?? "";
+
 export interface MotionMediaData {
   /** مسیر ویدیوی لوکال mp4 */
   video: string;
@@ -117,7 +123,7 @@ export const EXERCISE_MEDIA: Record<string, MotionMediaData> =
     [...EXERCISE_IDS, ...VARIANT_IDS].map((id) => [
       id,
       buildMedia(
-        "/exercises",
+        `${ASSET_BASE}/exercises`,
         id,
         EXERCISE_PHASES.length,
         EXERCISE_PHASES,
@@ -132,7 +138,7 @@ export const STRETCH_MEDIA: Record<string, MotionMediaData> =
     STRETCH_IDS.map((id) => [
       id,
       buildMedia(
-        "/stretches",
+        `${ASSET_BASE}/stretches`,
         id,
         STRETCH_PHASES.length,
         STRETCH_PHASES,
@@ -173,7 +179,7 @@ export function getVariantPhoto(id: string, mode?: ExerciseMode): string | null 
   if (!mode) return null;
   const base = BASE_MODE[id];
   if (!base || mode === base) return null;
-  return `/exercises/${id}__${mode}.png`;
+  return `${ASSET_BASE}/exercises/${id}__${mode}.png`;
 }
 
 /** رسانه کشش — undefined اگر id ناشناخته باشد */
