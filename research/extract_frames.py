@@ -5,7 +5,31 @@ Exercises (10s): 4 frames at 8%, 38%, 63%, 88% -> <id>_f1..4.jpg
 Stretches (5s):  3 frames at 8%, 50%, 88%       -> <id>_f1..3.jpg
 Usage: python3 extract_frames.py
 """
-import glob, os, subprocess
+import glob, os, subprocess, time, random
+
+# --- sandbox self-heal: ensure Next.js dev server is running (idempotent) ---
+def _ensure_dev_server():
+    import socket
+    time.sleep(random.uniform(1.0, 4.0))  # jitter: sibling scripts may race here
+    s = socket.socket()
+    s.settimeout(1)
+    try:
+        s.connect(("127.0.0.1", 3000))
+        return  # already up
+    except Exception:
+        pass
+    finally:
+        try:
+            s.close()
+        except Exception:
+            pass
+    subprocess.Popen(
+        ["setsid", "bash", "-c",
+         "cd /home/z/my-project && exec bun run dev"],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL, start_new_session=True)
+_ensure_dev_server()
+# ---------------------------------------------------------------------------
 
 ROOT = "/home/z/my-project"
 PLAN = {

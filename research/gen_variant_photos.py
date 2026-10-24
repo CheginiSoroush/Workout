@@ -6,6 +6,29 @@ Usage: python3 gen_variant_photos.py [deadline_seconds]
 """
 import os, subprocess, sys, time
 
+# --- sandbox self-heal: ensure Next.js dev server is running (idempotent) ---
+def _ensure_dev_server():
+    import socket
+    s = socket.socket()
+    s.settimeout(1)
+    try:
+        s.connect(("127.0.0.1", 3000))
+        return  # already up
+    except Exception:
+        pass
+    finally:
+        try:
+            s.close()
+        except Exception:
+            pass
+    subprocess.Popen(
+        ["setsid", "bash", "-c",
+         "cd /home/z/my-project && exec bun run dev"],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL, start_new_session=True)
+_ensure_dev_server()
+# ---------------------------------------------------------------------------
+
 ROOT = "/home/z/my-project"
 OUT_DIR = f"{ROOT}/public/exercises"
 os.makedirs(OUT_DIR, exist_ok=True)
