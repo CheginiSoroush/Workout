@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T14:51:09.009Z",
+  "generatedAt": "2026-10-24T14:57:04.305Z",
   "exerciseVideos": [
     "bench-press",
     "cable-fly",
@@ -12,6 +12,7 @@
     "db-shoulder-press": 4,
     "incline-db-press": 4
   },
+  "exerciseStepCounts": {},
   "exercisePhotos": [
     "barbell-row.jpg",
     "bench-press.jpg",
@@ -59,6 +60,7 @@
     "shoulder-cross": 3,
     "wall-lat": 3
   },
+  "stretchStepCounts": {},
   "stretchPhotos": [
     "calf.png",
     "cat-cow.png",

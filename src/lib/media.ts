@@ -24,9 +24,11 @@ const ASSET_BASE = process.env.NEXT_PUBLIC_ASSET_BASE ?? "";
 // چه رسانه‌ای وجود دارد و برای نسخه‌های خالی به رسانهٔ پایه فال‌بک کند.
 const EXERCISE_VIDEOS = new Set<string>(manifest.exerciseVideos);
 const EXERCISE_FRAME_COUNTS: Record<string, number> = manifest.exerciseFrameCounts;
+const EXERCISE_STEP_COUNTS: Record<string, number> = manifest.exerciseStepCounts;
 const EXERCISE_PHOTOS = new Set<string>(manifest.exercisePhotos);
 const STRETCH_VIDEOS = new Set<string>(manifest.stretchVideos);
 const STRETCH_FRAME_COUNTS: Record<string, number> = manifest.stretchFrameCounts;
+const STRETCH_STEP_COUNTS: Record<string, number> = manifest.stretchStepCounts;
 
 export interface MotionMediaData {
   /** مسیر ویدیوی لوکال mp4 */
@@ -112,7 +114,8 @@ function buildMedia(
   id: string,
   frameCount: number,
   phases: string[],
-  stepLabels: string[]
+  stepLabels: string[],
+  stepCount = 0
 ): MotionMediaData {
   return {
     video: `${base}/videos/${id}.mp4`,
@@ -120,7 +123,12 @@ function buildMedia(
       { length: frameCount },
       (_, i) => `${base}/frames/${id}_f${i + 1}.jpg`
     ),
-    steps: stepLabels.map((_, i) => `${base}/steps/${id}/step${i + 1}.jpg`),
+    // مسیرهای مرحله فقط وقتی که واقعاً تولید شده‌اند — وگرنه آرایهٔ خالی
+    // تا MotionMedia بیخودی HEAD های ۴۰۴ نزند
+    steps:
+      stepCount >= stepLabels.length
+        ? stepLabels.map((_, i) => `${base}/steps/${id}/step${i + 1}.jpg`)
+        : [],
     phases,
     stepPhases: stepLabels,
   };
@@ -136,7 +144,8 @@ export const EXERCISE_MEDIA: Record<string, MotionMediaData> =
         id,
         EXERCISE_PHASES.length,
         EXERCISE_PHASES,
-        STEP_LABELS
+        STEP_LABELS,
+        EXERCISE_STEP_COUNTS[id] ?? 0
       ),
     ])
   );
@@ -151,7 +160,8 @@ export const STRETCH_MEDIA: Record<string, MotionMediaData> =
         id,
         STRETCH_PHASES.length,
         STRETCH_PHASES,
-        STEP_LABELS_STRETCH
+        STEP_LABELS_STRETCH,
+        STRETCH_STEP_COUNTS[id] ?? 0
       ),
     ])
   );

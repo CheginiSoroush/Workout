@@ -33,13 +33,31 @@ const frameCounts = (dir) => {
   return m;
 };
 
+// عکس‌های مرحله‌ای: public/<group>/steps/<id>/stepN.jpg
+const stepCounts = (dir) => {
+  const m = {};
+  let ids = [];
+  try {
+    ids = readdirSync(join(PUB, dir));
+  } catch {
+    return m;
+  }
+  for (const id of ids) {
+    const n = list(`${dir}/${id}`, /^step\d+\.(jpg|jpeg|png)$/).length;
+    if (n > 0) m[id] = n;
+  }
+  return m;
+};
+
 const manifest = {
   generatedAt: new Date().toISOString(),
   exerciseVideos: list("exercises/videos", /\.mp4$/).map(stripVideo),
   exerciseFrameCounts: frameCounts("exercises/frames"),
+  exerciseStepCounts: stepCounts("exercises/steps"),
   exercisePhotos: list("exercises", /\.(jpg|jpeg|png)$/).sort(),
   stretchVideos: list("stretches/videos", /\.mp4$/).map(stripVideo),
   stretchFrameCounts: frameCounts("stretches/frames"),
+  stretchStepCounts: stepCounts("stretches/steps"),
   stretchPhotos: list("stretches", /\.(jpg|jpeg|png)$/).sort(),
 };
 
@@ -50,5 +68,6 @@ console.log(
   `media manifest → ${manifest.exerciseVideos.length} exercise videos, ` +
     `${Object.keys(manifest.exerciseFrameCounts).length} exercise flipbooks, ` +
     `${manifest.stretchVideos.length} stretch videos, ` +
-    `${Object.keys(manifest.stretchFrameCounts).length} stretch flipbooks`
+    `${Object.keys(manifest.stretchFrameCounts).length} stretch flipbooks, ` +
+    `${Object.keys(manifest.exerciseStepCounts).length}+${Object.keys(manifest.stretchStepCounts).length} step sets`
 );
