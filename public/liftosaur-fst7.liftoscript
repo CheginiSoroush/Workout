@@ -1,13 +1,16 @@
 /// FST-7 Swimmer — 3 days/week (Sat / Mon / Wed)
 /// Goal: V-taper + fat loss, based on FST-7 principles.
 /// Double progression: hit the top of the rep range on all sets -> weight goes up automatically.
+/// گرم‌کردن هر جلسه: ۵ دقیقه دوچرخه خیلی سبک + ست‌های گرم‌کردنی زیر حرکت اول هر روز (خودکار محاسبه می‌شوند)
+/// بعد از هر جلسه: ۱۵ تا ۲۰ دقیقه دوچرخه LISS (ضربان ۱۱۵ تا ۱۳۵) + روتین کششی — یادداشت سرد کردن زیر حرکت آخر هر روز
 
 # Week 1
 
 ## Day 1 — Push (Saturday)
 
+// گرم‌کردن: ۵ دقیقه دوچرخه خیلی سبک، بعد ست‌های گرم‌کردنی زیر (درصد از وزنه ست اول)
 // هالتر را تا وسط سینه پایین بیاور — کتف‌ها جمع، آرنج‌ها ۴۵ درجه
-Bench Press, Barbell / 4x5-8 / 180s / progress: dp(2.5kg, 5, 8)
+Bench Press, Barbell / 4x5-8 / 180s / warmup: 1x8 40%, 1x4 60%, 1x2 75% / progress: dp(2.5kg, 5, 8)
 
 // زاویه نیمکت ۳۰ درجه — دمبل‌ها تا کنار سینه پایین بیایند
 Incline Bench Press, Dumbbell / 3x8-12 / 120s / progress: dp(2.5kg, 8, 12)
@@ -22,10 +25,12 @@ Cable Crossover, Cable / 3x10-15 @9 / 90s
 Triceps Pushdown, Cable / 3x10-15 @9 / 75s
 
 // FST-7 — ۷ ست پیاپی با استراحت کوتاه، هدف: پامپ
+// سرد کردن بعد جلسه: LISS دوچرخه ۱۵ تا ۲۰ دقیقه (ضربان ۱۱۵ تا ۱۳۵) + کشش: چارچوب در ۲۰ تا ۳۰ ثانیه هر طرف، کراس‌بادی شانه ۳۰ ثانیه هر طرف، کودک ۴۵ ثانیه
 Lateral Raise, Dumbbell / 7x10-15 @9 / 45s
 
 ## Day 2 — Pull (Monday)
 
+// گرم‌کردن: ۵ دقیقه دوچرخه خیلی سبک + ۱ ست اسکاپولار پول و ۵ تکرار سبک با کش کمکی
 // بارفیکس — چانه بالای میله، پایین آمدن کامل و کنترل‌شده
 Pull Up, Bodyweight / 4x5-10 / 180s / progress: dp(2.5kg, 5, 10)
 
@@ -42,12 +47,14 @@ Standing Row Rear Delt With Rope, Cable / 3x12-15 @9 / 90s
 Bicep Curl, EZ Bar / 3x8-12 / 90s / progress: dp(2.5kg, 8, 12)
 
 // FST-7 پول‌اور دست صاف — ۷ ست پیاپی، پامپ زیربغل
+// سرد کردن بعد جلسه: LISS دوچرخه ۱۵ تا ۲۰ دقیقه + کشش: لت روی دیوار ۳۰ ثانیه هر طرف، آویزان‌شدن از بارفیکس ۲۰ تا ۳۰ ثانیه، گربه–گاو ۸ تکرار
 Pullover, Dumbbell / 7x10-15 / 45s
 
 ## Day 3 — Legs + Abs (Wednesday)
 
+// گرم‌کردن: ۵ دقیقه دوچرخه خیلی سبک، بعد ست‌های گرم‌کردنی زیر (درصد از وزنه ست اول)
 // پرس پا دستگاه — زانو ۹۰ درجه، پاها عرض شانه
-Leg Press, Leverage Machine / 4x8-12 / 180s / progress: dp(5kg, 8, 12)
+Leg Press, Leverage Machine / 4x8-12 / 180s / warmup: 1x10 40%, 1x5 60%, 1x3 75% / progress: dp(5kg, 8, 12)
 
 // ددلیفت رومانیایی — لولا از مفصل ران، کمر کاملاً صاف
 Romanian Deadlift, Barbell / 3x8-10 / 180s / progress: dp(2.5kg, 8, 10)
@@ -65,4 +72,5 @@ Standing Calf Raise, Leverage Machine / 4x10-15 @9 / 60s
 Hanging Leg Raise, Bodyweight / 3x8-15 / 90s
 
 // FST-7 شکم سیم‌کش — ۷ ست پیاپی، پامپ شکم
+// سرد کردن بعد جلسه: LISS دوچرخه ۱۵ تا ۲۰ دقیقه + کشش: همسترینگ با بند ۲ در ۳۰ ثانیه هر پا، چهارسر ایستاده ۳۰ ثانیه هر پا، فلکسور ران ۳۰ ثانیه هر پا، ساق روی دیوار ۳۰ ثانیه هر پا
 Cable Crunch, Cable / 7x12-15 @9 / 45s
