@@ -1,0 +1,22 @@
+/home/z/my-project/src/components/dashboard/AppExports.tsx:236:            کل روتین هفتگی (باشگاه + گرم‌کردن + کششی + دوچرخه + نوت‌ها) آمادهٔ هر اپ
+/home/z/my-project/src/components/dashboard/AppExports.tsx:327:            طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
+/home/z/my-project/src/components/app/workout/SetLogger.tsx:161:            description: "هر وقت آماده بودی برو حرکت بعد.",
+/home/z/my-project/src/components/app/workout/SetLogger.tsx:395:              برنامه این حرکت کامل شد — حرکت بعدی آماده است.
+/home/z/my-project/src/components/app/workout/RestTimer.tsx:60:      description: "هر وقت آماده بودی ادامه بده.",
+/home/z/my-project/src/components/app/workout/RestTimer.tsx:104:            ? "استراحت تمام شد — هر وقت آماده بودی ادامه بده"
+/home/z/my-project/src/components/app/media/MotionMedia.tsx:162:  // نشان آماده‌سازی فقط بعد از قطعی نتیجهٔ پروب‌ها (نه در حین پروب اولیه)
+/home/z/my-project/src/components/app/media/MotionMedia.tsx:260:        {/* نشان رسانه در حال آماده‌سازی — فریم‌ها هنوز تولید نشده‌اند (جایگاه مشترک با لیبل فاز) */}
+/home/z/my-project/src/components/app/media/MotionMedia.tsx:264:            رسانه در حال آماده‌سازی
+/home/z/my-project/src/components/app/HomeView.tsx:304:                {activeDay ? activeDay.title : "جلسه تمرین"} — هر وقت آماده بودی
+/home/z/my-project/src/components/app/HomeView.tsx:349:            {start.isPending ? "در حال آماده‌سازی…" : "شروع تمرین"}
+/home/z/my-project/src/components/app/HomeView.tsx:552:            description="هر وقت آماده بودی از کارت بالای صفحه شروع کن — حتی چند ست کوتاه حسابه و در همین‌جا ثبت می‌شود."
+/home/z/my-project/src/components/app/ProgramView.tsx:185:                    {start.isPending ? "در حال آماده‌سازی…" : "شروع تمرین امروز"}
+/home/z/my-project/src/components/app/Onboarding.tsx:142:            {step === 1 ? "با هم تنظیمش کنیم" : "تقریباً آماده‌ای!"}
+/home/z/my-project/src/components/app/WorkoutView.tsx:395:          description="از خانه یک جلسه جدید شروع کن — هر وقت آماده بودی."
+/home/z/my-project/src/components/app/WorkoutView.tsx:433:                : "از خانه یک جلسه جدید شروع کن — هر وقت آماده بودی."
+/home/z/my-project/src/components/app/profile/DataSection.tsx:51:        title: "خروجی آماده شد ✅",
+/home/z/my-project/src/components/app/profile/RemindersSection.tsx:6:// دستگاه ذخیره می‌شوند تا زیرساخت آینده آماده باشد.
+/home/z/my-project/src/components/app/profile/RemindersSection.tsx:88:          واقعی اضافه شد، همین‌جا آماده باشد؛ خاموش‌کردن‌شان هم همیشه یک تپ
+/home/z/my-project/src/lib/media.ts:23:// تا به‌جای پروب‌های ۴۰۴ و نشان «آماده‌سازی» ابدی، UI از همان اول بداند
+/home/z/my-project/src/lib/media.ts:196: * پایه برمی‌گردد — حرکت یکی است و بهتر از نشان «آماده‌سازی» ابدی است.
+/home/z/my-project/src/lib/appExports.ts:112:    "summary": "Fitbod برخلاف بقیه برنامه را خودش با الگوریتم می‌سازد و اجازهٔ import برنامهٔ آماده ندارد. راه درست: برای هر روز یک Custom Workout بساز و برگه را به‌عنوان مرجع ساختار و دوزها نگه دار.",
