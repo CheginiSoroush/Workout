@@ -382,3 +382,23 @@ Stage Summary:
 - کد آماده است: به محض تولید هر عکس مرحله‌ای، فلیپ‌بوک آن حرکت خودکار فعال می‌شود (بدون تغییر کد)
 - 90 عکس مرحله‌ای + 12 عکس نسخه + ~30 ویدیو در صف watchdog — اولویت با step-by-step ها
 - پاسخ سؤال آفلاین: همه رسانه‌ها لوکال‌اند (public/) — یوتیوب حذف شده، فونت آفلاین؛ دانلود کد = هرچه تا لحظه دانلود تولید شده
+
+---
+Task ID: 6-h
+Agent: main (Z.ai Code)
+Task: ایمپورت Liftosaur — برنامه FST-7 به فرمت Liftoscript + راهنمای ایمپورت داخل اپ
+
+Work Log:
+- تحقیق فرمت از منبع: liftosaur.com/doc/liftoscript (سینتکس: اکسرسایز / ست×تکرار @RPE / استراحت / progress)، کتابخانه کامل ۳۰۰+ حرکت از liftosaur.com/exercises، تست end-to-end در Planner رسمی (CodeMirror 6)
+- کشف فنی: fill/type مرورگر newline را از دست می‌دهد — راه‌حل: ClipboardEvent paste با DataTransfer؛ حالت Full Program با دکمه UI فعال شد (خطای «per-day lists» رفع)
+- نگاشت ۱۹ حرکت به نام‌های مرجع کتابخانه (bench-press→«Bench Press, Barbell»، cable-fly→«Cable Crossover, Cable»، barbell-row→«Bent Over Row, Barbell»، face-pull→«Standing Row Rear Delt With Rope, Cable»، straight-arm-pulldown→«Pullover, Dumbbell»، leg-curl→«Lying Leg Curl, Leverage Machine»، ...)
+- برنامه نهایی: ۳ روز × ۱۹ حرکت، استراحت‌ها به ثانیه، RPE @8/@9، FST-7ها (نشر جانب/پول‌اور/شکم) ۷ ست با استراحت ۴۵s، پیشرفت خودکار dp(2.5kg, min, max) روی حرکات اصلی — کامنت فارسی راهنما بالای هر حرکت (هنگام تمرین نمایش داده می‌شود)
+- Planner رسمی: parse بدون خطا + اسکرین‌شات (highlight سالم، همه حرکات شناخته‌شده)
+- src/lib/liftosaur.ts: LIFTOSAUR_PROGRAM (متن دقیق تست‌شده) + LIFTOSAUR_GUIDE (۴ مرحله + نکته‌های تطبیق نام)
+- src/components/dashboard/LiftosaurGuide.tsx: دکمه کپی (clipboard + toast)، دیدن کد (pre dir=ltr max-h-96 اسکرول)، دانلود فایل (/liftosaur-fst7.liftoscript لینک public)، لینک Planner — در تب «دانش و منابع» کنار HevyGuide (id=liftosaur)
+- وریفای مرورگر: کارت در موبایل ۳۹۰px کامل رندر شد، کد ۲۴۰۸ کاراکتر نمایش داده شد، لینک دانلود HTTP 200، صفر خطای کنسول، lint پاک، tsc فقط خطاهای قدیمی examples/skills
+
+Stage Summary:
+- برنامه FST-7 اکنون در اپ با یک کلیک قابل کپی برای Liftosaur است (متن Planner-validated)؛ فایل مستقل هم در public/liftosaur-fst7.liftoscript
+- نکته: progress dp = همان قاعده پیشرفت دوگانه سایت؛ اعداد استراحت سقف بازه‌های برنامه است
+- رسانه Task 6 همچنان در صف watchdog (still 429 در طول این سشن)
