@@ -678,3 +678,22 @@ Stage Summary:
 - دیگر هیچ ویدیوی گمراه‌کنندهٔ مشترکی بین نسخه‌ها نیست؛ هر نسخه عکس اختصاصی خودش را دارد
 - ۱۲ عکس نسخه در git و Pages (پوش 7906017)
 - باقی‌مانده: ویدیوی ۱۲ نسخه + ۱۵ حرکت پایه + ۳ کشش — منتظر سهمیهٔ ویدیو (فقط-متن موفق است)؛ بعدش extract_frames + مانیفست + پوش
+
+---
+Task ID: 13
+Agent: Z.ai Code (main, IM session)
+Task: درخواست کاربر «توی سایتم روزهای استراحت هم برنامه‌ریزی کن — فلان حرکت کششی خوبه چون روز قبلش فلان حرکت رو رفتی»
+
+Work Log:
+- لایهٔ دادهٔ جدید src/lib/restDays.ts: REST_DAY_PLANS برای ۴ روز استراحت (یکشنبه/سه‌شنبه/پنجشنبه/جمعه با jsDay 0/2/4/5)؛ هر روز: typeLabel، اتصال به جلسهٔ قبلی (prevWorkout)، چرا (why)، فعالیت اصلی + hint، دوچرخهٔ اختیاری، stretches با دلیل اتصال به تمرین دیروز، prepTasks (جمعه: مرور Hevy + پلن +۲.۵/۵ کیلو)
+- کامپوننت جدید src/components/dashboard/RestDaySection.tsx: آکاردئون ۴ روزه، روزِ امروز با Badge «امروز» + glow-emerald، خودکار باز (defaultValue after hydrate — اسکلت تا hydration)، ردیف کشش با MotionMedia compact (عکس/فلیپ‌بوک) + duration + reason سبز + howTo
+- ProgramView: import + رندر در تب weekly بعد از ScheduleStrip (id="restday")، hash "#restday"→weekly، دکمهٔ «برنامهٔ کامل روز استراحت» روی کارت یادآوری روز استراحت
+- HomeView: کارت استراحت عمومی → داینامیک per-day: typeLabel + why + فعالیت + چیپ «دیروز X زدی — کشش‌های امروز همان ناحیه را باز می‌کنند» + ۳ چیپ کشش + دکمه‌های «کشش امروز» (#stretch) و «برنامهٔ کامل روز» (#restday)؛ Bike import حذف شد (جایگزین شد)
+- کشف/فیکس: قانون lint جدید react-hooks/set-state-in-effect — setState در effect ممنوع؛ راه‌حل: آکاردئون uncontrolled + defaultValue + رندر اسکلت تا hydrate (الگوی کدبیس)
+- وریفای مرورگر (agent-browser): شنبه واقعی → کارت تمرین خانه سالم؛ stub getDay→0 (یکشنبه) → کارت داینامیک خانه کامل + کلیک «برنامهٔ کامل روز» → hash:#restday، تب weekly، یکشنبه باز با Badge امروز + glow + scrollIntoView
+- ۸/۸ عکس کشش لود شد؛ آکاردئون single-mode سوییچ درست؛ محتوای سه‌شنبه (شنا/لت/ددهنگ)، پنجشنبه (کودک/تکالیف)، جمعه (Hevy/۲.۵-۵ کیلو/یادآور) همه تأیید؛ موبایل ۳۹۰ بدون overflow افقی؛ صفر خطای کنسول؛ lint پاس
+
+Stage Summary:
+- روزهای استراحت حالا برنامهٔ کامل روزبه‌روز دارند: کشش هر روز از تمرینِ روز قبل می‌آید («چون دیروز پرس زدی، سینه کشش می‌خوان»)
+- سه نقطهٔ دسترسی: کارت استراحت داینامیک خانه، دکمهٔ کارت یادآوری تب برنامه، هش #restday
+- فایل‌ها: src/lib/restDays.ts (جدید)، RestDaySection.tsx (جدید)، ProgramView.tsx، HomeView.tsx

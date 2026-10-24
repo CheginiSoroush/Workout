@@ -10,7 +10,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
-  Bike,
   BookMarked,
   Check,
   CheckCircle2,
@@ -40,6 +39,7 @@ import {
   type WorkoutDay,
 } from "@/lib/program";
 import { STRETCH_ROUTINE, STRETCH_RULES } from "@/lib/mobility";
+import { getRestDayPlan } from "@/lib/restDays";
 import {
   DAY_SHORT,
   getTodayPlan,
@@ -142,6 +142,7 @@ export default function HomeView() {
 
   const { jsDay, hour, dayOfMonth, hydrated } = useToday();
   const todayPlan = hydrated ? getTodayPlan(jsDay) : undefined;
+  const todayRest = hydrated ? getRestDayPlan(jsDay) : undefined;
 
   // ---------- کوئری‌ها ----------
   // ⚠️ شکل کش ["profile"] باید همه‌جا یکسان باشد (پاسخ کامل { profile }) —
@@ -353,21 +354,68 @@ export default function HomeView() {
           </p>
         </section>
       ) : (
-        /* روز استراحت — کارت آرام */
+        /* روز استراحت — برنامهٔ زندهٔ امروز، متصل به تمرین دیروز */
         <section
           aria-label="روز استراحت"
-          className="rounded-2xl border border-border bg-card/60 p-5 text-center"
+          className="rounded-2xl border border-border bg-card/60 p-5"
         >
-          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-muted">
-            <MoonStar className="h-6 w-6 text-primary" aria-hidden="true" />
-          </span>
-          <h3 className="mt-3 text-base font-extrabold">
-            استراحت هم بخشی از برنامه است
-          </h3>
-          <p className="mx-auto mt-1 max-w-xs text-xs leading-6 text-muted-foreground">
-            عضله در استراحت ساخته می‌شود — امروز بدنت را خوب غذا بده، آب
-            بنوش و بخواب.
-          </p>
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-muted">
+              <MoonStar className="h-6 w-6 text-primary" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <h3 className="text-base font-extrabold">
+                امروز استراحت است — {todayRest?.typeLabel ?? "ریکاوری"}
+              </h3>
+              <p className="mt-0.5 text-xs leading-6 text-muted-foreground">
+                {todayRest?.why ??
+                  "عضله در استراحت ساخته می‌شود — امروز بدنت را خوب غذا بده، آب بنوش و بخواب."}
+              </p>
+            </div>
+          </div>
+
+          {todayRest && (
+            <div className="mt-3.5 space-y-2">
+              <div className="flex items-start gap-2.5 rounded-xl border border-border/60 bg-secondary/30 p-3">
+                <todayRest.icon
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                <div className="min-w-0">
+                  <p className="text-xs font-extrabold">
+                    {todayRest.activity}
+                  </p>
+                  <p className="mt-0.5 text-[11px] leading-5 text-muted-foreground">
+                    {todayRest.activityHint}
+                  </p>
+                </div>
+              </div>
+              {todayRest.prevWorkout && (
+                <p className="flex items-center gap-1.5 rounded-xl border border-primary/25 bg-primary/10 p-3 text-[11px] font-bold leading-5 text-primary">
+                  <Dumbbell
+                    className="h-3.5 w-3.5 shrink-0"
+                    aria-hidden="true"
+                  />
+                  دیروز {todayRest.prevWorkout} زدی — کشش‌های امروز همان ناحیه
+                  را باز می‌کنند
+                </p>
+              )}
+              <div className="flex flex-wrap gap-1.5">
+                {todayRest.stretches.slice(0, 3).map((s) => {
+                  const move = STRETCH_ROUTINE.find((m) => m.id === s.id);
+                  return move ? (
+                    <span
+                      key={s.id}
+                      className="rounded-full border border-border bg-secondary/40 px-2.5 py-1 text-[11px] font-bold"
+                    >
+                      {move.faName}
+                    </span>
+                  ) : null;
+                })}
+              </div>
+            </div>
+          )}
+
           <div className="mt-4 grid grid-cols-2 gap-2.5">
             <Button
               variant="secondary"
@@ -381,11 +429,11 @@ export default function HomeView() {
             <Button
               variant="secondary"
               className="h-11 min-h-11 rounded-xl text-xs font-bold"
-              onClick={() => openProgramTab(setView, "#bike")}
-              aria-label="رفتن به بخش دوچرخه"
+              onClick={() => openProgramTab(setView, "#restday")}
+              aria-label="برنامهٔ کامل روز استراحت"
             >
-              <Bike className="h-4 w-4" aria-hidden="true" />
-              دوچرخه
+              <MoonStar className="h-4 w-4" aria-hidden="true" />
+              برنامهٔ کامل روز
             </Button>
           </div>
         </section>

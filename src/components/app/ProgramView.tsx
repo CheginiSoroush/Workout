@@ -20,6 +20,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ScheduleStrip from "@/components/dashboard/ScheduleStrip";
+import RestDaySection from "@/components/dashboard/RestDaySection";
 import ProgramTabs from "@/components/dashboard/ProgramTabs";
 import ProgressionCard from "@/components/dashboard/ProgressionCard";
 import MobilitySection from "@/components/dashboard/MobilitySection";
@@ -44,6 +45,7 @@ import {
 const HASH_TO_TAB: Record<string, string> = {
   "#stretch": "stretch",
   "#bike": "bike",
+  "#restday": "weekly",
   "#creatine": "knowledge",
   "#hevy": "knowledge",
   "#sources": "knowledge",
@@ -195,15 +197,32 @@ export default function ProgramView() {
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted">
                 <MoonStar className="h-5 w-5 text-primary" aria-hidden="true" />
               </span>
-              <p className="text-xs leading-6 text-muted-foreground">
-                امروز استراحت است — عضله در استراحت ساخته می‌شود. کشش یا
-                دوچرخه سبک در تب‌های کناری منتظرته.
-              </p>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs leading-6 text-muted-foreground">
+                  امروز استراحت است — عضله در استراحت ساخته می‌شود. برنامهٔ
+                  کامل این روز (فعالیت + کشش‌های مرتبط با تمرین دیروز) منتظرته.
+                </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="mt-2 h-9 min-h-9 rounded-lg px-3 text-[11px] font-bold"
+                  onClick={() => {
+                    window.location.hash = "#restday";
+                  }}
+                  aria-label="دیدن برنامهٔ کامل روز استراحت"
+                >
+                  <MoonStar className="h-3.5 w-3.5" aria-hidden="true" />
+                  برنامهٔ کامل روز استراحت
+                </Button>
+              </div>
             </section>
           )}
 
           {/* محتوای اصلی داشبورد — دست‌نخورده */}
           <ScheduleStrip />
+          <div id="restday">
+            <RestDaySection />
+          </div>
           <ProgramTabs />
           <ProgressionCard />
         </TabsContent>
