@@ -486,3 +486,25 @@ Stage Summary:
 - GymMane: جایگزین فارسی‌زبان برای کسی که رابط فارسی می‌خواهد — ساخت دستی با برگه، ولی رابط کامل RTL فارسی + آفلاین مطلق
 - ژنراتور همچنان تک‌منبع: هر تغییر program.ts → bun run research/gen_app_exports.ts → فایل JSON هم به‌روز می‌شود
 - رسانه Task 6: همچنان در انتظار رفع 429
+
+---
+Task ID: 9
+Agent: main (Z.ai Code)
+Task: بازخورد کاربر — (۱) «زیربغل سیم‌کش نشسته در برنامهٔ Liftosaur من نیست، عاشقشم» (۲) «قرار بود دستگاه و وزنهٔ آزاد باشه، فقط یه نوع برنامه می‌بینم» — رفع کامل هر دو
+
+Work Log:
+- ریشه‌یابی: program.ts از ابتدا دو نسخه دارد (baseMode/machineAlt/freeAlt + startMode=machine برای شروع تازه‌کار) و ExerciseCard/WorkoutView سوییچ دستگاه↔آزاد دارند؛ اما فایل Liftoscript (fst7-program.txt = نسخهٔ وزنهٔ آزاد) فقط یک حرکت در هر اسلات داشت — Liftosaur در هر اسلات فقط یک حرکت قبول می‌کند، پس «دو نسخه» باید «دو برنامهٔ جدا» شود
+- تحقیق رسمی کتابخانهٔ Liftosaur: liftosaur.com/exercises را با agent-browser باز و ۳۷۴ نام استخراج شد؛ نام‌های نسخهٔ دستگاهی تأیید شد: «Seated Row, Cable» (زیربغل سیم‌کش نشسته ⭐)، «Chest Press / Incline Chest Press / Shoulder Press, Leverage Machine»، «Lateral Raise, Cable»، «Bicep Curl, Cable»، «Pull Up, Leverage Machine» (دستگاه کمکی)، «Back Extension, Leverage Machine»، «Bulgarian Split Squat, Bodyweight»، «Flat Leg Raise, Bodyweight»؛ «Single Leg Press» و «Captain's Chair» در کتابخانه نیستند (جایگزین صادقانه: بلغاری وزن بدن / بالانش روی زمین)
+- ساخت research/liftosaur/fst7-machine-program.txt — نسخهٔ دستگاهی هفتهٔ ۱–۲: همان ساختار/حجم v1 (۷۳ ست، dp، warmup ramp، یادداشت‌های سرد کردن) با حرکات دستگاهی + ⭐ زیربغل سیم‌کش نشسته به‌عنوان ردیف اصلی روز Pull؛ بارفیکس کمکی بدون dp (منطق: کم کردن وزنهٔ کمک، توضیح در کامنت)
+- کپی به public/liftosaur-fst7-machine.liftoscript
+- بازنویسی src/lib/liftosaur.ts (تولید با python + json.dumps برای تطبیق بایت‌به‌بایت با فایل‌های txt): LIFTOSAUR_VERSIONS (machine با badge «پیشنهاد شروع» / free با badge «مرحلهٔ بعد»)؛ LIFTOSAUR_PROGRAM برای سازگاری حفظ شد؛ راهنما به‌روز شد (گام ۲: «هر دو نسخه را ایمپورت کن و در Programs سوییچ کن» + ۷ نکته شامل نام Seated Row, Cable)
+- بازنویسی LiftosaurGuide.tsx: سوییچ دو نسخه‌ای (پیش‌فرض: دستگاهی)، کپی/دانلود/دیدن کد برای هر نسخه، hint سوئیچ از Programs، aria-pressed، آیکون Cog/Dumbbell
+- 🐛 کشف مهم ابزاری: agent-browser fill روی CodeMirror کامل جایگزین نمی‌کند — دنبالهٔ برنامهٔ پیش‌فرض می‌ماند و چسبیده به متن جدید («45s# Week 1») خطای Syntax error (80:x) می‌ساخت که به متن ما ربطی نداشت؛ حتی v1 (تست‌شدهٔ قبلی) هم با fill خطا می‌داد! روش درست: Ctrl+A + Delete (خالی شدن کامل) + type چهار تکه (~۱.۱KB هر تکه) → اعتبارسنجی واقعی در planner رسمی: **CLEAN PARSE، همهٔ حرکات resolve شدند، صفر unknown** — نسخهٔ دستگاهی رسماً valid است
+- وریفای سایت: سوییچ دو نسخه رندر، کد هر دو نسخه درست (دستگاهی: Seated Row/Chest Press Machine/...؛ آزاد: Bent Over Row/... با 3436 کاراکتر دست‌نخورده)، کپی → توست «کد نسخهٔ «وزنهٔ آزاد — از هفتهٔ ۳» کپی شد»، دانلود هر دو 200 (machine 6106B / free 4925B)، موبایل 390px بدون overflow، کنسول پاک، lint پاک
+
+Stage Summary:
+- کاربر حالا در Liftosaur دو برنامهٔ هم‌حجم دارد: «دستگاهی — هفتهٔ ۱ تا ۲» (شامل زیربغل سیم‌کش نشستهٔ محبوبش) و «وزنهٔ آزاد — از هفتهٔ ۳» (همان که قبلاً ایمپورت کرده) — دقیقاً همان منطق سوییچ کارت‌های سایت
+- نام دقیق زیربغل سیم‌کش نشسته در Liftosaur: «Seated Row, Cable» — در نسخهٔ آزاد هم می‌شود از داخل اپ زیربغل هالتر خم را با آن جابجا کرد
+- نکتهٔ باز: اکسپورت‌های openGym/Hevy/Lyfta/Fitbod فعلاً نسخهٔ آزاد/پایه را می‌دهند — در صورت درخواست کاربر، ژنراتور باید نسخهٔ دستگاهی را هم خروجی بدهد
+- درس ماندگار: اعتبارسنجی Liftoscript در planner = هرگز از fill روی CodeMirror استفاده نکن؛ Ctrl+A+Delete + type چندتکه
+- رسانهٔ Task 6: همچنان 429

@@ -1,0 +1,2 @@
+/home/z/my-project/src/lib/program.ts:276:        faName: "زیربغل سیم‌کش نشسته",
+/home/z/my-project/src/lib/program.ts:277:        hevyName: "Seated Cable Row",
