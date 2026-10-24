@@ -139,8 +139,27 @@ def has_mp4(group, iid):
     return os.path.exists(p) and os.path.getsize(p) > 20000
 
 def parse_json(txt):
-    m = re.search(r"\{.*\}", txt, re.S)
-    return json.loads(m.group(0)) if m else None
+    """Robust: CLI may print several concatenated JSON objects —
+    decode them all with raw_decode and return the last dict (final state)."""
+    if not txt:
+        return None
+    dec = json.JSONDecoder()
+    objs = []
+    idx, n = 0, len(txt)
+    while idx < n:
+        c = txt.find("{", idx)
+        if c < 0:
+            break
+        try:
+            obj, end = dec.raw_decode(txt, c)
+            objs.append(obj)
+            idx = end
+        except json.JSONDecodeError:
+            idx = c + 1
+    for o in reversed(objs):
+        if isinstance(o, dict):
+            return o
+    return None
 
 def get_task_id(path):
     d = json.load(open(path))

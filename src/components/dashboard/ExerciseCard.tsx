@@ -16,6 +16,7 @@ import {
   Flame,
   Target,
   Cog,
+  Clock,
   Lightbulb,
   Sparkles,
 } from "lucide-react";
@@ -44,6 +45,8 @@ export default function ExerciseCard({
   const hasToggle = !!(exercise.machineAlt || exercise.freeAlt);
   const current = mode === "machine" ? machineVersion : freeVersion;
   const isBase = mode === baseMode;
+  // رسانهٔ نسخهٔ فعلی — undefined یعنی این نسخه ویدیو/فلیپ‌بوک اختصاصی ندارد
+  const currentMedia = getExerciseMedia(exercise.id, mode);
   const optionClass = (active: boolean) =>
     `inline-flex items-center gap-1.5 h-9 px-3.5 text-xs font-bold transition-all cursor-pointer ${
       active
@@ -65,9 +68,16 @@ export default function ExerciseCard({
             photo={getVariantPhoto(exercise.id, mode) ?? exercise.image}
             fallbackPhoto={exercise.image}
             alt={`نحوه اجرای ${current?.faName ?? exercise.faName}`}
-            media={getExerciseMedia(exercise.id, mode)}
+            media={currentMedia}
             className="h-full rounded-none border-0"
           />
+          {/* نشان صادق — این نسخه فعلاً ویدیوی اختصاصی ندارد (عکس نسخه نمایش داده می‌شود) */}
+          {!currentMedia && (
+            <span className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded-full bg-black/65 px-2 py-0.5 text-[10px] font-bold text-white/90 backdrop-blur-sm">
+              <Clock className="h-3 w-3" aria-hidden="true" />
+              {isBase ? "ویدیو به‌زودی" : "ویدیوی این نسخه به‌زودی"}
+            </span>
+          )}
           {exercise.fst7 && (
             <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-amber-500 text-amber-950 text-xs font-bold px-2.5 py-1 shadow-lg">
               <Flame className="w-3.5 h-3.5" />

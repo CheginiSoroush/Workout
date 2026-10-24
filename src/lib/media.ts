@@ -191,10 +191,11 @@ function stretchMediaAvailable(id: string): boolean {
 }
 
 /**
- * رسانه حرکت باشگاه — نسخه‌آگاه.
- * اگر نسخهٔ درخواستی رسانهٔ واقعی نداشته باشد (تولیدنشده)، رسانهٔ نسخهٔ
- * پایه برمی‌گردد — حرکت یکی است و بهتر از نشان «آماده‌سازی» ابدی است.
- * undefined یعنی هیچ رسانه‌ای نیست → UI فقط عکس را نشان می‌دهد.
+ * رسانه حرکت باشگاه — نسخه‌آگاه و صادق.
+ * نسخهٔ جایگزین فقط وقتی رسانه دارد که ویدیو/فریم مخصوص خودش واقعاً وجود داشته
+ * باشد — فال‌بک به رسانهٔ نسخهٔ پایه گمراه‌کننده است (پرس سینه هالتر ≠ پرس دستگاه؛
+ * کاربر درست‌بود — «ویدیوی هر دو یکی است»). undefined یعنی این نسخه فعلاً
+ * ویدیو/فلیپ‌بوک ندارد → UI عکس اختصاصی نسخه را نشان می‌دهد.
  */
 export function getExerciseMedia(
   id: string,
@@ -207,6 +208,8 @@ export function getExerciseMedia(
       if (exerciseMediaAvailable(variantId)) {
         return EXERCISE_MEDIA[variantId];
       }
+      // نسخهٔ جایگزین رسانهٔ اختصاصی ندارد → هیچ (نه فال‌بک گمراه‌کننده)
+      return undefined;
     }
   }
   return exerciseMediaAvailable(id) ? EXERCISE_MEDIA[id] : undefined;
