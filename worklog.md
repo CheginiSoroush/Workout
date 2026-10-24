@@ -534,3 +534,24 @@ Stage Summary:
 - openGym machine JSON با پارسر رسمی خود اپ تأیید شد (parse + merge همزیست)
 - برگهٔ جامع هفتگی جدول «دو نسخه» دارد و برای ساخت هر نسخه در هر اپ کافی است
 - رسانهٔ Task 6: همچنان 429
+
+---
+Task ID: 7
+Agent: Z.ai Code (main)
+Task: آپلود تمامی فایل‌ها روی GitHub و ساخت GitHub Pages از همین سایت
+
+Work Log:
+- بررسی وضعیت گیت: همه فایل‌های واقعی کامیت شده بودند (فقط node_modules/.next/logها ignore می‌شوند)
+- کشف چالش اصلی: اپ ۱۲+ API route با Prisma دارد ولی GitHub Pages فقط استاتیک سرو می‌کند
+- راه‌حل: شیم کلاینت کامل — src/lib/staticApi.ts همه ۲۴ هندلر endpoint را دقیقاً آینهٔ routeهای سرور (با localStorage) بازنویسی می‌کند: weights، profile، workout-logs، sessions (+active/[id]/sets)، sets/[id]، stretch-log، progress (PR/هفتگی/کل)، export، data، bike-log
+- منطق حساس آینه شد: upsert ها، همگام‌سازی WorkoutLog در PATCH/DELETE session، محاسبات progress، خروجی کامل export، شمارش delete data
+- نصب شیم: src/components/StaticApiShim.tsx (module-level + useEffect، idempotent) در layout.tsx؛ فقط با NEXT_PUBLIC_STATIC_EXPORT=1 فعال — سندباکس دست‌نخورده
+- next.config.ts شرطی: STATIC_EXPORT=1 → output:export، basePath:/Workout، images:unoptimized، eslint ignoreDuringBuilds
+- package.json: اسکریپت build:static
+- scripts/fix-pages-paths.sh: بازنویسی sed مسیرهای مطلق public (fonts/exercises/stretches/exports/liftosaur/day-*/bike/stretch/hero/logo) در html/css/js/txt/json خروجی + .nojekyll — idempotent
+- .github/workflows/deploy-pages.yml: push روی main → bun install → db:generate → rm -rf src/app/api → build:static → fix paths → upload-pages-artifact → deploy-pages@v4
+- lint پاک
+
+Stage Summary:
+- دارایی‌ها و فونت‌ها با basePath سازگار شدند؛ APIها در حالت Pages با localStorage معادل سرور پاسخ می‌گیرند؛ دادهٔ کاربر روی همان دستگاه می‌ماند (فلسفهٔ اپ حفظ شد)
+- URL مقصد: https://cheginisoroush.github.io/Workout/

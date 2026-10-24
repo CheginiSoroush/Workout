@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import StaticApiShim from "@/components/StaticApiShim";
 
 export const metadata: Metadata = {
   title: "داشبورد فیتنس من | برنامه شناگر FST-7",
@@ -32,6 +33,8 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          {/* شیم API استاتیک — فقط در بیلد GitHub Pages فعال می‌شود */}
+          <StaticApiShim />
           {children}
           <Toaster />
           {/* توست‌های sonner — LiftosaurGuide/AppExports/HomeView از این سیستم استفاده می‌کنند */}
