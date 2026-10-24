@@ -79,21 +79,20 @@ function useReducedMotion(): boolean {
 }
 
 /** پروب گروه فریم‌ها — همه فریم‌ها باید باشند وگرنه فلیپ‌بوک غیرفعال می‌شود */
-function useFramesReady(media?: MotionMediaData): boolean | null {
-  const frames = media?.frames;
+function useSequenceReady(seq?: string[]): boolean | null {
   const [ready, setReady] = useState<boolean | null>(() =>
-    frames && frames.length > 0 ? null : false
+    seq && seq.length > 0 ? null : false
   );
   useEffect(() => {
-    if (!frames || frames.length === 0) return;
+    if (!seq || seq.length === 0) return;
     let alive = true;
-    Promise.all(frames.map((f) => probeMedia(f))).then((results) => {
+    Promise.all(seq.map((f) => probeMedia(f))).then((results) => {
       if (alive) setReady(results.every(Boolean));
     });
     return () => {
       alive = false;
     };
-  }, [frames]);
+  }, [seq]);
   return ready;
 }
 
@@ -109,6 +108,7 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
   const [mode, setMode] = useState<MediaMode>("flipbook");
   const [idx, setIdx] = useState(0);
   const [frameError, setFrameError] = useState(false);
+  const [stepError, setStepError] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [photoError, setPhotoError] = useState(false);
   const [fallbackError, setFallbackError] = useState(false);
@@ -120,8 +120,9 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
     effectivePhoto === photo ? setPhotoError(true) : setFallbackError(true);
 
   const frames = media?.frames ?? [];
-  const phases = media?.phases ?? [];
-  const framesReady = useFramesReady(media);
+  const steps = media?.steps ?? [];
+  const framesReady = useSequenceReady(frames);
+  const stepsReady = useSequenceReady(steps);
 
   const [videoReady, setVideoReady] = useState<boolean | null>(() =>
     media?.video ? null : false
@@ -142,37 +143,51 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
   const [playOverride, setPlayOverride] = useState<boolean | null>(null);
   const playing = playOverride ?? !reduced;
 
-  const flipActive =
+  // زنجیره فلیپ‌بوک: فریم‌های ویدیویی → عکس‌های مرحله‌ای → عکس ثابت
+  const usingFrames =
     !!media && framesReady === true && !frameError && frames.length > 0;
+  const usingSteps =
+    !usingFrames &&
+    !!media &&
+    stepsReady === true &&
+    !stepError &&
+    steps.length > 0;
+  const flipActive = usingFrames || usingSteps;
+  const sequence = usingFrames ? frames : steps;
+  const labels = usingFrames
+    ? (media?.phases ?? [])
+    : (media?.stepPhases ?? []);
   const hasVideo = !!media && videoReady === true && !videoError;
   const showVideo = hasVideo && mode === "video";
-  const preparing =
-    !!media && !flipActive && !showVideo && framesReady === false;
+  const preparing = !!media && !flipActive && !showVideo;
 
   // چرخه فلیپ‌بوک — پاک‌سازی در unmount/توقف
   useEffect(() => {
-    if (!playing || !flipActive || frames.length < 2) return;
+    if (!playing || !flipActive || sequence.length < 2) return;
     const t = setInterval(
-      () => setIdx((i) => (i + 1) % frames.length),
+      () => setIdx((i) => (i + 1) % sequence.length),
       FLIP_INTERVAL_MS
     );
     return () => clearInterval(t);
-  }, [playing, flipActive, frames.length]);
+  }, [playing, flipActive, sequence.length]);
 
   const step = useCallback(
     (dir: 1 | -1) => {
-      if (frames.length === 0) return;
-      setIdx((i) => (i + dir + frames.length) % frames.length);
+      if (sequence.length === 0) return;
+      setIdx((i) => (i + dir + sequence.length) % sequence.length);
     },
-    [frames.length]
+    [sequence.length]
   );
 
   return (
     <figure
       data-testid="motion-media"
-      data-mode={showVideo ? "video" : "flipbook"}
+      data-mode={showVideo ? "video" : flipActive ? (usingSteps ? "steps" : "flipbook") : "photo"}
       data-frames={
         flipActive ? "ok" : framesReady === false ? "missing" : "probing"
+      }
+      data-steps={
+        usingSteps ? "ok" : stepsReady === false ? "missing" : "probing"
       }
       data-video={hasVideo ? "ok" : videoReady === false ? "missing" : "probing"}
       className={cn(
@@ -198,14 +213,16 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
             }}
           />
         ) : flipActive ? (
-          frames.map((f, i) => (
+          sequence.map((f, i) => (
             <img
               key={f}
               src={f}
               alt={i === idx ? alt : ""}
               aria-hidden={i !== idx}
               loading="lazy"
-              onError={() => setFrameError(true)}
+              onError={() =>
+                usingFrames ? setFrameError(true) : setStepError(true)
+              }
               className={cn(
                 "absolute inset-0 h-full w-full object-cover transition-opacity duration-200",
                 i === idx ? "opacity-100" : "opacity-0"
@@ -230,7 +247,7 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
         {/* لیبل فاز فعلی — پایین-انتها (بدون تداخل با نشان‌های بیرونی کارت) */}
         {flipActive && !showVideo && (
           <span className="absolute bottom-2 end-2 rounded-full bg-black/65 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
-            {phases[idx % Math.max(1, phases.length)]}
+            {labels[idx % Math.max(1, labels.length)]}
           </span>
         )}
 
@@ -333,7 +350,7 @@ function FullMedia({ photo, fallbackPhoto, alt, media, className }: MotionMediaP
                 className="flex min-w-4 flex-1 items-center justify-center gap-1"
                 aria-hidden="true"
               >
-                {frames.map((f, i) => (
+                {sequence.map((f, i) => (
                   <span
                     key={f}
                     className={cn(
@@ -371,6 +388,7 @@ function CompactMedia({ photo, fallbackPhoto, alt, media, className }: MotionMed
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [frameError, setFrameError] = useState(false);
+  const [stepError, setStepError] = useState(false);
   const [photoError, setPhotoError] = useState(false);
   const [fallbackError, setFallbackError] = useState(false);
 
@@ -380,19 +398,29 @@ function CompactMedia({ photo, fallbackPhoto, alt, media, className }: MotionMed
     effectivePhoto === photo ? setPhotoError(true) : setFallbackError(true);
 
   const frames = media?.frames ?? [];
-  const framesReady = useFramesReady(media);
-  const flipActive =
+  const steps = media?.steps ?? [];
+  const framesReady = useSequenceReady(frames);
+  const stepsReady = useSequenceReady(steps);
+  const usingFrames =
     !!media && framesReady === true && !frameError && frames.length > 0;
+  const usingSteps =
+    !usingFrames &&
+    !!media &&
+    stepsReady === true &&
+    !stepError &&
+    steps.length > 0;
+  const flipActive = usingFrames || usingSteps;
+  const sequence = usingFrames ? frames : steps;
 
   // فلیپ‌بوک کوچک — وقتی Dialog باز است یا کاهش موشن، می‌ایستد
   useEffect(() => {
-    if (open || reduced || !flipActive || frames.length < 2) return;
+    if (open || reduced || !flipActive || sequence.length < 2) return;
     const t = setInterval(
-      () => setIdx((i) => (i + 1) % frames.length),
+      () => setIdx((i) => (i + 1) % sequence.length),
       FLIP_INTERVAL_MS
     );
     return () => clearInterval(t);
-  }, [open, reduced, flipActive, frames.length]);
+  }, [open, reduced, flipActive, sequence.length]);
 
   return (
     <>
@@ -411,13 +439,15 @@ function CompactMedia({ photo, fallbackPhoto, alt, media, className }: MotionMed
         )}
       >
         {flipActive ? (
-          frames.map((f, i) => (
+          sequence.map((f, i) => (
             <img
               key={f}
               src={f}
               alt=""
               loading="lazy"
-              onError={() => setFrameError(true)}
+              onError={() =>
+                usingFrames ? setFrameError(true) : setStepError(true)
+              }
               className={cn(
                 "h-full w-full object-cover transition-opacity duration-200",
                 i === idx

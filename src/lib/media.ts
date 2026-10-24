@@ -16,10 +16,15 @@ import { PROGRAM, type ExerciseMode } from "@/lib/program";
 export interface MotionMediaData {
   /** مسیر ویدیوی لوکال mp4 */
   video: string;
-  /** فریم‌های مرحله‌به‌مرحله به ترتیب اجرا */
+  /** فریم‌های مرحله‌به‌مرحله به ترتیب اجرا — استخراج‌شده از ویدیو */
   frames: string[];
+  /** عکس‌های مرحله‌به‌مرحله آموزشی — ۳ فاز کلیدی تولیدشده با AI
+   *  وقتی فریم ویدیویی غایب است، فلیپ‌بوک با این عکس‌ها فعال می‌شود */
+  steps: string[];
   /** برچسب فارسی هر فاز — هم‌طول با چرخه حرکت */
   phases: string[];
+  /** برچسب فارسی عکس‌های مرحله — همیشه ۳ فاز */
+  stepPhases: string[];
 }
 
 const EXERCISE_IDS = [
@@ -83,11 +88,16 @@ const EXERCISE_PHASES = ["شروع", "میانه", "انقباض", "پایان"]
 /** فازهای کشش: ۳ فریم */
 const STRETCH_PHASES = ["شروع", "عمیق‌شدن", "پایان"];
 
+/** برچسب عکس‌های مرحله‌ای آموزشی — برای همه حرکات و کشش‌ها ۳ فاز */
+const STEP_LABELS = ["شروع", "اجرا", "انقباض"];
+const STEP_LABELS_STRETCH = ["شروع", "عمیق‌شدن", "پایان"];
+
 function buildMedia(
   base: string,
   id: string,
   frameCount: number,
-  phases: string[]
+  phases: string[],
+  stepLabels: string[]
 ): MotionMediaData {
   return {
     video: `${base}/videos/${id}.mp4`,
@@ -95,25 +105,39 @@ function buildMedia(
       { length: frameCount },
       (_, i) => `${base}/frames/${id}_f${i + 1}.jpg`
     ),
+    steps: stepLabels.map((_, i) => `${base}/steps/${id}/step${i + 1}.jpg`),
     phases,
+    stepPhases: stepLabels,
   };
 }
 
-/** رسانه ۱۹ حرکت باشگاه + ۱۲ نسخه جایگزین — ویدیو: /exercises/videos ، فریم: /exercises/frames */
+/** رسانه ۱۹ حرکت باشگاه + ۱۲ نسخه جایگزین — ویدیو: /exercises/videos ، فریم: /exercises/frames ، مرحله: /exercises/steps */
 export const EXERCISE_MEDIA: Record<string, MotionMediaData> =
   Object.fromEntries(
     [...EXERCISE_IDS, ...VARIANT_IDS].map((id) => [
       id,
-      buildMedia("/exercises", id, EXERCISE_PHASES.length, EXERCISE_PHASES),
+      buildMedia(
+        "/exercises",
+        id,
+        EXERCISE_PHASES.length,
+        EXERCISE_PHASES,
+        STEP_LABELS
+      ),
     ])
   );
 
-/** رسانه ۱۴ کشش — ویدیو: /stretches/videos ، فریم: /stretches/frames */
+/** رسانه ۱۴ کشش — ویدیو: /stretches/videos ، فریم: /stretches/frames ، مرحله: /stretches/steps */
 export const STRETCH_MEDIA: Record<string, MotionMediaData> =
   Object.fromEntries(
     STRETCH_IDS.map((id) => [
       id,
-      buildMedia("/stretches", id, STRETCH_PHASES.length, STRETCH_PHASES),
+      buildMedia(
+        "/stretches",
+        id,
+        STRETCH_PHASES.length,
+        STRETCH_PHASES,
+        STEP_LABELS_STRETCH
+      ),
     ])
   );
 
