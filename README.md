@@ -43,4 +43,4 @@ bun run build:static  # خروجی استاتیک برای GitHub Pages
 
 ---
 
-© ۲۰۲۵ Soroush (CheginiSoroush) — تمام حقوق محفوظ است.
+© ۲۰۲۶ Soroush (CheginiSoroush) — تمام حقوق محفوظ است.
