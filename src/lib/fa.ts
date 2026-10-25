@@ -26,12 +26,21 @@ export function faDate(input: string | Date): string {
     d = input;
   }
   if (Number.isNaN(d.getTime())) return "";
-  return new Intl.DateTimeFormat("fa-IR", {
+  // formatToParts + ترتیب دستی — برخی ICUها ترتیب را برعکس می‌دهند
+  // (۱۴۰۵ آبان ۳, یکشنبه)؛ این‌جا همیشه «یکشنبه ۳ آبان ۱۴۰۵» می‌سازیم
+  const parts = new Intl.DateTimeFormat("fa-IR", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
-  }).format(d);
+  }).formatToParts(d);
+  const get = (type: string) =>
+    parts.find((p) => p.type === type)?.value ?? "";
+  const weekday = get("weekday");
+  const day = get("day");
+  const month = get("month");
+  const year = get("year");
+  return [weekday, day, month, year].filter(Boolean).join(" ");
 }
 
 /** تاریخ امروز به میلادی با فرمت YYYY-MM-DD (بر اساس تقویم لوکال) */
