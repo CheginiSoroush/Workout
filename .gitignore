@@ -59,3 +59,7 @@ db/
 
 # static export build (custom distDir)
 .next-static/
+
+# sandbox runtime artifacts (not needed in repo)
+.zscripts/dev.pid
+tool-results/

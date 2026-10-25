@@ -2,7 +2,9 @@
 
 import { WEEK_SCHEDULE } from "@/lib/program";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Dumbbell, Footprints, CalendarDays } from "lucide-react";
+import { useToday } from "@/components/app/home/useTodaySession";
 
 const JS_DAY_MAP: Record<string, number> = {
   شنبه: 6,
@@ -15,7 +17,11 @@ const JS_DAY_MAP: Record<string, number> = {
 };
 
 export default function ScheduleStrip() {
-  const today = new Date().getDay();
+  // ⚠️ روزِ امروز فقط بعد از hydrate مشخص می‌شود —
+  // new Date() در رندر باعث hydration mismatch می‌شد
+  // (سرور UTC، کاربر محلی؛ نیم‌ساعت اول نیمه‌شب روز فرق می‌کند).
+  const { jsDay, hydrated } = useToday();
+  const today = hydrated ? jsDay : -1;
 
   return (
     <Card>
@@ -26,6 +32,13 @@ export default function ScheduleStrip() {
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {!hydrated ? (
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            {WEEK_SCHEDULE.map((d) => (
+              <Skeleton key={d.day} className="h-[72px] rounded-xl" />
+            ))}
+          </div>
+        ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
           {WEEK_SCHEDULE.map((d) => {
             const isToday = JS_DAY_MAP[d.day] === today;
@@ -70,6 +83,7 @@ export default function ScheduleStrip() {
             );
           })}
         </div>
+        )}
       </CardContent>
     </Card>
   );

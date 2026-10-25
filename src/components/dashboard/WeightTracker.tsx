@@ -58,7 +58,8 @@ export default function WeightTracker() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const w = parseFloat(weight);
+    // گرد کردن به ۰٫۱ — با input step هماهنگ (مثلاً ۸۲٫۵۵۵ → ۸۲٫۶)
+    const w = Math.round(parseFloat(weight) * 10) / 10;
     if (!w || w < 30 || w > 300) {
       toast({
         title: "وزن نامعتبر",
@@ -143,7 +144,11 @@ export default function WeightTracker() {
           <div className="rounded-xl bg-secondary/60 p-3 text-center">
             <div className="text-xs text-muted-foreground">از شروع کم شده</div>
             <div className="text-xl font-extrabold text-amber-400 mt-1">
-              {changeFromStart > 0 ? `${fa(changeFromStart)}-` : fa(0)}
+              {changeFromStart > 0
+                ? `${fa(changeFromStart)}-`
+                : changeFromStart < 0
+                ? `${fa(Math.abs(changeFromStart))}+`
+                : fa(0)}
               <span className="text-xs font-normal"> کیلو</span>
             </div>
           </div>
