@@ -7,7 +7,6 @@ import ProgramTabs from "@/components/dashboard/ProgramTabs";
 import WeightTracker from "@/components/dashboard/WeightTracker";
 import WorkoutChecklist from "@/components/dashboard/WorkoutChecklist";
 import NutritionPanel from "@/components/dashboard/NutritionPanel";
-import MedicalNotes from "@/components/dashboard/MedicalNotes";
 import CreatineResearch from "@/components/dashboard/CreatineResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import SourcesSection from "@/components/dashboard/SourcesSection";
@@ -193,7 +192,6 @@ export default function Dashboard() {
           </section>
 
           <section id="health" className="scroll-mt-20">
-            <MedicalNotes />
           </section>
 
           <section id="creatine" className="scroll-mt-20">

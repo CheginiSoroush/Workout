@@ -26,11 +26,9 @@ import ProgressionCard from "@/components/dashboard/ProgressionCard";
 import MobilitySection from "@/components/dashboard/MobilitySection";
 import CardioSection from "@/components/dashboard/CardioSection";
 import NutritionPanel from "@/components/dashboard/NutritionPanel";
-import MedicalNotes from "@/components/dashboard/MedicalNotes";
 import ProgramScience from "@/components/dashboard/ProgramScience";
 import GlossarySection from "@/components/dashboard/GlossarySection";
 import CreatineResearch from "@/components/dashboard/CreatineResearch";
-import ClaResearch from "@/components/dashboard/ClaResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import LiftosaurGuide from "@/components/dashboard/LiftosaurGuide";
 import AppExports from "@/components/dashboard/AppExports";
@@ -245,7 +243,6 @@ export default function ProgramView() {
         {/* ---------- تب ۴: تغذیه و سلامت ---------- */}
         <TabsContent value="health" className="mt-5 space-y-6" aria-label="تغذیه و سلامت">
           <NutritionPanel />
-          <MedicalNotes />
         </TabsContent>
 
         {/* ---------- تب ۵: دانش و منابع ---------- */}
@@ -270,9 +267,6 @@ export default function ProgramView() {
           </div>
           <div id="creatine">
             <CreatineResearch />
-          </div>
-          <div id="cla">
-            <ClaResearch />
           </div>
           <div id="hevy">
             <HevyGuide />

@@ -1,11 +1,14 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" width="100%" alt="داشبورد فیتنس من — برنامهٔ شناگر FST-7"/>
+<img src="docs/assets/banner.svg" width="100%" alt="FST-7 Swim Physique Dashboard — personal PPL training"/>
 
-[![Live Site](https://img.shields.io/badge/🌐_سایت_زنده-GitHub_Pages-25c281?style=for-the-badge)](https://cheginisoroush.github.io/Workout/)
+# FST-7 Swim Physique Dashboard
+
+**A personal, fully-RTL fitness dashboard — a 3-day Push / Pull / Legs split with FST-7 finishers, set-by-set logging, a science-backed knowledge base, and one-click exports to workout apps.**
+
+[![Live Site](https://img.shields.io/badge/🌐_Live_Site-GitHub_Pages-25c281?style=for-the-badge)](https://cheginisoroush.github.io/Workout/)
 [![Deploy](https://github.com/CheginiSoroush/Workout/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/CheginiSoroush/Workout/actions/workflows/deploy-pages.yml)
-[![Author](https://img.shields.io/badge/سازنده-Soroush_Chegini-0f1512?style=for-the-badge&logo=github)](https://github.com/CheginiSoroush)
-[![Email](https://img.shields.io/badge/ایمیل-imsorouschegini@gmail.com-25c281?style=for-the-badge&logo=gmail&logoColor=white)](mailto:imsorouschegini@gmail.com)
+[![Author](https://img.shields.io/badge/Author-Soroush_Chegini-0f1512?style=for-the-badge&logo=github)](https://github.com/CheginiSoroush)
 
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -14,75 +17,120 @@
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white)
 ![Bun](https://img.shields.io/badge/Bun-⚡_runtime-F472B6)
 
-**ساختهٔ [سروش چگینی (Soroush)](https://github.com/CheginiSoroush) — برای خودش، بر پایهٔ اصول هانی رامبد (FST-7)**
-
-[🌐 سایت زنده](https://cheginisoroush.github.io/Workout/) · [imsoroush.ir](https://imsoroush.ir) · [پرتفولیو گیت‌هاب](https://github.com/CheginiSoroush)
+[🌐 Live Site](https://cheginisoroush.github.io/Workout/) · [Portfolio](https://imsoroush.ir) · [GitHub Profile](https://github.com/CheginiSoroush)
 
 </div>
 
 ---
 
-## ✨ این چیه؟ / What is this?
+## ✨ What is this?
 
-داشبورد شخصی تمرین، تغذیه و پیشرفت — برنامهٔ **۳ روزهٔ Push / Pull / Legs** با فینیشر **FST-7** در پایان هر جلسه، RPE ۸–۹ و پیشروی دوگانه. همه‌چیز RTL و فارسی، همه‌داده‌ها فقط روی دستگاه خودت، و خروجی مستقیم برای اپ‌های بدنسازی.
+A self-hosted training companion built around the **FST-7** principle (Hany Rambod): a 3-day **Push / Pull / Legs** split, each session ending with a 7-set, 45-second rest-pause finisher. Every exercise ships with machine ↔ free-weight variants, form cues, common mistakes and video references. Everything is **Persian-first (RTL)**, works **100% offline**, and stores data **only on your own device** — no accounts, no servers.
 
-> A personal, fully-RTL fitness dashboard: a 3-day PPL split with FST-7 finishers, set-by-set logging, science-backed knowledge base, and one-click exports to Hevy / Liftosaur / Lyfta.
+## 📸 Screenshots
 
-## 🖼️ نگاهی به داخل / Screenshots
-
-| خانه | برنامهٔ هفتگی | دانش و منابع |
+| Home | Weekly Program | Knowledge Base |
 |:---:|:---:|:---:|
-| ![خانه](docs/screenshots/home.png) | ![برنامه](docs/screenshots/program.png) | ![دانش](docs/screenshots/knowledge.png) |
-| **موبایل — خانه** | **موبایل — برنامه** | |
-| ![موبایل خانه](docs/screenshots/mobile-home.png) | ![موبایل برنامه](docs/screenshots/mobile-program.png) | |
+| ![Home](docs/screenshots/home.png) | ![Program](docs/screenshots/program.png) | ![Knowledge](docs/screenshots/knowledge.png) |
+| **Mobile — Home** | **Mobile — Program** | |
+| ![Mobile Home](docs/screenshots/mobile-home.png) | ![Mobile Program](docs/screenshots/mobile-program.png) | |
 
-## 🏋️ برنامهٔ تمرین / The Program
+## 🏋️ The Program
 
-| جلسه | تمرکز | ست‌های کاری | فینیشر FST-7 |
+| Session | Focus | Working Sets | FST-7 Finisher |
 |:---:|:---|:---:|:---|
-| **شنبه** | سینه · سرشانه · پشت‌بازو | ۲۳ ست | نشر جانب کابل — ۷ ست × ۴۵ ثانیه |
-| **دوشنبه** | زیربغل · پشت بازو جلوی بدن | ۲۶ ست | فییس‌پول — ۷ ست × ۴۵ ثانیه |
-| **چهارشنبه** | پا · باسن · شکم | ۲۷ ست | نشر جانب دستگاه — ۷ ست × ۴۵ ثانیه |
+| **Sat** | Chest · Shoulders · Triceps | 23 sets | Cable lateral raise — 7 × 45s |
+| **Mon** | Back · Biceps | 26 sets | Face pull — 7 × 45s |
+| **Wed** | Legs · Glutes · Abs | 27 sets | Machine lateral raise — 7 × 45s |
 
-هر ۲۰ حرکت با ویدیو/فلیپ‌بوک، نکات فرم، خطاهای رایج و **نسخهٔ دستگاه ↔ وزنهٔ آزاد**.
+All 20 exercises include video/flickbook demos, form cues, common mistakes and a **machine ↔ free-weight switch** (machine-first for beginners, backed by a 2023 meta-analysis).
 
-## 🚀 قابلیت‌ها / Features
+## 🚀 Features
 
-- 📋 **ثبت جلسه ست‌به‌ست** — وزنه، تکرار، استراحت‌سنج و RPE با دکمه‌های سریع
-- 📈 **پیشرفت واقعی** — نمودار وزنه‌ها، استمراری هفتگی و رکوردهای شخصی
-- 🧠 **کتابخانهٔ دانش** — قاموس ۳۱ اصطلاح، تحقیق کراتین و CLA، منابع علمی لینک‌دار
-- 🧘 **روتین کشش ۱۴ حرکته** + LISS دوچرخه + تغذیه و سلامت
-- 📤 **خروجی برای اپ‌ها** — Hevy، Liftosaur، Lyfta، Gymverse و… با نام دقیق حرکت‌ها از کتابخانهٔ هر اپ
-- 🤖 **پرامپت ChatGPT + Hevy** — ساخت خودکار هر ۳ روال داخل اپ با یک پرامپت (دستگاهی/آزاد)
-- 🔒 **حریم خصوصی کامل** — بدون سرور و حساب؛ همه‌چیز روی دستگاه تو
-- 🌓 **تم تیرهٔ سبز** — طراحی mobile-first با فونت وزیرمتن، کاملاً آفلاین
+- 📋 **Set-by-set session logging** — weight, reps, rest timer and RPE with quick-fill buttons
+- 📈 **Real progress tracking** — weight charts, weekly consistency, personal records
+- 🧠 **Knowledge library** — 31-term glossary, creatine research digest, linked scientific sources
+- 🧘 **14-move stretching routine** + LISS bike cardio + nutrition guidance
+- 📤 **Export to workout apps** — Hevy, Liftosaur, Lyfta, GymMane, Gymverse and more, with exact per-app exercise names
+- 🤖 **ChatGPT + Hevy prompt** — auto-build all 3 routines inside the app with a single prompt
+- 🔒 **Privacy by design** — no server, no account; everything stays on your device
+- 🌓 **Dark emerald theme** — mobile-first, Vazirmatn font, fully offline-capable
 
-## 📤 خروجی‌ها / Exports
+## 📤 Workout App Exports
 
-فایل‌های آماده در [`public/exports`](public/exports): `build-hevy*.txt` · `liftosaur-*.liftoscript` · `build-lyfta*.txt` · `chatgpt-hevy-prompt-*.txt` و…
+Ready-made files in [`public/exports`](public/exports): `build-hevy*.txt` · `liftosaur-*.liftoscript` · `build-lyfta*.txt` · `build-gymmane*.txt` · `opengym-plan*.json` · `chatgpt-hevy-prompt-*.txt` · `weekly-routine-full.md`
 
-## ⚙️ معماری / Architecture
+## 🧠 Architecture
 
 ```mermaid
 graph LR
-  A([کاربر]) --> B[Next.js 16 — App Router]
-  B --> C[خانه · برنامه · تمرین · پیشرفت · پروفایل]
-  B --> D[(دیتای محلی — فقط روی دستگاه)]
-  B --> E[خروجی: Hevy · Liftosaur · Lyfta · ChatGPT]
-  C --> F[کتابخانهٔ دانش علمی]
+  A([User]) --> B[Next.js 16 — App Router]
+  B --> C[Home · Program · Workout · Progress · Knowledge]
+  B --> D[(Local-first data — on device only)]
+  B --> E[Exports: Hevy · Liftosaur · Lyfta · ChatGPT]
+  C --> F[Science-backed knowledge library]
 ```
 
-## 🛠️ تکنولوژی / Tech Stack
+## 🛠️ Tech Stack
 
-| لایه | ابزار |
+| Layer | Tools |
 |:---|:---|
-| فریم‌ورک | Next.js 16 (App Router) · React 19 |
-| زبان | TypeScript 5 (strict) |
-| استایل | Tailwind CSS 4 · shadcn/ui · Lucide |
-| داده | Prisma + SQLite · TanStack Query · Zustand |
-| اجرا | Bun · GitHub Actions → GitHub Pages |
+| Framework | Next.js 16 (App Router) · React 19 |
+| Language | TypeScript 5 (strict) |
+| Styling | Tailwind CSS 4 · shadcn/ui · Lucide |
+| Data | Prisma + SQLite · TanStack Query · Zustand |
+| Runtime | Bun · GitHub Actions → GitHub Pages |
 
-## 🏃 اجرا / Getting Started
+## ⚡ Getting Started
+
+```bash
+git clone https://github.com/CheginiSoroush/Workout.git
+cd Workout
+bun install
+bun run dev            # develop → http://localhost:3000
+bun run build:static   # static build for GitHub Pages
+```
+
+## 👤 Author
+
+| | |
+|:---|:---|
+| **Design, code, training program & content** | Soroush Chegini |
+| **GitHub** | [@CheginiSoroush](https://github.com/CheginiSoroush) |
+| **Email** | [imsorouschegini@gmail.com](mailto:imsorouschegini@gmail.com) |
+| **Website** | [imsoroush.ir](https://imsoroush.ir) |
+
+---
+
+## 🇮🇷 نسخهٔ فارسی
+
+<details>
+<summary><b>مشاهدهٔ نسخهٔ فارسی — کلیک کنید</b></summary>
+
+### ✨ این چیه؟
+
+داشبورد شخصی تمرین بر پایهٔ اصل **FST-7** (هانی رامبد): برنامهٔ ۳ روزهٔ **Push / Pull / Legs** که هر جلسه با فینیشر ۷ ست × ۴۵ ثانیه تمام می‌شود. هر ۲۰ حرکت نسخهٔ **دستگاه ↔ وزنهٔ آزاد**، نکات فرم، خطاهای رایج و ویدیو دارد. همه‌چیز فارسی و RTL، کاملاً آفلاین، و داده‌ها فقط روی دستگاه خودت — بدون سرور و حساب کاربری.
+
+### 🏋️ برنامه
+
+| جلسه | تمرکز | ست‌های کاری | فینیشر FST-7 |
+|:---:|:---|:---:|:---|
+| **شنبه** | سینه · سرشانه · پشت‌بازو | ۲۳ ست | نشر جانب کابل — ۷ × ۴۵ث |
+| **دوشنبه** | زیربغل · جلوبازو | ۲۶ ست | فییس‌پول — ۷ × ۴۵ث |
+| **چهارشنبه** | پا · باسن · شکم | ۲۷ ست | نشر جانب دستگاه — ۷ × ۴۵ث |
+
+### 🚀 قابلیت‌ها
+
+- 📋 ثبت جلسه ست‌به‌ست — وزنه، تکرار، استراحت‌سنج و RPE
+- 📈 نمودار وزنه‌ها، استمراری هفتگی و رکوردهای شخصی
+- 🧠 کتابخانهٔ دانش — قاموس ۳۱ اصطلاح، تحقیق کراتین، منابع علمی لینک‌دار
+- 🧘 روتین کشش ۱۴ حرکته + LISS دوچرخه + تغذیه
+- 📤 خروجی برای Hevy، Liftosaur، Lyfta، GymMane و… با نام دقیق حرکت‌ها
+- 🤖 پرامپت ChatGPT + Hevy برای ساخت خودکار هر ۳ روال
+- 🔒 حریم خصوصی کامل — همه‌چیز روی دستگاه تو
+- 🌓 تم تیرهٔ سبز، فونت وزیرمتن، mobile-first
+
+### 🏃 اجرا
 
 ```bash
 git clone https://github.com/CheginiSoroush/Workout.git
@@ -92,21 +140,18 @@ bun run dev            # توسعه → http://localhost:3000
 bun run build:static   # خروجی استاتیک برای GitHub Pages
 ```
 
-## 👤 سازنده / Creator
+### 👤 سازنده
 
-| | |
-|:---|:---|
-| **طراحی، کد، برنامهٔ تمرینی و محتوا** | سروش چگینی — **Soroush Chegini** |
-| **گیت‌هاب** | [@CheginiSoroush](https://github.com/CheginiSoroush) |
-| **ایمیل** | [imsorouschegini@gmail.com](mailto:imsorouschegini@gmail.com) |
-| **وب‌سایت** | [imsoroush.ir](https://imsoroush.ir) |
+**سروش چگینی — Soroush Chegini** · [@CheginiSoroush](https://github.com/CheginiSoroush) · [imsorouschegini@gmail.com](mailto:imsorouschegini@gmail.com) · [imsoroush.ir](https://imsoroush.ir)
+
+</details>
 
 ---
 
 <div align="center">
 
-© ۲۰۲۶ [Soroush Chegini](https://github.com/CheginiSoroush) — تمام حقوق محفوظ است.
+© 2026 [Soroush Chegini](https://github.com/CheginiSoroush) — All rights reserved. / تمام حقوق محفوظ است.
 
-⭐ اگه ایده‌ات را زد، یک ستار بزن!
+⭐ If this project gave you an idea, give it a star!
 
 </div>

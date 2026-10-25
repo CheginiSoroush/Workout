@@ -414,6 +414,7 @@ export default function AppExports() {
               </h3>
               <p className="mt-1 text-xs leading-6 text-muted-foreground">
                 تقویم هفته، پروتکل دقیق جلسه، هر ۲۰ حرکت با دوز/نکات فرم/خطاهای رایج/نسخه‌های
+                جایگزین، برنامهٔ دوچرخه ثابت، ۱۴ کششی، قواعد پیشرفت و FST-7، تغذیه —
                 یک فایل، همه‌چیز.
               </p>
             </div>

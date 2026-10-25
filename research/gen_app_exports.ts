@@ -9,7 +9,6 @@ import {
   WEEK_SCHEDULE,
   PROGRESSION_RULES,
   NUTRITION_NOTES,
-  MEDICAL_NOTES,
   FST7_NOTES,
   MACHINE_FIRST_NOTE,
   PROFILE,
@@ -152,7 +151,7 @@ function buildSheet(appName: string, accent: string, mode: "base" | "machine" = 
   parts.push("=====================================================");
   parts.push("");
   parts.push("هفته: شنبه Push | دوشنبه Pull | چهارشنبه پا+شکم | بقیه روزها استراحت/کششی/دوچرخه");
-  parts.push(`پروفایل: ${PROFILE.age} ساله، ${faNum(PROFILE.height)} سانتی‌متر، هدف ${PROFILE.targetWeight} کیلو — ${PROFILE.goal}`);
+  parts.push(`هدف: ${PROFILE.goal}`);
   parts.push(`حجم دو نسخه یکسان است — فقط ابزار عوض می‌شود، نه ساختار. ${MACHINE_FIRST_NOTE.text}`);
   parts.push("");
   PROGRAM.forEach((d) => {
@@ -172,8 +171,6 @@ function buildSheet(appName: string, accent: string, mode: "base" | "machine" = 
   parts.push(`• ${FST7_NOTES.description}`);
   FST7_NOTES.rules.forEach((r) => parts.push(`• ${r}`));
   parts.push("");
-  MEDICAL_NOTES.forEach((m) => parts.push(`• ${m.title}: ${m.text}`));
-  parts.push("");
   parts.push("قاعدهٔ طلایی: ثبت‌نکردن = تمرین‌نکردن — هر ست را در اپ لاگ کن تا پیشرفت دوگانه کار کند.");
   void accent;
   return parts.join("\n");
@@ -185,7 +182,7 @@ function weeklySheet(): string {
   p.push("# 🏊 روتین کامل هفتگی ورزش — برنامهٔ شناگر FST-7");
   p.push("");
   p.push(`> تولید ${TODAY} — تک‌برگ مرجع برای ساخت برنامه در هر اپ یا روی کاغذ`);
-  p.push(`> پروفایل: ${faNum(PROFILE.age)} ساله | ${faNum(PROFILE.height)} سانتی‌متر | ${faNum(PROFILE.startWeight)} → ${faNum(PROFILE.targetWeight)} کیلو | هدف: ${PROFILE.goal}`);
+  p.push(`> هدف: ${PROFILE.goal}`);
   p.push(`> پروتئین: ${faNum(PROFILE.proteinPerTargetKg)} گرم به ازای هر کیلو وزن هدف | کسری کالری: ${faNum(PROFILE.calorieDeficit)} | کراتین: ${PROFILE.creatine}`);
   p.push("");
   p.push("## 📅 تقویم هفته");
@@ -296,9 +293,6 @@ function weeklySheet(): string {
   p.push("## 🥗 تغذیه");
   p.push("");
   NUTRITION_NOTES.forEach((n) => p.push(`- **${n.title}:** ${n.text}`));
-  p.push("");
-  p.push("");
-  MEDICAL_NOTES.forEach((m) => p.push(`- **${m.title}:** ${m.text}`));
   p.push("");
   p.push("---");
   p.push("");
@@ -912,10 +906,9 @@ function gymmaneSheet(mode: "base" | "machine" = "base"): string {
     parts.push(`• ${b.title} — ${b.when} — ${b.dose}`);
   });
   parts.push("");
-  parts.push("--- قواعد پیشرفت / FST-7 / تغذیه / پزشکی ---");
+  parts.push("--- قواعد پیشرفت / FST-7 / تغذیه ---");
   PROGRESSION_RULES.forEach((r) => parts.push(`• ${r.title}: ${r.text}`));
   parts.push(`• ${FST7_NOTES.description}`);
-  MEDICAL_NOTES.forEach((m) => parts.push(`• ${m.title}: ${m.text}`));
   return parts.join("\n");
 }
 
