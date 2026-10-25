@@ -82,7 +82,7 @@ export const DAY1: WorkoutDay = {
       reps: "۵ تا ۸",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/bench-press.jpg",
+      image: "/exercises/bench-press.webp",
       videoQuery: "barbell bench press proper form tutorial",
       tips: [
         "تیغه‌های شانه رو عقب و پایین قفل کن و قفسه سینه رو باد کن",
@@ -107,7 +107,7 @@ export const DAY1: WorkoutDay = {
       reps: "۸ تا ۱۲",
       rest: "۲ دقیقه",
       rpe: "۸",
-      image: "/exercises/incline-db-press.jpg",
+      image: "/exercises/incline-db-press.webp",
       videoQuery: "incline dumbbell press proper form tutorial",
       tips: [
         "شیب نیمکت ۳۰ درجه — بیشتر بشه سرشانه فعال‌تر می‌شه، کمتر بشه سینه پایین",
@@ -132,7 +132,7 @@ export const DAY1: WorkoutDay = {
       reps: "۸ تا ۱۲",
       rest: "۲ دقیقه",
       rpe: "۸",
-      image: "/exercises/db-shoulder-press.jpg",
+      image: "/exercises/db-shoulder-press.webp",
       videoQuery: "seated dumbbell shoulder press form tutorial",
       tips: [
         "پشتت کامل به پشتی نیمکت بچسبه؛ قوس کمر طبیعی و کم",
@@ -157,7 +157,7 @@ export const DAY1: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۷۵–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/cable-fly.png",
+      image: "/exercises/cable-fly.webp",
       videoQuery: "cable chest fly form tutorial",
       tips: [
         "قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت",
@@ -180,7 +180,7 @@ export const DAY1: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۶۰–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/rope-pushdown.png",
+      image: "/exercises/rope-pushdown.webp",
       videoQuery: "cable rope triceps pushdown form tutorial",
       tips: [
         "آرنج‌ها چسبیده به بدن و ثابت — فقط ساعد حرکت می‌کنه",
@@ -198,7 +198,7 @@ export const DAY1: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۳۰–۴۵ ثانیه",
       rpe: "پامپ",
-      image: "/exercises/lateral-raise.jpg",
+      image: "/exercises/lateral-raise.webp",
       videoQuery: "dumbbell lateral raise form tutorial",
       tips: [
         "شونه‌ها پایین و عقب — ترپس رو درگیر نکن",
@@ -238,7 +238,7 @@ export const DAY2: WorkoutDay = {
       reps: "۵ تا ۱۰",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/pull-up.png",
+      image: "/exercises/pull-up.webp",
       videoQuery: "pull up proper form tutorial",
       tips: [
         "دست‌ها کمی بازتر از عرض شانه، سینه به سمت میله",
@@ -263,7 +263,7 @@ export const DAY2: WorkoutDay = {
       reps: "۶ تا ۱۰",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/barbell-row.jpg",
+      image: "/exercises/barbell-row.webp",
       videoQuery: "barbell bent over row form tutorial",
       tips: [
         "تنه حدود ۴۵ درجه، کمر صاف و هسته سفت",
@@ -288,7 +288,7 @@ export const DAY2: WorkoutDay = {
       reps: "۱۰ تا ۱۲",
       rest: "۲ دقیقه",
       rpe: "۸",
-      image: "/exercises/lat-pulldown.jpg",
+      image: "/exercises/lat-pulldown.webp",
       videoQuery: "wide grip lat pulldown form tutorial",
       tips: [
         "دست کمی بازتر از شانه؛ دسته رو تا بالای سینه بکش",
@@ -306,7 +306,7 @@ export const DAY2: WorkoutDay = {
       reps: "۱۲ تا ۱۵",
       rest: "۷۵–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/face-pull.jpg",
+      image: "/exercises/face-pull.webp",
       videoQuery: "cable face pull form tutorial",
       tips: [
         "طناب در ارتفاع صورت؛ به سمت پیشونی بکش نه سینه",
@@ -324,7 +324,7 @@ export const DAY2: WorkoutDay = {
       reps: "۱۲ تا ۱۵",
       rest: "۶۰–۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/reverse-pec-deck.png",
+      image: "/exercises/reverse-pec-deck.webp",
       videoQuery: "reverse pec deck rear delt fly machine tutorial",
       tips: [
         "سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها",
@@ -350,7 +350,7 @@ export const DAY2: WorkoutDay = {
       reps: "۸ تا ۱۲",
       rest: "۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/ez-curl.jpg",
+      image: "/exercises/ez-curl.webp",
       videoQuery: "EZ bar bicep curl form tutorial",
       tips: [
         "آرنج‌ها ثابت کنار بدن — فقط ساعد حرکت می‌کنه",
@@ -375,7 +375,7 @@ export const DAY2: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۳۰–۴۵ ثانیه",
       rpe: "پامپ",
-      image: "/exercises/straight-arm-pulldown.jpg",
+      image: "/exercises/straight-arm-pulldown.webp",
       videoQuery: "straight arm cable pulldown lat form tutorial",
       tips: [
         "آرنج ثابت و کمی خم — زاویه دست در کل حرکت ثابت",
@@ -408,7 +408,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۲",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/leg-press.png",
+      image: "/exercises/leg-press.webp",
       videoQuery: "leg press machine form tutorial",
       tips: [
         "پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه",
@@ -431,7 +431,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۰",
       rest: "۲–۳ دقیقه",
       rpe: "۸",
-      image: "/exercises/rdl.jpg",
+      image: "/exercises/rdl.webp",
       videoQuery: "romanian deadlift form tutorial",
       tips: [
         "لگن رو به عقب هل بده (hip hinge) — اسکات نیست!",
@@ -456,7 +456,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۲ هر پا",
       rest: "۹۰ ثانیه",
       rpe: "۸",
-      image: "/exercises/bulgarian-split-squat.jpg",
+      image: "/exercises/bulgarian-split-squat.webp",
       videoQuery: "bulgarian split squat form tutorial",
       tips: [
         "پنجه پای عقب روی نیمکت، پای جلو حدود ۶۰ سانت جلوتر",
@@ -481,7 +481,7 @@ export const DAY3: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۷۵ ثانیه",
       rpe: "۹",
-      image: "/exercises/leg-curl.jpg",
+      image: "/exercises/leg-curl.webp",
       videoQuery: "lying leg curl machine form tutorial",
       tips: [
         "لگن تمام مدت چسبیده به دستگاه — باسن بالا نیاد",
@@ -499,7 +499,7 @@ export const DAY3: WorkoutDay = {
       reps: "۱۰ تا ۱۵",
       rest: "۶۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/calf-raise.jpg",
+      image: "/exercises/calf-raise.webp",
       videoQuery: "standing calf raise form tutorial",
       tips: [
         "دامنه کامل: پایین کشش ۲ ثانیه، بالا اسکوییز ۱ ثانیه",
@@ -517,7 +517,7 @@ export const DAY3: WorkoutDay = {
       reps: "۸ تا ۱۵",
       rest: "۹۰ ثانیه",
       rpe: "۹",
-      image: "/exercises/hanging-leg-raise.png",
+      image: "/exercises/hanging-leg-raise.webp",
       videoQuery: "hanging leg raise form tutorial",
       tips: [
         "کلید حرکت چرخش لگنه (posterior pelvic tilt) — نه فقط بالا بردن پا",
@@ -542,7 +542,7 @@ export const DAY3: WorkoutDay = {
       reps: "۱۲ تا ۱۵",
       rest: "۳۰–۴۵ ثانیه",
       rpe: "پامپ",
-      image: "/exercises/cable-crunch.jpg",
+      image: "/exercises/cable-crunch.webp",
       videoQuery: "kneeling cable crunch form tutorial",
       tips: [
         "دسته رو کنار گردن بگیر (نه پشت سر) و زانوها روی زمین",
@@ -764,6 +764,40 @@ export const CREATINE_RESEARCH = {
     {
       title: "نتیجه برای تو — شروع از امروز",
       text: "۳ گرم هر روز، حتی روزهای استراحت، با آب زیاد. وزن آبیِ اول ماه (+۱ تا ۱.۵ کیلو) طبیعیه و چربی نیست. در کسری کالری، کراتین قدرت و عضله رو حفظ می‌کنه — دقیقاً هدف فعلی تو.",
+    },
+  ],
+};
+
+export const CLA_RESEARCH = {
+  subtitle:
+  cards: [
+    {
+      title: "CLA چیست و این محصول چیست؟",
+    },
+    {
+      title: "چقدر واقعاً چربی کم می‌کند؟ — متاآنالیزها",
+      text: "برآورد متاآنالیز Whigham ۲۰۰۷: با ~۳.۲ گرم در روز، حدود ۰.۰۹ کیلو چربی در هفته (~۱ کیلو در ۳ ماه). مرور Onakpoya ۲۰۱۲ محافظه‌کارانه‌تر: ~۰.۷ کیلو در ۶ ماه. یعنی اثر واقعی ولی به‌چشم‌نیامدنی در آینه — در حالی که کسری ۵۰۰ کالری تو هفته‌ای ~۰.۵ کیلو می‌دهد؛ تقریباً ۱۰ برابر بیشتر، بدون هزینه.",
+      linkLabel: "Whigham 2007 — متاآنالیز AJCN (PubMed)",
+      linkUrl:
+        "https://pubmed.ncbi.nlm.nih.gov/?term=Whigham+conjugated+linoleic+acid+reducing+body+fat+meta-analysis",
+    },
+    {
+      title: "عضله و قدرت چه؟",
+      text: "در پژوهش‌های آموزش مقاومتی، CLA نسبت به پلاسیبو تفاوت معنادار در قدرت و عضله‌سازی نشان نداد؛ چند مطالعهٔ کوچک کاهش جزئی چربی در ورزشکاران دیدند ولی اثر ناچیز بود. جایگزین پروتئین و کراتین نیست و هیچ‌وقت نمی‌تواند باشد.",
+      linkLabel: "Onakpoya — مرور نظام‌مند (PubMed)",
+      linkUrl:
+        "https://pubmed.ncbi.nlm.nih.gov/?term=Onakpoya+conjugated+linoleic+acid+body+fat+systematic+review",
+    },
+    {
+      title: "عوارض و احتیاط‌ها — این بخش مهم است",
+      text: "رایج: ناراحتی گوارشی (تهوع، اسهال، مزهٔ بد). مهم‌تر: در چند کارآزمایی، CLA حساسیت به انسولین را کمی بدتر و قند ناشتا را بالاتر برد — اگر پیش‌دیابت یا سابقهٔ خانوادگی داری، اول با پزشک چک کن. دوزهای بالا و طولانی‌مدت در مطالعات حیوانی بار کبدی نشان داده‌اند.",
+    },
+    {
+      text: "روی جعبه ببین: میلی‌گرم CLA در هر کپسول (۱۰۰۰)، تعداد کپسول، و درصد ایزومر فعال (~۷۵–۸۰٪). فقط از داروخانهٔ معتبر بخر — بازار مکمل ایران جنس باز و تقلبی زیاد دارد. قیمت هر گرم CLA را با برند معتبر Tonalin مقایسه کن تا کلاه سرت نرود.",
+    },
+    {
+      title: "نتیجه برای تو — اولویت‌بندی پول",
+      text: "ترتیب هزینه‌به‌نتیجه در فاز فعلی: ۱) پروتئین ~۱۷۰ گرم ۲) کراتین ۳ گرم ۳) خواب و پیوستن به برنامه ۴) CLA — اختیاری، ۱ تا ۲ درصد بازی اضافه. اگر باز هم خواستی: ۱ کپسول با ناهار و ۱ با شام، حداقل ۸–۱۲ هفته قبل از قضاوت؛ اگر گوارش اذیت شد قطع کن — و هیچ‌وقت جای کسری کالری و گام‌های روزانه را نگیرد.",
     },
   ],
 };

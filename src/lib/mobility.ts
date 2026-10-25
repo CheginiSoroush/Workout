@@ -43,7 +43,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "نشسته یا ایستاده، تنه صاف؛ دست را روی سر بگذار و آرام به سمت کنار بکش — شانه مقابل پایین و شل. هرگز به عقب نکش.",
     why: "سفتی گردن از موبایل و نشستن، تا کمر و شانه کشیده می‌شود — شروع آرام روتین.",
-    photo: "/stretches/neck.jpg",
+    photo: "/stretches/neck.webp",
     video: "/stretches/videos/neck.mp4",
   },
   {
@@ -55,7 +55,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "دست را افقی روی سینه بیاور؛ با دست دیگر آرنج را به سمت سینه قفل کن. شانه پایین، تنه ثابت.",
     why: "پشت شانه و دلتوئید — برای سلامت شانه در پرس و نشر.",
-    photo: "/stretches/shoulder-cross.jpg",
+    photo: "/stretches/shoulder-cross.webp",
     video: "/stretches/videos/shoulder-cross.mp4",
   },
   // ---------- سینه و پشت ----------
@@ -68,7 +68,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "ساعد روی چارچوب در، آرنج هم‌سطح شانه؛ یک قدم جلو و تنه را بچرخان تا جلوی شانه کشیده شود.",
     why: "پادزهر خم‌بودن روزانه — سینه باز = شانه عقب = قامت بلندتر + پرس بهتر.",
-    photo: "/stretches/doorway-pec.jpg",
+    photo: "/stretches/doorway-pec.webp",
     video: "/stretches/videos/doorway-pec.mp4",
   },
   {
@@ -80,7 +80,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "دست‌ها بالای دیوار/چارچوب، لگن را عقب بده و سینه را پایین بین بازوها — کشش از زیربغل تا پهلو.",
     why: "عرض پشت (V-Taper) + شانه سالم — بعد از جلسه Pull طلاست.",
-    photo: "/stretches/wall-lat.png",
+    photo: "/stretches/wall-lat.webp",
     video: "/stretches/videos/wall-lat.mp4",
   },
   // ---------- کمر و ستون ----------
@@ -93,7 +93,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "چهار دست‌وپا؛ با دم کمر را گوهی خم کن، با بازدم قوس بده و نگاه بالا. مهره‌به‌مهره، بدون عجله.",
     why: "موبیلیتی کل ستون فقرات — گرم‌کننده همه کشش‌های بعدی.",
-    photo: "/stretches/cat-cow.png",
+    photo: "/stretches/cat-cow.webp",
     video: "/stretches/videos/cat-cow.mp4",
   },
   {
@@ -105,7 +105,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "به پشت خوابیده، زانوها خم و روی هم؛ هر دو زانو را آرام به یک طرف رها کن و دستِ مقابل را باز کن رو زمین و نگاه را دنبالش ببر.",
     why: "موبیلیتی سینه‌پشت — پرس بهتر، پشت صاف‌تر، کمر راحت‌تر.",
-    photo: "/stretches/openbook.jpeg",
+    photo: "/stretches/openbook.webp",
     video: "/stretches/videos/openbook.mp4",
   },
   {
@@ -117,7 +117,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "رو شکم، کف دست‌ها کنار سینه؛ تنه را بالا بیار — اول با عضله کمر، بعد اگر راحت بود با کمک دست. لگن چسبیده به زمین.",
     why: "اکستنشن کمر طبق پروتکل مک‌کنزی — جبران خم‌شدنِ تمام‌روز.",
-    photo: "/stretches/mckenzie.jpg",
+    photo: "/stretches/mckenzie.webp",
     key: true,
   },
   {
@@ -128,7 +128,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     duration: "۴۵ ثانیه",
     howTo:
       "زانوها کمی باز، باسن روی پاشنه، دست‌ها جلو و پیشونی روی زمین. با هر بازدم ۱–۲ سانت عمیق‌تر.",
-    photo: "/stretches/childs-pose.jpg",
+    photo: "/stretches/childs-pose.webp",
     video: "/stretches/videos/childs-pose.mp4",
   },
   // ---------- لگن و باسن ----------
@@ -141,7 +141,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "یک زانو زمین، پای جلو ۹۰ درجه؛ تنه صاف، باسن را جمع کن و لگن را آرام به جلو هل بده تا جلوی ران کشیده شود.",
     why: "⭐ مهم‌ترین کشش برای کمردردِ نشستن — فلکسور سفت، کمر را دائم قوس می‌دهد.",
-    photo: "/stretches/hip-flexor.jpg",
+    photo: "/stretches/hip-flexor.webp",
     key: true,
   },
   {
@@ -153,7 +153,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "پشت خوابیده، مچ پای جلو روی ران پای مقابل؛ پای مقابل را به سمت سینه بکش. کشش را در باسن حس کن.",
     why: "باسنِ سفت (پیریفورمیس) شایع‌ترین علت کشیده‌شدن کمر و باسن است.",
-    photo: "/stretches/figure4.jpg",
+    photo: "/stretches/figure4.webp",
     video: "/stretches/videos/figure4.mp4",
     key: true,
   },
@@ -167,7 +167,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "پشت دراز بکش، پا را با حوله یا بند بالا بکش تا کشش ملایم پشت ران؛ زانو تقریباً صاف ولی قفل نه.",
     why: "همسترینگ سفت لگن را به عقب می‌چرخاند و فشار را روی کمر می‌اندازد.",
-    photo: "/stretches/hamstring.jpg",
+    photo: "/stretches/hamstring.webp",
     video: "/stretches/videos/hamstring.mp4",
     key: true,
   },
@@ -180,7 +180,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "ایستاده (یا با دست روی دیوار)، مچ پا را بگیر و پاشنه را به باسن نزدیک کن — زانوها کنار هم، لگن جمع.",
     why: "جلوی ران — بعد از اسکوات/لانژ/پرس پا لازمه.",
-    photo: "/stretches/quad.jpg",
+    photo: "/stretches/quad.webp",
   },
   {
     id: "calf",
@@ -191,7 +191,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     howTo:
       "دست‌ها روی دیوار، پای عقب صاف با پاشنه چسبیده به زمین؛ به جلو خم شو تا ساق کشیده شود. زانوی پای عقب صاف.",
     why: "ساق سفت روی قوس کمر و مچ پا اثر می‌گذارد — برای سلامت اسکوات هم مهم.",
-    photo: "/stretches/calf.png",
+    photo: "/stretches/calf.webp",
     video: "/stretches/videos/calf.mp4",
   },
   {
@@ -202,7 +202,7 @@ export const STRETCH_ROUTINE: StretchMove[] = [
     duration: "۲۰–۳۰ ثانیه",
     howTo: "از میله آویزان شو، شانه‌ها فعال و کمی پایین، نفس آرام. بگذار ستون فقرات باز شود.",
     why: "اختیاری — دکامپرشن کمر + قدرت گریپ برای بارفیکس جلسه Pull.",
-    photo: "/stretches/deadhang.png",
+    photo: "/stretches/deadhang.webp",
     video: "/stretches/videos/deadhang.mp4",
     optional: true,
   },

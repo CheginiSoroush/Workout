@@ -54,11 +54,11 @@ const manifest = {
   exerciseVideos: list("exercises/videos", /\.mp4$/).map(stripVideo),
   exerciseFrameCounts: frameCounts("exercises/frames"),
   exerciseStepCounts: stepCounts("exercises/steps"),
-  exercisePhotos: list("exercises", /\.(jpg|jpeg|png)$/).sort(),
+  exercisePhotos: list("exercises", /\.(jpg|jpeg|png|webp)$/).sort(),
   stretchVideos: list("stretches/videos", /\.mp4$/).map(stripVideo),
   stretchFrameCounts: frameCounts("stretches/frames"),
   stretchStepCounts: stepCounts("stretches/steps"),
-  stretchPhotos: list("stretches", /\.(jpg|jpeg|png)$/).sort(),
+  stretchPhotos: list("stretches", /\.(jpg|jpeg|png|webp)$/).sort(),
 };
 
 const OUT = join(ROOT, "src/lib/generated/media-manifest.json");

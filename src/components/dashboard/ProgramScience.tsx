@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle2,
   Flame,
+  ListOrdered,
   Microscope,
+  Repeat,
   Scale,
   Sparkles,
   Timer,
@@ -287,6 +289,66 @@ export default function ProgramScience() {
             جلسه زیر ۷۵ دقیقه + RPE سقف ۹ + دیلود هر ۶–۸ هفته → مدیریت کورتیزول
             پیاده‌روی به‌جای HIIT روزانه.
           </p>
+        </div>
+      </div>
+
+      {/* ---------- ترتیب ست‌ها: مستقیم یا چرخشی؟ ---------- */}
+      <div className="rounded-2xl border border-border/70 bg-card/60 p-4">
+        <h4 className="flex items-center gap-2 text-sm font-extrabold">
+          <ListOrdered className="h-4 w-4 text-primary" aria-hidden="true" />
+          ست‌ها را چطور برویم؟ هر حرکت تا آخر، یا چرخشی؟
+        </h4>
+        <p className="mt-2 text-xs leading-6 text-muted-foreground">
+          <span className="font-bold text-foreground">
+            هر حرکت را تا ست آخر برو (Straight Sets)
+          </span>{" "}
+          — فقط فینیشرهای FST-7 استثنا هستند که خودشان چرخش درون یک حرکت‌اند.
+        </p>
+        <div className="mt-3 space-y-2">
+          <div className="rounded-xl border border-primary/25 bg-primary/5 p-3">
+            <p className="flex items-center gap-1.5 text-[11px] font-extrabold text-primary">
+              <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              مستقیم — انتخاب برنامه
+            </p>
+            <p className="mt-1 text-xs leading-6 text-muted-foreground">
+              حرکات اصلی (پرس، بارفیکس، زیربغل خم) بعد از هر ست به ۲–۳ دقیقه
+              استراحت کامل نیاز دارند تا ATP و سیستم عصبی بازیابی شود؛ نتیجه:
+              تکرارهای بیشتر با وزنهٔ سنگین‌تر و فرم تمیزتر = تنش مکانیکی بیشتر =
+              رشد بیشتر. پژوهش نشان داد استراحت ۲–۳ دقیقه در برابر ۱ دقیقه، هم
+              قدرت و هم هیپرتروفی را بیشتر می‌کند.
+            </p>
+          </div>
+          <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-3">
+            <p className="flex items-center gap-1.5 text-[11px] font-extrabold text-amber-500">
+              <Repeat className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              چرخشی (یک ست از هر حرکت پشت‌سرهم) — نه برای هدف تو
+            </p>
+            <p className="mt-1 text-xs leading-6 text-muted-foreground">
+              کالری بیشتری می‌سوزاند و زمان را کم می‌کند، ولی استراحت ناکافی یعنی
+              افت بار و تکرار در ست‌های بعدی — برای چربی‌سوزی و استقامت خوب است،
+              برای عضله‌سازی در کسری کالری بهینه نیست. اگر روزی مجبور شدی (باشگاه
+              شلوغ یا وقت کم)، فقط دو حرکت ایزولهٔ آخر جلسه را جفت کن — نوت
+              «سوپرست با جلوبازو» روی پک‌دک معکوس دقیقاً برای همین است.
+            </p>
+          </div>
+        </div>
+        <div className="mt-2.5 flex flex-wrap gap-1.5">
+          <a
+            href="https://pubmed.ncbi.nlm.nih.gov/?term=Schoenfeld+longer+inter-set+rest+periods+muscle+strength+hypertrophy"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-lg border border-border/60 bg-background/50 px-2 py-1 text-[10px] text-muted-foreground transition hover:border-primary/40 hover:text-primary"
+          >
+            Schoenfeld 2016 — طول استراحت بین ست‌ها
+          </a>
+          <a
+            href="https://pubmed.ncbi.nlm.nih.gov/?term=Iversen+No+time+to+lift+time-efficient+resistance+training"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-lg border border-border/60 bg-background/50 px-2 py-1 text-[10px] text-muted-foreground transition hover:border-primary/40 hover:text-primary"
+          >
+            Iversen 2021 — برنامه‌های کم‌زمان
+          </a>
         </div>
       </div>
 

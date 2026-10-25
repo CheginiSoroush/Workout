@@ -29,6 +29,7 @@ import NutritionPanel from "@/components/dashboard/NutritionPanel";
 import MedicalNotes from "@/components/dashboard/MedicalNotes";
 import ProgramScience from "@/components/dashboard/ProgramScience";
 import CreatineResearch from "@/components/dashboard/CreatineResearch";
+import ClaResearch from "@/components/dashboard/ClaResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import LiftosaurGuide from "@/components/dashboard/LiftosaurGuide";
 import AppExports from "@/components/dashboard/AppExports";
@@ -264,6 +265,9 @@ export default function ProgramView() {
           </div>
           <div id="creatine">
             <CreatineResearch />
+          </div>
+          <div id="cla">
+            <ClaResearch />
           </div>
           <div id="hevy">
             <HevyGuide />

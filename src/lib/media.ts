@@ -8,7 +8,7 @@
 // نسخه ۲: رسانه مستقل برای نسخه‌های دستگاه ↔ وزنه آزاد
 // هر حرکت با mode متفاوت، ویدیو/فریم مخصوص خودش را می‌گیرد
 // (الگوی نام: {id}__machine یا {id}__free) — عکس اختصاصی نسخه هم
-// در public/exercises/{id}__{mode}.png.
+// در public/exercises/{id}__{mode}.webp.
 // ============================================================
 
 import { PROGRAM, type ExerciseMode } from "@/lib/program";
@@ -221,8 +221,8 @@ export function getVariantPhoto(id: string, mode?: ExerciseMode): string | null 
   const base = BASE_MODE[id];
   if (!base || mode === base) return null;
   // فقط اگر عکس نسخه واقعاً موجود است (وگرنه ۴۰۴ و فلاش عکس شکسته)
-  if (!EXERCISE_PHOTOS.has(`${id}__${mode}.png`)) return null;
-  return `${ASSET_BASE}/exercises/${id}__${mode}.png`;
+  if (!EXERCISE_PHOTOS.has(`${id}__${mode}.webp`)) return null;
+  return `${ASSET_BASE}/exercises/${id}__${mode}.webp`;
 }
 
 /** رسانه کشش — undefined اگر شناسه ناشناخته یا بدون رسانه باشد */
