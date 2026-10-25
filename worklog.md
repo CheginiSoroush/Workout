@@ -948,3 +948,22 @@ Stage Summary:
 - گیت‌هاب (کامیت‌ها + README + package.json + ایمیل عمومی) = proton؛ جیمیل فقط در رزومه و خط Contact پروفایل‌README باقی است
 - تصمیم نهایی ایمیل با کاربر است: (الف) جیمیل را در Settings→Emails گیت‌هاب Add+Verify کند → یک پاس دیگر همه‌چیز جیمیل می‌شود؛ (ب) یا رزومه را proton کند → همین حالا یکدست است
 - درس: ایمیل نویسندهٔ کامیت باید روی اکانت verify باشد وگرنه کامیتی به contribution graph و پروفایل وصل نمی‌شود — قبل از بازنویسی انبوه حتماً linkage تست شود (اینجا تست پس از push نجات‌بخش بود)
+
+---
+Task ID: 26
+Agent: main (Z.ai Code)
+Task: رفع ناسازگاری ایمیل (README ↔ رزومه/پروفایل گیت‌هاب) + ریدمی قشنگ با عکس/انیمیشن + topics + GitHub Pages info
+
+Work Log:
+- PAT جدید کاربر دریافت و در /home/z/.git-credentials ذخیره شد (توکن قبلی منقضی/جایگزین)
+- ریشهٔ باگ کشف شد: git config user.email ریپو روی gmail بود → کامیتِ README با gmail ثبت شده بود
+- اصلاح: git config → lmsoroush@proton.me (verified)، chmod 644 برای ۳ فایل بی‌ربط (icon.svg + ۲ پرامپت txt که mode تغییر کرده بودند)، دو بار amend کامیت README
+- README نهایی: بنر SVG انیمیشنی دست‌ساز (docs/assets/banner.svg — سویپ نوری ۵.۵s + حلقهٔ تپنده + گرادیان زمردی)، ۵ اسکرین‌شات واقعی در docs/screenshots/، بج‌های shields.io (for-the-badge)، بج پویای Deploy workflow، جدول برنامهٔ ۳ روزه، مِرمِید معماری، جدول سازنده با ایمیل gmail و لینک imsoroush.ir
+- قاعدهٔ نهایی هویت: محتوا (README/package.json) → gmail؛ نویسندهٔ کامیت → proton (چون gmail در گیت‌هاب verify نشده و contribution نمی‌بست)
+- API مخزن: PUT topics (۱۵ تگ: fitness, workout, fst7, nextjs, persian, rtl, ...)، PATCH description دوزبانه + homepage=https://cheginisoroush.github.io/Workout/
+- push → دیپلوی Actions در ~۴۵ ثانیه completed success (a2ed918)
+
+Stage Summary:
+- صفحهٔ عمومی مخزن تأیید شد: توضیحات، ۱۵ تاپیک، بنر انیمیشنی و هر ۵ اسکرین‌شات رندر می‌شوند؛ کامیت a2ed918 به CheginiSoroush linked است
+- سایت زنده 200؛ docs/assets/banner.svg و همهٔ اسکرین‌شات‌ها روی raw 200
+- درس فنی: بعد از هر checkout/new-clone، git config user.email را با نویسندهٔ موردنظر چک کن؛ gmail unverified فقط برای محتواست نه commit
