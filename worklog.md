@@ -889,3 +889,25 @@ Stage Summary:
 - دو پرامپت آمادهٔ ChatGPT+Hevy از روی همان دیتای وریفای‌شدهٔ ۳۳/۳۳ تولید می‌شوند — هر تغییری در program.ts خودکار به پرامپت‌ها هم می‌رسد
 - ۲ باگ پنهان exports فیکس شد: rest undefineds (همهٔ برگه‌های دستگاهی) و نام دستگاهی در برگه‌های وزنهٔ آزاد
 - فایل‌های خروجی همه ری‌جنریت شدند؛ UI کارت جدید در بالای بخش «برنامه در اپ‌های دیگر»
+
+---
+Task ID: 23
+Agent: main (Z.ai Code)
+Task: مالکیت کامل گیت‌هاب برای سروش — هویت گیت، بازنویسی تاریخچه، متادیتا و محتوا
+
+Work Log:
+- درخواست کاربر: «همه چیز توی گیت‌هاب به اسم خودم ثبت بشه از گیت و کامیت‌ها تا کانتنت و همه چیز»
+- هویت از پروفایل GitHub API استخراج شد: Soroush / CheginiSoroush / lmsoroush@proton.me (ایمیل عمومی خود پروفایل → اتصال خودکار کامیت‌ها به اکانت)
+- git config (لوکال + گلوبال): user.name=Soroush، user.email=lmsoroush@proton.me — قبلی Z User <z@container> بود
+- بکاپ لوکال (backup-zuser-history) → git filter-branch --env-filter روی main → هر ۵۰ کامیت author+committer → Soroush <lmsoroush@proton.me>؛ diff خالی درخت = محتوا دست‌نخورده
+- محتوا: package.json (name→workout-fst7 + author/repository/homepage)، bun.lock (اسم ریشه)، layout.tsx (authors/creator/publisher/applicationName + آیکون لوکال)، فاوآیکون اختصاصی هالتر public/icon.svg (سبز برند oklch 162)، حذف لوگوی ثالث Z.ai از public + سواپ logo.svg→icon.svg در fix-pages-paths.sh، کارت «سازنده» در HelpSection پروفایل با دکمهٔ GitHub، README.md ریشهٔ ریپو (فارسی+انگلیسی، جدول سازنده، © Soroush)
+- push --force (b19b281→ad5cea3) → Actions success → وریفای لایو: meta author/creator/publisher = Soroush (CheginiSoroush)، آیکون 200، لوگوی قدیمی 404، README API 200
+- وریفای اکانت: هر ۵۰ کامیت روی GitHub → author.login=CheginiSoroush + committer.login=CheginiSoroush
+- e2e agent-browser: تب پروفایل → بخش کمک و درباره → کارت «سازنده» رندر (اسکرین‌شات)، دکمهٔ GitHub با aria-label، favicon href=/icon.svg، errors/console خالی
+- پاک‌سازی: بکاپ‌برنچ و refs/original حذف شد؛ contributor stats گیت‌هاب بعد از force push موقتاً خالی است (کش GitHub — خودش دوباره محاسبه می‌کند)
+
+Stage Summary:
+- گیت‌هاب ریپو حالا ۱۰۰٪ به نام سروش است: تمام ۵۰ کامیت (نویسنده و کامیت‌کننده) → Soroush <lmsoroush@proton.me> متصل به اکانت CheginiSoroush
+- کلیدهای قدیمی کار (۸۰۶f236/۷۰۶۱e7a/b19b281 و…) با بازنویسی تاریخچه عوض شدند — هش‌های جدید از ad5cea3 به بعد معتبرند
+- برندینگ ثالث کامل حذف شد: لوگو/فاوآیکون Z.ai → هالتر اختصاصی سبز؛ نام پکیج تمپلیت → workout-fst7
+- هویت گلوبال هم ست شد → همهٔ کامیت‌های آینده خودکار به نام سروش ثبت می‌شوند
