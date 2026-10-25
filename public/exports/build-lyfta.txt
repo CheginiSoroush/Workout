@@ -16,20 +16,20 @@ FST-7 SWIMMER — LYFTA — برگهٔ ساخت کامل
   Notes: تیغه‌های شانه رو عقب و پایین قفل کن و قفسه سینه رو باد کن
   ★ گرم‌کردن این حرکت: ۱×۸ ۴۰٪ → ۱×۴ ۶۰٪ → ۱×۲ ۷۵٪ (درصد از وزنه ست اول)
   نسخهٔ دستگاهی (هفتهٔ ۱–۲): Chest Press (Machine)
-2. Incline Dumbbell Press — 3 × 8-12 — rest 120s — RPE 8
+2. Incline Bench Press (Dumbbell) — 3 × 8-12 — rest 120s — RPE 8
   Notes: شیب نیمکت ۳۰ درجه — بیشتر بشه سرشانه فعال‌تر می‌شه، کمتر بشه سینه پایین
   نسخهٔ دستگاهی (هفتهٔ ۱–۲): Incline Chest Press (Machine)
-3. Seated Dumbbell Shoulder Press — 3 × 8-12 — rest 120s — RPE 8
+3. Shoulder Press (Dumbbell) — 3 × 8-12 — rest 120s — RPE 8
   Notes: پشتت کامل به پشتی نیمکت بچسبه؛ قوس کمر طبیعی و کم
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Shoulder Press (Machine)
-4. Cable Chest Fly — 3 × 10-15 — rest 90s — RPE 9
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Seated Shoulder Press (Machine)
+4. Cable Fly Crossovers — 3 × 10-15 — rest 90s — RPE 9
   Notes: قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت
-  نسخهٔ جایگزین (همان تمرین): Dumbbell Fly
+  نسخهٔ جایگزین (همان تمرین): Chest Fly (Dumbbell)
 5. Triceps Rope Pushdown — 3 × 10-15 — rest 75s — RPE 9
   Notes: آرنج‌ها چسبیده به بدن و ثابت — فقط ساعد حرکت می‌کنه
 6. Lateral Raise (Dumbbell) — 7 × 10-15 — rest 45s — RPE 9 (pump) — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)
   Notes: شونه‌ها پایین و عقب — ترپس رو درگیر نکن
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Cable Lateral Raise
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Lateral Raise (Cable)
 
 [بعد از ست آخر: LISS دوچرخه ۱۵ تا ۲۰ دقیقه (ضربان ۱۱۵ تا ۱۳۵) — جایگزین تردمیل شیب‌دار]
 [سرد کردن — روتین کششی سایت: چارچوب در (سینه) — کراس‌بادی شانه — کودک]
@@ -39,21 +39,24 @@ FST-7 SWIMMER — LYFTA — برگهٔ ساخت کامل
 
 [گرم‌کردن: دوچرخه ثابت ۵ دقیقه خیلی سبک (مقاومت کم — ریتمی که راحت حرف بزنی) + ست‌های سبکِ حرکت اول جلسه]
 
-1. Pull-Up — 4 × 5-10 — rest 180s — RPE 8
+1. Pull Up — 4 × 5-10 — rest 180s — RPE 8
   Notes: دست‌ها کمی بازتر از عرض شانه، سینه به سمت میله
   ★ گرم‌کردن این حرکت: ۱ ست اسکاپولار پول + ۵ تکرار سبک با کش کمکی
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Assisted Pull-Up
-2. Barbell Row — 3 × 6-10 — rest 180s — RPE 8
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Pull Up (Assisted)
+2. Bent Over Row (Barbell) — 3 × 6-10 — rest 180s — RPE 8
   Notes: تنه حدود ۴۵ درجه، کمر صاف و هسته سفت
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Seated Cable Row
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Seated Cable Row - V Grip (Cable)
 3. Lat Pulldown (Cable) — 3 × 10-12 — rest 120s — RPE 8
   Notes: دست کمی بازتر از شانه؛ دسته رو تا بالای سینه بکش
-4. Face Pull (Cable) — 3 × 12-15 — rest 90s — RPE 9
+4. Face Pull — 3 × 12-15 — rest 90s — RPE 9
   Notes: طناب در ارتفاع صورت؛ به سمت پیشونی بکش نه سینه
-5. EZ Bar Curl — 3 × 8-12 — rest 90s — RPE 9
+5. Rear Delt Reverse Fly (Machine) — 3 × 12-15 — rest undefineds — RPE 9
+  Notes: سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها
+  نسخهٔ جایگزین (همان تمرین): Rear Delt Reverse Fly (Dumbbell)
+6. EZ Bar Biceps Curl — 3 × 8-12 — rest 90s — RPE 9
   Notes: آرنج‌ها ثابت کنار بدن — فقط ساعد حرکت می‌کنه
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Cable Curl
-6. Straight Arm Pulldown (Cable) — 7 × 10-15 — rest 45s — RPE 9 (pump) — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Bicep Curl (Cable)
+7. Straight Arm Lat Pulldown (Cable) — 7 × 10-15 — rest 45s — RPE 9 (pump) — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)
   Notes: آرنج ثابت و کمی خم — زاویه دست در کل حرکت ثابت
 
 [بعد از ست آخر: LISS دوچرخه ۱۵ تا ۲۰ دقیقه (ضربان ۱۱۵ تا ۱۳۵) — جایگزین تردمیل شیب‌دار]
@@ -64,23 +67,23 @@ FST-7 SWIMMER — LYFTA — برگهٔ ساخت کامل
 
 [گرم‌کردن: دوچرخه ثابت ۵ دقیقه خیلی سبک (مقاومت کم — ریتمی که راحت حرف بزنی) + ست‌های سبکِ حرکت اول جلسه]
 
-1. Leg Press — 4 × 8-12 — rest 180s — RPE 8
+1. Leg Press (Machine) — 4 × 8-12 — rest 180s — RPE 8
   Notes: پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه
   ★ گرم‌کردن این حرکت: ۱×۱۰ ۴۰٪ → ۱×۵ ۶۰٪ → ۱×۳ ۷۵٪ (درصد از وزنه ست اول)
   نسخهٔ جایگزین (همان تمرین): Goblet Squat
 2. Romanian Deadlift (Barbell) — 3 × 8-10 — rest 180s — RPE 8
   Notes: لگن رو به عقب هل بده (hip hinge) — اسکات نیست!
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Back Extension
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Back Extension (Machine)
 3. Bulgarian Split Squat (Dumbbell) — 3 × 8-12 هر پا (هر پا جدا) — rest 90s — RPE 8
   Notes: پنجه پای عقب روی نیمکت، پای جلو حدود ۶۰ سانت جلوتر
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Single Leg Press
-4. Leg Curl (Lying) — 3 × 10-15 — rest 75s — RPE 9
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Single Leg Press (Machine)
+4. Lying Leg Curl (Machine) — 3 × 10-15 — rest 75s — RPE 9
   Notes: لگن تمام مدت چسبیده به دستگاه — باسن بالا نیاد
 5. Standing Calf Raise — 4 × 10-15 — rest 60s — RPE 9
   Notes: دامنه کامل: پایین کشش ۲ ثانیه، بالا اسکوییز ۱ ثانیه
 6. Hanging Leg Raise — 3 × 8-15 — rest 90s — RPE 9
   Notes: کلید حرکت چرخش لگنه (posterior pelvic tilt) — نه فقط بالا بردن پا
-  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Captain's Chair Leg Raise
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Leg Raise Parallel Bars
 7. Cable Crunch — 7 × 12-15 — rest 45s — RPE 9 (pump) — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)
   Notes: دسته رو کنار گردن بگیر (نه پشت سر) و زانوها روی زمین
 

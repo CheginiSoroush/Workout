@@ -109,9 +109,11 @@ function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "ba
     );
     lines.push(`  Notes: ${ex.tips[0] || faName}${mach && mach.note ? ` — ${mach.note}` : ""}${warm}`);
     // نسخهٔ جایگزین — در حالت دستگاهی جهت سوییچ برعکس می‌شود
+    // حالت دستگاهی: اولویت با freeAlt واقعی است؛ فقط وقتی پایهٔ حرکت وزنهٔ آزاد است، نام پایه می‌آید
     const alt =
       mode === "machine"
-        ? ex.hevyName
+        ? ex.freeAlt?.hevyName ??
+          ((ex.baseMode ?? "machine") === "free" ? ex.hevyName : null)
         : ex.machineAlt?.hevyName || ex.freeAlt?.hevyName;
     if (alt) {
       const altLabel =

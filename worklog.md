@@ -841,3 +841,28 @@ Stage Summary:
 - ۴ باگ واقعی پیدا و فیکس شد (hydration، گرد کردن وزن، نمایش افزایش وزن، کلید eslint) + پاک‌سازی git
 - falsy alarm مهم: workflow «خراب» نبود — با od -c تأیید شد؛ همیشه قبل از فیکس bytes را چک کن
 - درس تست: Radix Tabs با click() سینتتیک فعال نمی‌شود (pointerdown لازم) — فقط ورودی واقعی agent-browser معتبر است
+
+---
+Task ID: 21
+Agent: main (Z.ai Code)
+Task: چک نهایی نسخهٔ Hevy با کتابخانهٔ رسمی + جواب سؤال کراتین (۳.۹ گرم داخل تمرین)
+
+Work Log:
+- دو منبع مستقل واقعی برای کتابخانهٔ Hevy پیدا و کلون شد:
+  1) ShehrozAttique/Hevy-Exercises-Data-Scraper — CSV با ۴۱۳ اسم واقعی اسکرپ‌شده از وب‌اپ Hevy (۲۰۲۴-۱۱)
+  2) drkostas/hevy2garmin — map با ۸۸۶ اسم رسمی Hevy (dump از پروژهٔ پایتون)
+- اسکریپت تأیید (bun) نوشته شد: هر ۳۳ hevyName (اصلی + machineAlt + freeAlt) از src/lib/program.ts استخراج و با هر دو منبع مقایسه شد
+- نتیجهٔ اولیه: فقط ۱۲/۳۳ تطبیق دقیق — ۲۱ اسم با کتابخانهٔ واقعی نمی‌خواند (مثل Dumbbell Fly→Chest Fly (Dumbbell)، EZ Bar Curl→EZ Bar Biceps Curl، Barbell Row→Bent Over Row (Barbell)، Pull-Up→Pull Up)
+- کشف دوم: فایل‌های public/exports قدیمی بودند — «Reverse Pec Deck» در هیچ‌کدام نبود (قبل از اضافه‌شدن آن حرکت تولید شده بودند)
+- باگ سوم در gen_app_exports.ts: در حالت دستگاهی، برای حرکات پایه‌دستگاهی (کراس‌اور، پک‌دک، پرس پا) خطِ «نسخهٔ وزنهٔ آزاد» اسم دستگاهی را تکرار می‌کرد — اصلاح شد (اولویت freeAlt واقعی)
+- ۲۱ اسم در program.ts اصلاح شد + یک متن tip فارسی (Assisted Pull-Up → Pull Up (Assisted))
+- همهٔ خروجی‌ها با bun research/gen_app_exports.ts ری‌جنریت شد (public/exports/* + src/lib/appExports.ts)
+- تأیید مجدد: ۳۲/۳۳ در هر دو منبع، ۱/۳۳ (Bulgarian Split Squat (Dumbbell)) فقط در map (CSV ناقص بود) — ۳۳/۳۳ تأیید؛ هیچ اسم قدیمی در هیچ فایل خروجی نماند (check با PCRE lookbehind)
+- e2e با agent-browser: کارت‌های حرکات هر ۳ روز + سوییچ وزنهٔ آزاد + سوییچ نسخهٔ کارت Hevy (لینک دانلود build-hevy-machine.txt ↔ build-hevy.txt) — همه OK؛ errors خالی؛ sticky-header lesson (scrollTo(0,0) قبل از کلیک)
+- lint پاس؛ tsc فقط خطاهای محیطی خارج از src/؛ فایل تأیید موقت حذف شد
+
+Stage Summary:
+- ۲۱ نام حرکت به نام دقیق کتابخانهٔ Hevy اصلاح شد؛ معیار جدید: هر اسمی که کاربر در سرچ Hevy تایپ می‌کند دقیقاً وجود دارد
+- جدول مهم‌ترین اصلاحات: Pull-Up→Pull Up | Assisted Pull-Up→Pull Up (Assisted) | Barbell Row→Bent Over Row (Barbell) | Seated Cable Row→Seated Cable Row - V Grip (Cable) | Face Pull (Cable)→Face Pull | Reverse Pec Deck (Machine)→Rear Delt Reverse Fly (Machine) | Dumbbell Reverse Fly→Rear Delt Reverse Fly (Dumbbell) | EZ Bar Curl→EZ Bar Biceps Curl | Cable Curl→Bicep Curl (Cable) | Straight Arm Pulldown (Cable)→Straight Arm Lat Pulldown (Cable) | Leg Press→Leg Press (Machine) | Single Leg Press→Single Leg Press (Machine) | Leg Curl (Lying)→Lying Leg Curl (Machine) | Back Extension→Back Extension (Machine) | Captain's Chair Leg Raise→Leg Raise Parallel Bars | Cable Chest Fly→Cable Fly Crossovers | Dumbbell Fly→Chest Fly (Dumbbell) | Cable Lateral Raise→Lateral Raise (Cable) | Incline Dumbbell Press→Incline Bench Press (Dumbbell) | Seated Dumbbell Shoulder Press→Shoulder Press (Dumbbell) | Shoulder Press (Machine)→Seated Shoulder Press (Machine)
+- خروجی‌های stale ری‌جنریت شدند (Reverse Pec Deck حالا در همه هست) + باگ خط جایگزین در حالت دستگاهی فیکس شد (روی همه اپ‌ها اثر دارد)
+- جواب کراتین: ۳.۹ گرم داخل تمرین کاملاً OK — با ISSN (نگهدارنده ۳–۵ گرم) و خود بخش کراتین سایت سازگار است

@@ -100,7 +100,7 @@ export const DAY1: WorkoutDay = {
     },
     {
       id: "incline-db-press",
-      hevyName: "Incline Dumbbell Press",
+      hevyName: "Incline Bench Press (Dumbbell)",
       faName: "پرس بالاسینه دمبل",
       muscles: "بالاسینه، سرشانه جلویی",
       sets: 3,
@@ -125,7 +125,7 @@ export const DAY1: WorkoutDay = {
     },
     {
       id: "db-shoulder-press",
-      hevyName: "Seated Dumbbell Shoulder Press",
+      hevyName: "Shoulder Press (Dumbbell)",
       faName: "پرس سرشانه دمبل نشسته",
       muscles: "سرشانه (دلتوئید قدامی و جانبی)، پشت‌بازو",
       sets: 3,
@@ -144,13 +144,13 @@ export const DAY1: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "پرس سرشانه دستگاه",
-        hevyName: "Shoulder Press (Machine)",
+        hevyName: "Seated Shoulder Press (Machine)",
         note: "پشتی دستگاه قوس کمر رو کنترل می‌کنه — ریسک کمتر، تمرکز بیشتر روی دلتوئید.",
       },
     },
     {
       id: "cable-fly",
-      hevyName: "Cable Chest Fly",
+      hevyName: "Cable Fly Crossovers",
       faName: "کراس اور سیم‌کش سینه",
       muscles: "سینه (به‌خصوص داخلی)",
       sets: 3,
@@ -167,7 +167,7 @@ export const DAY1: WorkoutDay = {
       mistakes: ["تبدیل‌شدن به پرس با خم کردن آرنج‌ها", "کشیدن وزنه با کمر و سوئینگ بدن"],
       freeAlt: {
         faName: "قفسه سینه دمبل",
-        hevyName: "Dumbbell Fly",
+        hevyName: "Chest Fly (Dumbbell)",
         note: "وقتی دستگاه شلوغه — کشش عمیق‌تر ولی کنترلش سخت‌تره؛ وزنه سبک انتخاب کن.",
       },
     },
@@ -211,7 +211,7 @@ export const DAY1: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "نشر جانب سیم‌کش",
-        hevyName: "Cable Lateral Raise",
+        hevyName: "Lateral Raise (Cable)",
         note: "تغییر وزنه بین ست‌ها با یک پیچ — برای ست‌های ۷گانه FST-7 ایده‌آله؛ خود رامبد هم برای FST-7 اغلب کابل/دستگاه استفاده می‌کنه.",
       },
     },
@@ -231,7 +231,7 @@ export const DAY2: WorkoutDay = {
   exercises: [
     {
       id: "pull-up",
-      hevyName: "Pull-Up",
+      hevyName: "Pull Up",
       faName: "بارفیکس",
       muscles: "لت‌ها (عرض پشت)، بالاپشت",
       sets: 4,
@@ -243,20 +243,20 @@ export const DAY2: WorkoutDay = {
       tips: [
         "دست‌ها کمی بازتر از عرض شانه، سینه به سمت میله",
         "قبل از کشیدن، شونه‌ها رو پایین و عقب بکش (depress)",
-        "اگه کمتر از ۵ تا می‌زنی: Lat Pulldown با وزنه کم یا Assisted Pull-Up — افتادن از تکرار نداریم!",
+        "اگه کمتر از ۵ تا می‌زنی: Lat Pulldown با وزنه کم یا Pull Up (Assisted) — افتادن از تکرار نداریم!",
       ],
       mistakes: ["کیک زدن با پا", "نصفه دامنه (چانه فقط تا میله بدون اسکوییز لت)"],
       baseMode: "free",
       startMode: "machine",
       machineAlt: {
         faName: "بارفیکس کمکی دستگاه",
-        hevyName: "Assisted Pull-Up",
+        hevyName: "Pull Up (Assisted)",
         note: "فنر/وزنه متعادل‌کننده تا وقتی ۵ تکرار تمیز بدون کمک بزنی — هر هفته کمک رو کم کن.",
       },
     },
     {
       id: "barbell-row",
-      hevyName: "Barbell Row",
+      hevyName: "Bent Over Row (Barbell)",
       faName: "زیربغل هالتر خم",
       muscles: "پشت میانی، لت‌ها، ذوزنقه",
       sets: 3,
@@ -275,7 +275,7 @@ export const DAY2: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "زیربغل سیم‌کش نشسته",
-        hevyName: "Seated Cable Row",
+        hevyName: "Seated Cable Row - V Grip (Cable)",
         note: "ستون فقرات اتکا داره و فشار می‌مونه روی پشت. اگه دستگاه زیربغل سینه‌اتکایی (مثل هامر استرنث که دوریان ییتس می‌زد) بود، همون بهترینه.",
       },
     },
@@ -299,7 +299,7 @@ export const DAY2: WorkoutDay = {
     },
     {
       id: "face-pull",
-      hevyName: "Face Pull (Cable)",
+      hevyName: "Face Pull",
       faName: "فیس پول سیم‌کش",
       muscles: "سرشانه خلفی، سلامت شانه",
       sets: 3,
@@ -317,7 +317,7 @@ export const DAY2: WorkoutDay = {
     },
     {
       id: "reverse-pec-deck",
-      hevyName: "Reverse Pec Deck (Machine)",
+      hevyName: "Rear Delt Reverse Fly (Machine)",
       faName: "پک‌دک معکوس",
       muscles: "ذوزنقه میانی (تراپز میانی)، سرشانه خلفی",
       sets: 3,
@@ -336,14 +336,14 @@ export const DAY2: WorkoutDay = {
       baseMode: "machine",
       freeAlt: {
         faName: "نشر خم دمبل",
-        hevyName: "Dumbbell Reverse Fly",
+        hevyName: "Rear Delt Reverse Fly (Dumbbell)",
         note: "وقتی دستگاه شلوغه — تنه موازی زمین، دمبل سبک، همون جمع کردن تیغه‌ها در انتها.",
       },
       note: "حرکت مستقیم تراپز میانی — هم‌حجم با فیس‌پول پشت تیغه‌های شانه رو کامل می‌کنه. اگه جلسه طولانی شد، سوپرست با جلوبازو بزن.",
     },
     {
       id: "ez-curl",
-      hevyName: "EZ Bar Curl",
+      hevyName: "EZ Bar Biceps Curl",
       faName: "جلوبازو هالتر خمیده",
       muscles: "جلوبازو",
       sets: 3,
@@ -362,13 +362,13 @@ export const DAY2: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "جلوبازو سیم‌کش",
-        hevyName: "Cable Curl",
+        hevyName: "Bicep Curl (Cable)",
         note: "کشش بیسپس در کل دامنه + سوئینگ کمر عملاً غیرممکن — فرم تمیز از روز اول.",
       },
     },
     {
       id: "straight-arm-pulldown",
-      hevyName: "Straight Arm Pulldown (Cable)",
+      hevyName: "Straight Arm Lat Pulldown (Cable)",
       faName: "پول‌اور سیم‌کش دست صاف",
       muscles: "لت‌ها — پامپ و کشش فاسیا",
       sets: 7,
@@ -401,7 +401,7 @@ export const DAY3: WorkoutDay = {
   exercises: [
     {
       id: "leg-press",
-      hevyName: "Leg Press",
+      hevyName: "Leg Press (Machine)",
       faName: "پرس پا دستگاه",
       muscles: "چهارسر، باسن",
       sets: 4,
@@ -443,7 +443,7 @@ export const DAY3: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "بک اکستنشن دستگاه (۴۵ درجه)",
-        hevyName: "Back Extension",
+        hevyName: "Back Extension (Machine)",
         note: "همون زنجیره پشتی (همسترینگ/باسن/فیله) با محافظت کامل کمر — RDL رو بعد هفته ۲–۳ با دمبل سبک برگردون.",
       },
     },
@@ -468,13 +468,13 @@ export const DAY3: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "پرس پا تک‌پا",
-        hevyName: "Single Leg Press",
+        hevyName: "Single Leg Press (Machine)",
         note: "همون کار یک‌پا بدون دغدغه تعادل — هر پا جداگانه ثبت کن.",
       },
     },
     {
       id: "leg-curl",
-      hevyName: "Leg Curl (Lying)",
+      hevyName: "Lying Leg Curl (Machine)",
       faName: "پشت‌پا خوابیده",
       muscles: "همسترینگ",
       sets: 3,
@@ -529,7 +529,7 @@ export const DAY3: WorkoutDay = {
       startMode: "machine",
       machineAlt: {
         faName: "بالانش با صندلی کاپیتان",
-        hevyName: "Captain's Chair Leg Raise",
+        hevyName: "Leg Raise Parallel Bars",
         note: "پشتی از کمر حمایت می‌کنه و تاب خوردن حذف می‌شه — تمرکز روی چرخش لگن.",
       },
     },
