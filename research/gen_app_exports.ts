@@ -13,6 +13,7 @@ import {
   FST7_NOTES,
   MACHINE_FIRST_NOTE,
   PROFILE,
+  type Exercise,
 } from "../src/lib/program";
 import {
   STRETCH_ROUTINE,
@@ -41,6 +42,7 @@ const REST_SEC: Record<string, number> = {
   "barbell-row": 180,
   "lat-pulldown": 120,
   "face-pull": 90,
+  "reverse-pec-deck": 75,
   "ez-curl": 90,
   "straight-arm-pulldown": 45,
   "leg-press": 180,
@@ -98,7 +100,11 @@ function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "ba
   lines.push("");
   day.exercises.forEach((ex, i) => {
     const mach = mode === "machine" ? ex.machineAlt : null;
-    const name = mach ? mach.hevyName : ex.hevyName;
+    // نام اصلی هر اسلات در هر دو حالت — حرکات پایه‌دستگاهی در برگهٔ آزاد باید نسخهٔ freeAlt را بگیرند
+    const name =
+      mode === "machine"
+        ? ex.machineAlt?.hevyName ?? ex.hevyName
+        : ex.freeAlt?.hevyName ?? ex.hevyName;
     const faName = mach ? mach.faName : ex.faName;
     const warm = WARMUP_FIRST[ex.id] ? `\n  ★ گرم‌کردن این حرکت: ${WARMUP_FIRST[ex.id]}` : "";
     const fst = ex.fst7 ? " — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)" : "";
@@ -107,21 +113,21 @@ function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "ba
     lines.push(
       `${i + 1}. ${name} — ${mach ? faName + " — " : ""}${ex.sets} × ${repsEn(ex.reps)}${perLeg} — rest ${REST_SEC[ex.id]}s — RPE ${fa2en(ex.rpe).replace("پامپ", "9 (pump)")}${fst}`
     );
-    lines.push(`  Notes: ${ex.tips[0] || faName}${mach && mach.note ? ` — ${mach.note}` : ""}${warm}`);
-    // نسخهٔ جایگزین — در حالت دستگاهی جهت سوییچ برعکس می‌شود
-    // حالت دستگاهی: اولویت با freeAlt واقعی است؛ فقط وقتی پایهٔ حرکت وزنهٔ آزاد است، نام پایه می‌آید
+    const altNote = mode === "machine" ? ex.machineAlt?.note : ex.freeAlt?.note;
+    lines.push(`  Notes: ${ex.tips[0] || faName}${altNote ? ` — ${altNote}` : ""}${warm}`);
+    // نسخهٔ جایگزین — در هر حالت، جایگزین = نسخهٔ دیگر است
+    // حالت دستگاهی: جایگزین = freeAlt (یا نام پایه وقتی پایه وزنهٔ آزاد است)
+    // حالت آزاد: جایگزین = machineAlt (یا نام پایه وقتی پایه دستگاهی است)
     const alt =
       mode === "machine"
         ? ex.freeAlt?.hevyName ??
           ((ex.baseMode ?? "machine") === "free" ? ex.hevyName : null)
-        : ex.machineAlt?.hevyName || ex.freeAlt?.hevyName;
-    if (alt) {
+        : ex.machineAlt?.hevyName ??
+          ((ex.baseMode ?? "machine") === "machine" ? ex.hevyName : null);
+    // اگر جایگزین همان نام اصلی بود (حرکت تک‌نسخه‌ای مثل فیس پول)، خط اضافه نگذار
+    if (alt && alt !== name) {
       const altLabel =
-        mode === "machine"
-          ? "نسخهٔ وزنهٔ آزاد (هفتهٔ ۳+)"
-          : ex.machineAlt?.hevyName
-            ? "نسخهٔ دستگاهی (هفتهٔ ۱–۲)"
-            : "نسخهٔ جایگزین (همان تمرین)";
+        mode === "machine" ? "نسخهٔ وزنهٔ آزاد (هفتهٔ ۳+)" : "نسخهٔ دستگاهی (هفتهٔ ۱–۲)";
       lines.push(`  ${altLabel}: ${alt}`);
     }
   });
@@ -913,6 +919,104 @@ function gymmaneSheet(mode: "base" | "machine" = "base"): string {
   return parts.join("\n");
 }
 
+// ---------- پرامپت ChatGPT + Hevy — ساخت خودکار ۳ روال با پلاگین ----------
+// نام‌ها با همان منطق برگه‌های build-hevy حل می‌شوند (۳۳ اسم قبلاً با دو منبع واقعی کتابخانهٔ Hevy وریفای شده)
+function exName(ex: Exercise, mode: "base" | "machine"): string {
+  return mode === "machine"
+    ? ex.machineAlt?.hevyName ?? ex.hevyName
+    : ex.freeAlt?.hevyName ?? ex.hevyName;
+}
+
+const PROMPT_ROUTINE: Record<string, { name: string }> = {
+  day1: { name: "FST-7 Push (Sat)" },
+  day2: { name: "FST-7 Pull (Mon)" },
+  day3: { name: "FST-7 Legs + Abs (Wed)" },
+};
+
+function hevyPromptSheet(mode: "base" | "machine"): string {
+  const L: string[] = [];
+  L.push("You are connected to my Hevy account via the Hevy tool/plugin.");
+  L.push(
+    "Use it to CREATE the 3 workout routines below in my Hevy account - exactly as specified."
+  );
+  L.push("");
+  L.push("ABOUT ME");
+  L.push(
+    "- Male, 25 y/o, 180 cm. Goal: body recomposition (fat loss + muscle) - swimmer's V-taper."
+  );
+  L.push(
+    "- Split: Push / Pull / Legs+Abs - 3 sessions per week (Sat = Push, Mon = Pull, Wed = Legs+Abs)."
+  );
+  L.push(
+    mode === "machine"
+      ? "- Equipment version: MACHINE (weeks 1-2) - machine-first on purpose: fixed path, safe without a spotter while learning the patterns. The free-weight version starts week 3."
+      : "- Equipment version: FREE WEIGHTS (weeks 3+) - same volume and structure as the machine version; only the tools change."
+  );
+  L.push("");
+  PROGRAM.forEach((day) => {
+    L.push(`ROUTINE - name: "${PROMPT_ROUTINE[day.id].name}"`);
+    day.exercises.forEach((ex, i) => {
+      const perLeg = ex.reps.includes("هر پا");
+      const repsTxt =
+        repsEn(ex.reps).replace(/\s*هر پا/g, "") + (perLeg ? " each leg" : "");
+      const note = [
+        ex.tips[0] || ex.faName,
+        mode === "machine" ? ex.machineAlt?.note : ex.freeAlt?.note,
+      ]
+        .filter(Boolean)
+        .join(" - ");
+      L.push(
+        `${i + 1}. ${exName(ex, mode)} - ${ex.sets} sets x ${repsTxt} - rest ${REST_SEC[ex.id]}s - RPE ${fa2en(ex.rpe).replace("پامپ", "9 (pump)")}${ex.fst7 ? " - FST-7 FINISHER" : ""} - note: ${JSON.stringify(note)}`
+      );
+    });
+    L.push("");
+  });
+  L.push(
+    "SESSION NOTES (put each text into the notes field of its routine, unchanged - it is in Persian):"
+  );
+  PROGRAM.forEach((day) => {
+    L.push(
+      `- ${PROMPT_ROUTINE[day.id].name}: [${WARMUP_LINE}] + [${LISS_LINE}] + [سرد کردن — روتین کششی سایت: ${COOLDOWN[day.id].label}]`
+    );
+  });
+  L.push("");
+  L.push("HARD RULES");
+  L.push(
+    "1. Exercise names above are verified against Hevy's own exercise library. Search each EXACT name and pick exactly that exercise. If a name is not found, STOP and tell me - never silently substitute a similar exercise."
+  );
+  L.push(
+    "2. Set the rest timer of every set exactly as written (seconds). Put rep ranges in the rep-range fields (start / end)."
+  );
+  L.push(
+    '3. Copy each exercise\'s note text into its notes field unchanged (Persian - keep as-is).'
+  );
+  L.push(
+    '4. Exercises marked "FST-7 FINISHER": exactly 7 sets, ~45s rest, constant light weight, last sets to technical failure. Do NOT mark them as a superset.'
+  );
+  L.push(
+    "5. Add 3 warm-up sets (type = warmup) before the FIRST exercise of each routine. Push/Legs: 8 reps at ~40%, 4 reps at ~60%, 2 reps at ~75% of the first working set. Pull: scapular pulls + 5 light band-assisted reps."
+  );
+  L.push(
+    "6. Leave all working weights EMPTY - I will log my first session to find my starting weights."
+  );
+  L.push(
+    `7. Create exactly 3 routines with the exact names above (${Object.values(PROMPT_ROUTINE)
+      .map((r) => `"${r.name}"`)
+      .join(", ")}).`
+  );
+  L.push(
+    "8. When done, list every routine with its exercises (sets x reps, rest) so I can verify. If the Hevy tool is unavailable, do NOT pretend it worked - output the 3 routines as plain text instead."
+  );
+  L.push("");
+  L.push(
+    "PROGRESSION (my own rule - Hevy has no auto-progression; reference only):"
+  );
+  L.push(
+    "- Double progression: when I hit the top of the rep range on all sets with good form (RPE 8), next session I add ~2.5 kg (upper body) / ~5 kg (lower body) and drop back to the bottom of the range."
+  );
+  return L.join("\n");
+}
+
 // ---------- ساخت فایل‌ها ----------
 const outDir = path.join(ROOT, "public", "exports");
 fs.mkdirSync(outDir, { recursive: true });
@@ -964,6 +1068,20 @@ const gymmaneSheetText = gymmaneSheet("base");
 fs.writeFileSync(path.join(outDir, "build-gymmane.txt"), gymmaneSheetText, "utf8");
 
 const gymmaneMachineText = gymmaneSheet("machine");
+
+// پرامپت‌های ChatGPT + Hevy — دو نسخه (دستگاهی / آزاد)
+const chatGptPromptMachine = hevyPromptSheet("machine");
+fs.writeFileSync(
+  path.join(outDir, "chatgpt-hevy-prompt-machine.txt"),
+  chatGptPromptMachine,
+  "utf8"
+);
+const chatGptPromptFree = hevyPromptSheet("base");
+fs.writeFileSync(
+  path.join(outDir, "chatgpt-hevy-prompt-free.txt"),
+  chatGptPromptFree,
+  "utf8"
+);
 
 // ---------- دو نسخهٔ هر کارت (سوییچ دستگاهی/آزاد) ----------
 const VARIANT_LABELS = {
@@ -1032,6 +1150,41 @@ export const WEEKLY_SHEET = {
   copyText: ${JSON.stringify(weekly)},
 };
 
+// پرامپت ChatGPT + Hevy — دو نسخه: دستگاهی (هفتهٔ ۱–۲) و وزنهٔ آزاد (هفتهٔ ۳+)
+export interface HevyPromptVariant {
+  id: "machine" | "free";
+  label: string;
+  file: string;
+  copyText: string;
+}
+
+export const HEVY_CHATGPT_PROMPT: {
+  file: string;
+  copyText: string;
+  variants: HevyPromptVariant[];
+} = ${JSON.stringify(
+    {
+      file: "/exports/chatgpt-hevy-prompt-machine.txt",
+      copyText: chatGptPromptMachine,
+      variants: [
+        {
+          id: "machine",
+          label: VARIANT_LABELS.machine,
+          file: "/exports/chatgpt-hevy-prompt-machine.txt",
+          copyText: chatGptPromptMachine,
+        },
+        {
+          id: "free",
+          label: VARIANT_LABELS.free,
+          file: "/exports/chatgpt-hevy-prompt-free.txt",
+          copyText: chatGptPromptFree,
+        },
+      ],
+    },
+    null,
+    2,
+  )};
+
 export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
     [
       {
@@ -1050,6 +1203,7 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "گرم‌کردن هر حرکت اول را با تیک Warmup روی ست‌های سبک علامت بزن",
         ],
         notes: [
+          "میان‌بر خودکار: پرامپت آمادهٔ ChatGPT بالای همین صفحه — با پلاگین Hevy هر ۳ روال را خودش می‌سازد",
           "فولدر بساز به نام FST-7 و هر ۳ روال را داخلش بگذار",
           "ست‌های FST-7 را Superset نزن — فقط استراحت ۴۵ ثانیه",
         ],
@@ -1068,7 +1222,7 @@ export const APP_EXPORTS: AppExportCard[] = ${JSON.stringify(
           "Lyfta فقط تاریخچهٔ ورزش را از اپ‌های دیگر import می‌کند، نه برنامه. ساخت روال دستی است و برگهٔ ما دقیقاً برای همین کار چیده شده.",
         steps: [
           "اپ یا my.lyfta.app → Routines → New Routine",
-          "۱۹ حرکت را با نام‌های انگلیسی برگه پیدا کن (کتابخانه‌اش بزرگ و کامل است)",
+          "۲۰ حرکت را با نام‌های انگلیسی برگه پیدا کن (کتابخانه‌اش بزرگ و کامل است)",
           "دوز و استراحت و نوت‌ها را از برگه وارد کن؛ برای هر روز یک روال",
         ],
         notes: [
@@ -1167,4 +1321,5 @@ console.log(" - public/exports/build-generic.txt", genericSheet.length, "+ build
 console.log(" - public/exports/opengym-plan.json", JSON.stringify(OPENGYM_PLAN).length, "+ opengym-plan-machine.json", JSON.stringify(OPENGYM_PLAN_MACHINE).length, "bytes (auto-import)");
 console.log(" - public/exports/build-opengym.txt", openGymSheetText.length, "+ build-opengym-machine.txt", openGymMachineSheetText.length);
 console.log(" - public/exports/build-gymmane.txt", gymmaneSheetText.length, "+ build-gymmane-machine.txt", gymmaneMachineText.length);
+console.log(" - public/exports/chatgpt-hevy-prompt-machine.txt", chatGptPromptMachine.length, "+ chatgpt-hevy-prompt-free.txt", chatGptPromptFree.length);
 console.log(" - src/lib/appExports.ts");

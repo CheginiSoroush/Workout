@@ -22,9 +22,9 @@ FST-7 SWIMMER — HEVY — برگهٔ ساخت کامل
 3. Shoulder Press (Dumbbell) — 3 × 8-12 — rest 120s — RPE 8
   Notes: پشتت کامل به پشتی نیمکت بچسبه؛ قوس کمر طبیعی و کم
   نسخهٔ دستگاهی (هفتهٔ ۱–۲): Seated Shoulder Press (Machine)
-4. Cable Fly Crossovers — 3 × 10-15 — rest 90s — RPE 9
-  Notes: قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت
-  نسخهٔ جایگزین (همان تمرین): Chest Fly (Dumbbell)
+4. Chest Fly (Dumbbell) — 3 × 10-15 — rest 90s — RPE 9
+  Notes: قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت — وقتی دستگاه شلوغه — کشش عمیق‌تر ولی کنترلش سخت‌تره؛ وزنه سبک انتخاب کن.
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Cable Fly Crossovers
 5. Triceps Rope Pushdown — 3 × 10-15 — rest 75s — RPE 9
   Notes: آرنج‌ها چسبیده به بدن و ثابت — فقط ساعد حرکت می‌کنه
 6. Lateral Raise (Dumbbell) — 7 × 10-15 — rest 45s — RPE 9 (pump) — ★ FST-7 FINISHER (۷ ست پیاپی، پامپ)
@@ -50,9 +50,9 @@ FST-7 SWIMMER — HEVY — برگهٔ ساخت کامل
   Notes: دست کمی بازتر از شانه؛ دسته رو تا بالای سینه بکش
 4. Face Pull — 3 × 12-15 — rest 90s — RPE 9
   Notes: طناب در ارتفاع صورت؛ به سمت پیشونی بکش نه سینه
-5. Rear Delt Reverse Fly (Machine) — 3 × 12-15 — rest undefineds — RPE 9
-  Notes: سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها
-  نسخهٔ جایگزین (همان تمرین): Rear Delt Reverse Fly (Dumbbell)
+5. Rear Delt Reverse Fly (Dumbbell) — 3 × 12-15 — rest 75s — RPE 9
+  Notes: سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها — وقتی دستگاه شلوغه — تنه موازی زمین، دمبل سبک، همون جمع کردن تیغه‌ها در انتها.
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Rear Delt Reverse Fly (Machine)
 6. EZ Bar Biceps Curl — 3 × 8-12 — rest 90s — RPE 9
   Notes: آرنج‌ها ثابت کنار بدن — فقط ساعد حرکت می‌کنه
   نسخهٔ دستگاهی (هفتهٔ ۱–۲): Bicep Curl (Cable)
@@ -67,10 +67,10 @@ FST-7 SWIMMER — HEVY — برگهٔ ساخت کامل
 
 [گرم‌کردن: دوچرخه ثابت ۵ دقیقه خیلی سبک (مقاومت کم — ریتمی که راحت حرف بزنی) + ست‌های سبکِ حرکت اول جلسه]
 
-1. Leg Press (Machine) — 4 × 8-12 — rest 180s — RPE 8
-  Notes: پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه
+1. Goblet Squat — 4 × 8-12 — rest 180s — RPE 8
+  Notes: پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه — برای تنوع یا تمرین در خانه/سفر — دمبل رو کنار سینه بگیر و عمیق پایین برو.
   ★ گرم‌کردن این حرکت: ۱×۱۰ ۴۰٪ → ۱×۵ ۶۰٪ → ۱×۳ ۷۵٪ (درصد از وزنه ست اول)
-  نسخهٔ جایگزین (همان تمرین): Goblet Squat
+  نسخهٔ دستگاهی (هفتهٔ ۱–۲): Leg Press (Machine)
 2. Romanian Deadlift (Barbell) — 3 × 8-10 — rest 180s — RPE 8
   Notes: لگن رو به عقب هل بده (hip hinge) — اسکات نیست!
   نسخهٔ دستگاهی (هفتهٔ ۱–۲): Back Extension (Machine)

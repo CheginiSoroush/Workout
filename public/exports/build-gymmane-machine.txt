@@ -60,7 +60,7 @@ GymMane چیست: لاگر آفلاین اندروید (GPLv3، F-Droid) — ب�
   Notes: دست کمی بازتر از شانه؛ دسته رو تا بالای سینه بکش
 4. Face Pull — 3 × 12-15 — rest 90s — RPE 9
   Notes: طناب در ارتفاع صورت؛ به سمت پیشونی بکش نه سینه
-5. Rear Delt Reverse Fly (Machine) — 3 × 12-15 — rest undefineds — RPE 9
+5. Rear Delt Reverse Fly (Machine) — 3 × 12-15 — rest 75s — RPE 9
   Notes: سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها
   نسخهٔ وزنهٔ آزاد (هفتهٔ ۳+): Rear Delt Reverse Fly (Dumbbell)
 6. Bicep Curl (Cable) — جلوبازو سیم‌کش — 3 × 8-12 — rest 90s — RPE 9

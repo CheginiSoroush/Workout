@@ -3,9 +3,11 @@
 import { useState } from "react";
 import {
   APP_EXPORTS,
+  HEVY_CHATGPT_PROMPT,
   WEEKLY_SHEET,
   type AppExportCard,
   type AppExportVariant,
+  type HevyPromptVariant,
 } from "@/lib/appExports";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -49,6 +51,166 @@ async function copyToClipboard(
     toast.error("کپی نشد — فایل را دانلود کن یا دستی باز کن");
     return false;
   }
+}
+
+/** کارت پرامپت ChatGPT + Hevy — دو نسخه (دستگاهی / آزاد) با کپی و دانلود */
+function HevyPromptCard() {
+  const [vid, setVid] = useState<HevyPromptVariant["id"]>("machine");
+  const [copied, setCopied] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const variant: HevyPromptVariant =
+    HEVY_CHATGPT_PROMPT.variants.find((v) => v.id === vid) ??
+    HEVY_CHATGPT_PROMPT.variants[0];
+
+  const onCopy = async () => {
+    const ok = await copyToClipboard(
+      variant.copyText,
+      `پرامپت ChatGPT (${variant.label}) کپی شد — بفرست به ChatGPT`
+    );
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  return (
+    <Card className="border-primary/40 bg-primary/5">
+      <CardContent className="space-y-3 p-4">
+        {/* هدر */}
+        <div className="flex items-start gap-2.5">
+          <Bot className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+          <div>
+            <h3 className="text-sm font-black">
+              پرامپت ChatGPT + Hevy — ساخت خودکار ۳ روال ⚡
+            </h3>
+            <p className="mt-1 text-xs leading-6 text-muted-foreground">
+              کل برنامه در یک پرامپت انگلیسی چیده شده: هر ۲۰ حرکت با نام دقیق کتابخانهٔ Hevy
+              (وریفای‌شده با دو منبع مستقل)، ست/تکرار/استراحت به ثانیه، نوت‌های فارسی، ست‌های
+              گرم‌کردنی و قواعد FST-7. بده به ChatGPT که پلاگین Hevy دارد — خودش ۳ روال
+              Push/Pull/Legs را در حسابت می‌سازد.
+            </p>
+          </div>
+        </div>
+
+        {/* سوییچ دو نسخه */}
+        <div
+          role="group"
+          aria-label="انتخاب نسخهٔ پرامپت Hevy"
+          className="grid grid-cols-2 gap-1.5 rounded-xl border border-border bg-secondary/40 p-1.5"
+        >
+          {HEVY_CHATGPT_PROMPT.variants.map((v) => {
+            const active = v.id === vid;
+            return (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setVid(v.id)}
+                aria-pressed={active}
+                className={`flex min-h-9 items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-colors ${
+                  active
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {v.id === "machine" ? (
+                  <Cog className="h-3.5 w-3.5" aria-hidden="true" />
+                ) : (
+                  <Dumbbell className="h-3.5 w-3.5" aria-hidden="true" />
+                )}
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* مراحل */}
+        <ol className="space-y-1.5" aria-label="مراحل ساخت خودکار روتین با ChatGPT و Hevy">
+          {[
+            "نسخه را انتخاب کن و پرامپت را کپی کن (دستگاهی هفتهٔ ۱–۲ / آزاد هفتهٔ ۳+)",
+            "در ChatGPT پلاگین/GPT متصل به Hevy را فعال کن — اگر کلید API خواست از hevyapp.com/api-keys بگیر (نیاز به اشتراک Pro)",
+            "پرامپت را بفرست — ChatGPT ۳ روال را با نام‌های دقیق کتابخانه می‌سازد",
+            "خروجی را چک کن: ۲۰ حرکت، استراحت‌ها و ست‌های FST-7 (۷ ست × ~۴۵ ثانیه)",
+          ].map((s, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs leading-6">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[10px] font-extrabold text-primary">
+                {faNum(i + 1)}
+              </span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ol>
+
+        {/* نوت‌ها */}
+        <ul className="space-y-1 rounded-lg border border-border/60 bg-secondary/40 p-2.5">
+          {[
+            "قانون ضدجایگزینی داخل پرامپت هست: اگر اسمی را در کتابخانه پیدا نکند باید بایستد و بگوید — حرکت مشابه نمی‌گذارد",
+            "اگر پلاگین در دسترس نبود، طبق پرامپت به‌جای وانمودکردن، ۳ روال را متنی می‌دهد — همان را با برگهٔ کارت Hevy دستی بساز",
+            "وزنه‌ها عمداً خالی می‌مانند — جلسهٔ اول را لاگ کن تا وزنه‌های شروع پیدا شوند؛ پیشرفت دوگانه داخل پرامپت توضیح داده شده",
+          ].map((n, i) => (
+            <li key={i} className="text-[11px] leading-5 text-muted-foreground">
+              • {n}
+            </li>
+          ))}
+        </ul>
+
+        {/* اکشن‌ها */}
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <Button
+            type="button"
+            size="sm"
+            onClick={onCopy}
+            className="min-h-9 gap-1.5 text-xs font-bold"
+            aria-label={`کپی پرامپت ChatGPT نسخهٔ ${variant.label}`}
+          >
+            {copied ? (
+              <Check className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+            {copied ? "کپی شد!" : "کپی پرامپت"}
+          </Button>
+          <a
+            href={variant.file}
+            download={`fst7-chatgpt-hevy-prompt-${variant.id}.txt`}
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-md border border-border px-3 text-xs font-bold transition-colors hover:bg-secondary"
+            aria-label={`دانلود پرامپت ChatGPT نسخهٔ ${variant.label}`}
+          >
+            <Download className="h-3.5 w-3.5" aria-hidden="true" />
+            دانلود
+          </a>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onClick={() => setOpen((v) => !v)}
+            className="min-h-9 gap-1.5 text-xs font-bold"
+            aria-expanded={open}
+            aria-controls="hevy-prompt-view"
+          >
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+              aria-hidden="true"
+            />
+            {open ? "بستن" : "دیدن پرامپت"}
+          </Button>
+        </div>
+
+        {/* متن پرامپت — انگلیسی، LTR */}
+        {open && (
+          <pre
+            id="hevy-prompt-view"
+            dir="ltr"
+            className="max-h-96 overflow-y-auto rounded-xl border border-border bg-background/60 p-4 text-left font-mono text-[11px] leading-5 whitespace-pre-wrap"
+            tabIndex={0}
+            aria-label="متن کامل پرامپت ChatGPT برای ساخت روتین در Hevy"
+          >
+            {variant.copyText}
+          </pre>
+        )}
+      </CardContent>
+    </Card>
+  );
 }
 
 function AppCard({ app }: { app: AppExportCard }) {
@@ -238,6 +400,9 @@ export default function AppExports() {
         </div>
       </div>
 
+      {/* کارت پرامپت ChatGPT + Hevy */}
+      <HevyPromptCard />
+
       {/* برگهٔ جامع */}
       <Card className="border-primary/40 bg-primary/5">
         <CardContent className="space-y-3 p-4">
@@ -248,7 +413,7 @@ export default function AppExports() {
                 برگهٔ جامع روتین هفتگی — مرجع واحد برای هر اپ
               </h3>
               <p className="mt-1 text-xs leading-6 text-muted-foreground">
-                تقویم هفته، پروتکل دقیق جلسه، هر ۱۹ حرکت با دوز/نکات فرم/خطاهای رایج/نسخه‌های
+                تقویم هفته، پروتکل دقیق جلسه، هر ۲۰ حرکت با دوز/نکات فرم/خطاهای رایج/نسخه‌های
                 یک فایل، همه‌چیز.
               </p>
             </div>
@@ -320,10 +485,12 @@ export default function AppExports() {
           <p className="text-xs leading-6 text-muted-foreground">
             <span className="font-bold text-foreground">واقعیت صادقانه:</span> دو اپ برنامه را
             خودکار می‌فهمند — Liftosaur (متن Liftoscript) و openGym (فایل JSON رسمی‌اش، تقویم هفته +
-            استراحت‌ها + پیشرفت دوگانه). GymMane ایمپورت برنامه ندارد ولی رابط فارسی کامل دارد؛
-            Hevy/Lyfta/Fitbod هم فقط دستی (بررسی رسمی مستنداتشان). هر کارت سوییچ «دستگاهی (هفتهٔ ۱–۲)
-            ↔ وزنهٔ آزاد (هفتهٔ ۳+)» دارد و برگه‌ها طوری چیده شده‌اند که ساخت هر روال دستی زیر ۲ دقیقه
-            طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
+            استراحت‌ها + پیشرفت دوگانه). Hevy هم یک میان‌بر نیمه‌خودکار دارد: پرامپت آمادهٔ ChatGPT
+            بالای همین صفحه — پلاگین Hevy خودش ۳ روال را با نام‌های وریفای‌شده می‌سازد. بدون پلاگین،
+            ساخت دستی با برگهٔ کارت Hevy زیر ۵ دقیقه است. GymMane ایمپورت برنامه ندارد ولی رابط
+            فارسی کامل دارد؛ Lyfta/Fitbod دستی‌اند (بررسی رسمی مستنداتشان). هر کارت سوییچ «دستگاهی
+            (هفتهٔ ۱–۲) ↔ وزنهٔ آزاد (هفتهٔ ۳+)» دارد و برگه‌ها طوری چیده شده‌اند که ساخت هر روال دستی
+            زیر ۲ دقیقه طول بکشد: نام حرکت انگلیسی + دوز + استراحت به ثانیه + نوت آماده.
           </p>
         </CardContent>
       </Card>

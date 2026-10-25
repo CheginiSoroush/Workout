@@ -866,3 +866,26 @@ Stage Summary:
 - جدول مهم‌ترین اصلاحات: Pull-Up→Pull Up | Assisted Pull-Up→Pull Up (Assisted) | Barbell Row→Bent Over Row (Barbell) | Seated Cable Row→Seated Cable Row - V Grip (Cable) | Face Pull (Cable)→Face Pull | Reverse Pec Deck (Machine)→Rear Delt Reverse Fly (Machine) | Dumbbell Reverse Fly→Rear Delt Reverse Fly (Dumbbell) | EZ Bar Curl→EZ Bar Biceps Curl | Cable Curl→Bicep Curl (Cable) | Straight Arm Pulldown (Cable)→Straight Arm Lat Pulldown (Cable) | Leg Press→Leg Press (Machine) | Single Leg Press→Single Leg Press (Machine) | Leg Curl (Lying)→Lying Leg Curl (Machine) | Back Extension→Back Extension (Machine) | Captain's Chair Leg Raise→Leg Raise Parallel Bars | Cable Chest Fly→Cable Fly Crossovers | Dumbbell Fly→Chest Fly (Dumbbell) | Cable Lateral Raise→Lateral Raise (Cable) | Incline Dumbbell Press→Incline Bench Press (Dumbbell) | Seated Dumbbell Shoulder Press→Shoulder Press (Dumbbell) | Shoulder Press (Machine)→Seated Shoulder Press (Machine)
 - خروجی‌های stale ری‌جنریت شدند (Reverse Pec Deck حالا در همه هست) + باگ خط جایگزین در حالت دستگاهی فیکس شد (روی همه اپ‌ها اثر دارد)
 - جواب کراتین: ۳.۹ گرم داخل تمرین کاملاً OK — با ISSN (نگهدارنده ۳–۵ گرم) و خود بخش کراتین سایت سازگار است
+
+---
+Task ID: 22
+Agent: main (Z.ai Code)
+Task: دو پرامپت ChatGPT+Hevy (وزنهٔ آزاد / دستگاه) در سایت — ساخت خودکار روتین با پلاگین
+
+Work Log:
+- درخواست کاربر: «ChatGPT یه پلاگین داره برای hevy... توی سایت دو قسمت پرامپت وزنه آزاد و دستگاه برای hevy بساز»
+- ژنراتور (research/gen_app_exports.ts): تابع hevyPromptSheet(mode) اضافه شد — پرامپت انگلیسی ساختاریافته از روی PROGRAM (تک‌منبع حقیقت): ۳ روال با نام دقیق (FST-7 Push (Sat) / Pull (Mon) / Legs + Abs (Wed))، هر ۲۰ حرکت با نام وریفای کتابخانهٔ Hevy + ست/تکرار/استراحت ثانیه + RPE + نوت فارسی JSON-safe، SESSION NOTES (گرم‌کردن/LISS/کشش هر روز)، ۸ HARD RULE (ضدجایگزینی، FST-7 = ۷ ست ~۴۵ ثانیه، ست‌های warmup، وزنه خالی، fallback متنی) + PROGRESSION دوگانه
+- دو فایل جدید: public/exports/chatgpt-hevy-prompt-machine.txt (6.6KB) و chatgpt-hevy-prompt-free.txt (5.8KB)
+- HEVY_CHATGPT_PROMPT با ۲ variant در appExports.ts تولید شد (توسط ژنراتور)
+- دو باگ قدیمی واقعی در راه پیدا و فیکس شد:
+  1) REST_SEC کلید reverse-pec-deck نداشت → «rest undefineds» در همهٔ برگه‌های دستگاهی چاپ می‌شد → ۷۵ ثانیه اضافه شد (هم‌خوان با ۶۰–۹۰ دیتا)
+  2) برگه‌های «وزنهٔ آزاد» (build-hevy/lyfta/generic/gymmane .txt) برای حرکات پایه‌دستگاهی (کراس‌اور/پک‌دک/پرس پا/پشت‌پا) نام دستگاهی چاپ می‌کردند + خط جایگزین برعکس بود → منطق نام هر دو حالت متقارن شد (machine: machineAlt??base / free: freeAlt??base) + گارد alt==name برای حرکات تک‌نسخه‌ای (فیس پول، لت پول‌داون، پول‌اور...) + نوت نسخهٔ آزاد هم حالا freeAlt.note دارد
+- اعتبارسنجی: نام‌های هر دو پرامپت ۱۰۰٪ با برگه‌های build-hevy منطبق (پارس فارسی-آگاه)؛ صفر undefined؛ شمارش ۱۹→۲۰ در متن‌های UI (برگهٔ جامع + مرحلهٔ Lyfta) اصلاح شد (openGym واقعاً ۱۹ دارد — دست نخورد)
+- UI (AppExports.tsx): کارت HevyPromptCard بالای برگهٔ جامع — سوییچ دو نسخه، ۴ مرحلهٔ faNum، ۳ نوت (ضدجایگزینی / fallback / وزنه خالی + Pro API یادآوری hevyapp.com/api-keys)، کپی با toast، دانلود، «دیدن پرامپت» با pre dir=ltr monospace max-h-96 scrollable؛ نوت «میان‌بر خودکار» به کارت Hevy اضافه شد؛ نکتهٔ پایانی (واقعیت صادقانه) به‌روز شد
+- e2e agent-browser: #hevy → تب دانش → کارت رندر؛ دیدن پرامپت ماشین (6593 chars، HARD RULES، dir=ltr)؛ سوییچ آزاد → Bench Press (Barbell)، 5824 chars؛ کپی → toast «کپی شد!»؛ لینک دانلود /exports/chatgpt-hevy-prompt-free.txt؛ نوت کارت Hevy + ۲۰ حرکت + فوتر جدید همه present؛ موبایل iPhone 14 بدون overflow-x؛ errors/console خالی (درس sticky-header: scrollTo(0,0) قبل از کلیک)
+- lint پاس؛ dev.log سالم
+
+Stage Summary:
+- دو پرامپت آمادهٔ ChatGPT+Hevy از روی همان دیتای وریفای‌شدهٔ ۳۳/۳۳ تولید می‌شوند — هر تغییری در program.ts خودکار به پرامپت‌ها هم می‌رسد
+- ۲ باگ پنهان exports فیکس شد: rest undefineds (همهٔ برگه‌های دستگاهی) و نام دستگاهی در برگه‌های وزنهٔ آزاد
+- فایل‌های خروجی همه ری‌جنریت شدند؛ UI کارت جدید در بالای بخش «برنامه در اپ‌های دیگر»
