@@ -27,6 +27,7 @@ import MobilitySection from "@/components/dashboard/MobilitySection";
 import CardioSection from "@/components/dashboard/CardioSection";
 import NutritionPanel from "@/components/dashboard/NutritionPanel";
 import MedicalNotes from "@/components/dashboard/MedicalNotes";
+import ProgramScience from "@/components/dashboard/ProgramScience";
 import CreatineResearch from "@/components/dashboard/CreatineResearch";
 import HevyGuide from "@/components/dashboard/HevyGuide";
 import LiftosaurGuide from "@/components/dashboard/LiftosaurGuide";
@@ -48,6 +49,7 @@ const HASH_TO_TAB: Record<string, string> = {
   "#restday": "weekly",
   "#creatine": "knowledge",
   "#hevy": "knowledge",
+  "#science": "knowledge",
   "#sources": "knowledge",
 };
 
@@ -257,6 +259,9 @@ export default function ProgramView() {
               چکش کنی.
             </p>
           </section>
+          <div id="science">
+            <ProgramScience />
+          </div>
           <div id="creatine">
             <CreatineResearch />
           </div>

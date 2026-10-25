@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-24T17:18:03.909Z",
+  "generatedAt": "2026-10-25T02:19:10.401Z",
   "exerciseVideos": [
-    "incline-db-press",
-    "db-shoulder-press",
     "bench-press",
-    "cable-fly"
+    "cable-fly",
+    "db-shoulder-press",
+    "incline-db-press"
   ],
   "exerciseFrameCounts": {
-    "db-shoulder-press": 4,
-    "incline-db-press": 4,
+    "bench-press": 4,
     "cable-fly": 4,
-    "bench-press": 4
+    "db-shoulder-press": 4,
+    "incline-db-press": 4
   },
   "exerciseStepCounts": {},
   "exercisePhotos": [
@@ -43,34 +43,35 @@
     "pull-up__machine.png",
     "rdl.jpg",
     "rdl__machine.png",
+    "reverse-pec-deck.png",
     "rope-pushdown.png",
     "straight-arm-pulldown.jpg"
   ],
   "stretchVideos": [
-    "shoulder-cross",
-    "childs-pose",
-    "hamstring",
-    "cat-cow",
-    "figure4",
-    "neck",
-    "wall-lat",
-    "deadhang",
-    "openbook",
     "calf",
-    "doorway-pec"
+    "cat-cow",
+    "childs-pose",
+    "deadhang",
+    "doorway-pec",
+    "figure4",
+    "hamstring",
+    "neck",
+    "openbook",
+    "shoulder-cross",
+    "wall-lat"
   ],
   "stretchFrameCounts": {
-    "wall-lat": 3,
-    "childs-pose": 3,
     "calf": 3,
-    "deadhang": 3,
-    "shoulder-cross": 3,
-    "figure4": 3,
-    "openbook": 3,
     "cat-cow": 3,
-    "hamstring": 3,
+    "childs-pose": 3,
+    "deadhang": 3,
     "doorway-pec": 3,
-    "neck": 3
+    "figure4": 3,
+    "hamstring": 3,
+    "neck": 3,
+    "openbook": 3,
+    "shoulder-cross": 3,
+    "wall-lat": 3
   },
   "stretchStepCounts": {},
   "stretchPhotos": [

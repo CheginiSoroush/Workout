@@ -150,6 +150,14 @@ export default function ExerciseCard({
             </div>
           )}
 
+          {/* یادداشت برنامه (مثل راهنمای سوپرست) */}
+          {exercise.note && (
+            <div className="rounded-lg bg-secondary/60 border border-border/60 px-3 py-2.5 flex items-start gap-2">
+              <Clock className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+              <p className="text-sm leading-6 text-muted-foreground">{exercise.note}</p>
+            </div>
+          )}
+
           {/* مشخصات ست‌ها */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div className="rounded-lg bg-secondary/60 px-3 py-2 text-center">

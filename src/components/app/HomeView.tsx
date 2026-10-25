@@ -19,6 +19,7 @@ import {
   Flame,
   History,
   Lightbulb,
+  Microscope,
   MoonStar,
   PersonStanding,
   Play,
@@ -96,6 +97,7 @@ const KNOW_CARDS: {
   icon: LucideIcon;
   hash: string;
 }[] = [
+  { label: "علم برنامه", hint: "انتظارات + پوشش", icon: Microscope, hash: "#science" },
   { label: "کشش و انعطاف", hint: "روتین ۱۴ حرکته", icon: PersonStanding, hash: "#stretch" },
   { label: "کراتین", hint: "تحقیق و دوز", icon: FlaskConical, hash: "#creatine" },
   { label: "منابع علمی", hint: "ریشه هر اصل", icon: BookMarked, hash: "#sources" },
@@ -646,7 +648,7 @@ export default function HomeView() {
           <BookMarked className="h-4 w-4 text-primary" aria-hidden="true" />
           میان‌بُر دانش
         </h3>
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
           {KNOW_CARDS.map((card) => (
             <button
               key={card.hash}
