@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { BookMarked, RefreshCw } from "lucide-react";
+import { BookMarked, Github, RefreshCw } from "lucide-react";
 import { openProgramTab } from "@/components/app/home/useTodaySession";
 import { useAppStore } from "@/lib/store/app";
 
@@ -90,6 +90,33 @@ export default function HelpSection() {
         >
           <BookMarked className="h-4 w-4" aria-hidden="true" />
           منابع علمی
+        </Button>
+      </div>
+
+      {/* سازنده */}
+      <div className="rounded-xl border border-primary/25 bg-primary/10 p-4">
+        <p className="text-sm font-bold">سازنده</p>
+        <p className="mt-1 text-xs leading-7 text-muted-foreground">
+          طراحی، کدنویسی، برنامه‌نویسی تمرینی و محتوای علمی این داشبورد همه
+          از <b className="text-foreground">سروش (Soroush)</b> است — ساخته‌شده
+          برای خودش، بر پایه اصول FST-7. کد و مستندات کامل در گیت‌هاب عمومی
+          است.
+        </p>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mt-3 min-h-11 gap-2 px-4 text-xs"
+          onClick={() =>
+            window.open(
+              "https://github.com/CheginiSoroush",
+              "_blank",
+              "noopener,noreferrer"
+            )
+          }
+          aria-label="باز کردن صفحه گیت‌هاب سازنده در تب جدید"
+        >
+          <Github className="h-4 w-4" aria-hidden="true" />
+          GitHub — CheginiSoroush
         </Button>
       </div>
     </div>

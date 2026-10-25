@@ -47,7 +47,7 @@ PREFIXES=(
   "bike.png"
   "stretch.png"
   "hero.png"
-  "logo.svg"
+  "icon.svg"
 )
 
 # فایل‌های متنی خروجی (html/css/js + payloadهای RSC و manifestها)

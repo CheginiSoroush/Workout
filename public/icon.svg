@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- فاوآیکون داشبورد فیتنس — هالتر برند سروش -->
+  <rect width="64" height="64" rx="14" fill="#0f1512"/>
+  <g fill="#25c281">
+    <rect x="13" y="26" width="6" height="12" rx="2"/>
+    <rect x="20.5" y="21" width="7.5" height="22" rx="2.5"/>
+    <rect x="36" y="21" width="7.5" height="22" rx="2.5"/>
+    <rect x="45" y="26" width="6" height="12" rx="2"/>
+    <rect x="28" y="29.5" width="8" height="5" rx="1.5"/>
+  </g>
+</svg>

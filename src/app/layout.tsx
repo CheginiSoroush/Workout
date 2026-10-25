@@ -9,8 +9,12 @@ export const metadata: Metadata = {
   title: "داشبورد فیتنس من | برنامه شناگر FST-7",
   description:
     "داشبورد شخصی تمرین و تغذیه — برنامه ۳ روزه بر پایه اصول هانی رامبد (FST-7) با هدف فرم شناگری و کاهش وزن",
+  applicationName: "داشبورد فیتنس من",
+  authors: [{ name: "Soroush (CheginiSoroush)", url: "https://github.com/CheginiSoroush" }],
+  creator: "Soroush (CheginiSoroush)",
+  publisher: "Soroush (CheginiSoroush)",
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/icon.svg",
   },
 };
 

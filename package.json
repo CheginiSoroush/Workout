@@ -1,7 +1,13 @@
 {
-  "name": "nextjs_tailwind_shadcn_ts",
+  "name": "workout-fst7",
   "version": "0.2.1",
   "private": true,
+  "author": "Soroush <lmsoroush@proton.me> (https://github.com/CheginiSoroush)",
+  "homepage": "https://cheginisoroush.github.io/Workout/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CheginiSoroush/Workout.git"
+  },
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
