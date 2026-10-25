@@ -40,7 +40,7 @@ SESSION NOTES (put each text into the notes field of its routine, unchanged - it
 HARD RULES
 1. Exercise names above are verified against Hevy's own exercise library. Search each EXACT name and pick exactly that exercise. If a name is not found, STOP and tell me - never silently substitute a similar exercise.
 2. Set the rest timer of every set exactly as written (seconds). Put rep ranges in the rep-range fields (start / end).
-3. Copy each exercise's note text into its notes field unchanged (Persian - keep as-is).
+3. Copy each exercise's note text into its notes field unchanged (Persian - keep as-is). Hevy has no RPE field - so APPEND this exercise's RPE target to the END of its note in the form " | RPE هدف: N" (N is the RPE written on the exercise line).
 4. Exercises marked "FST-7 FINISHER": exactly 7 sets, ~45s rest, constant light weight, last sets to technical failure. Do NOT mark them as a superset.
 5. Add 3 warm-up sets (type = warmup) before the FIRST exercise of each routine. Push/Legs: 8 reps at ~40%, 4 reps at ~60%, 2 reps at ~75% of the first working set. Pull: scapular pulls + 5 light band-assisted reps.
 6. Leave all working weights EMPTY - I will log my first session to find my starting weights.

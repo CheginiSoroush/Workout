@@ -988,7 +988,7 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
     "2. Set the rest timer of every set exactly as written (seconds). Put rep ranges in the rep-range fields (start / end)."
   );
   L.push(
-    '3. Copy each exercise\'s note text into its notes field unchanged (Persian - keep as-is).'
+    "3. Copy each exercise's note text into its notes field unchanged (Persian - keep as-is). Hevy has no RPE field - so APPEND this exercise's RPE target to the END of its note in the form \" | RPE هدف: N\" (N is the RPE written on the exercise line)."
   );
   L.push(
     '4. Exercises marked "FST-7 FINISHER": exactly 7 sets, ~45s rest, constant light weight, last sets to technical failure. Do NOT mark them as a superset.'
