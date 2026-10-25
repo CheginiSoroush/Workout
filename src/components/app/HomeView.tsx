@@ -17,6 +17,7 @@ import {
   Dumbbell,
   FlaskConical,
   Flame,
+  GraduationCap,
   History,
   Lightbulb,
   Microscope,
@@ -97,6 +98,7 @@ const KNOW_CARDS: {
   icon: LucideIcon;
   hash: string;
 }[] = [
+  { label: "راهنما و اصطلاحات", hint: "rep، ست، RPE…", icon: GraduationCap, hash: "#glossary" },
   { label: "علم برنامه", hint: "انتظارات + پوشش", icon: Microscope, hash: "#science" },
   { label: "کشش و انعطاف", hint: "روتین ۱۴ حرکته", icon: PersonStanding, hash: "#stretch" },
   { label: "کراتین", hint: "تحقیق و دوز", icon: FlaskConical, hash: "#creatine" },
@@ -648,7 +650,7 @@ export default function HomeView() {
           <BookMarked className="h-4 w-4 text-primary" aria-hidden="true" />
           میان‌بُر دانش
         </h3>
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-5">
           {KNOW_CARDS.map((card) => (
             <button
               key={card.hash}
