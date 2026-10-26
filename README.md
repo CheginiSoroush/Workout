@@ -25,7 +25,7 @@
 
 ## ✨ What is this?
 
-A self-hosted training companion built around the **FST-7** principle (Hany Rambod): a 3-day **Push / Pull / Legs** split, each session ending with a 7-set, 45-second rest-pause finisher. Every exercise ships with machine ↔ free-weight variants, form cues, common mistakes and video references. Everything is **Persian-first (RTL)**, works **100% offline**, and stores data **only on your own device** — no accounts, no servers.
+A self-hosted training companion built around the **FST-7** principle (Hany Rambod): a 3-day **Push / Pull / Legs** split, each session ending with a 7-set, 30–45-second rest-pause finisher. Every exercise ships with machine ↔ free-weight variants, form cues, common mistakes and video references. Everything is **Persian-first (RTL)**, works **100% offline**, and stores data **only on your own device** — no accounts, no servers.
 
 ## 📸 Screenshots
 
@@ -39,11 +39,11 @@ A self-hosted training companion built around the **FST-7** principle (Hany Ramb
 
 | Session | Focus | Working Sets | FST-7 Finisher |
 |:---:|:---|:---:|:---|
-| **Sat** | Chest · Shoulders · Triceps | 23 sets | Cable lateral raise — 7 × 45s |
-| **Mon** | Back · Biceps | 26 sets | Face pull — 7 × 45s |
-| **Wed** | Legs · Glutes · Abs | 27 sets | Machine lateral raise — 7 × 45s |
+| **Sat** | Chest · Shoulders · Triceps | 23 sets | Dumbbell lateral raise — 7 × 30–45s |
+| **Mon** | Back · Biceps | 26 sets | Straight-arm lat pulldown — 7 × 30–45s |
+| **Wed** | Legs · Glutes · Abs | 27 sets | Cable crunch — 7 × 30–45s |
 
-All 20 exercises include video/flickbook demos, form cues, common mistakes and a **machine ↔ free-weight switch** (machine-first for beginners, backed by a 2023 meta-analysis).
+All 20 exercises include video/flipbook demos, form cues, common mistakes and a **machine ↔ free-weight switch** (machine-first for beginners, backed by a 2023 meta-analysis).
 
 ## 🚀 Features
 
@@ -51,14 +51,14 @@ All 20 exercises include video/flickbook demos, form cues, common mistakes and a
 - 📈 **Real progress tracking** — weight charts, weekly consistency, personal records
 - 🧠 **Knowledge library** — 31-term glossary, creatine research digest, linked scientific sources
 - 🧘 **14-move stretching routine** + LISS bike cardio + nutrition guidance
-- 📤 **Export to workout apps** — Hevy, Liftosaur, Lyfta, GymMane, Gymverse and more, with exact per-app exercise names
+- 📤 **Export to workout apps** — Hevy, Liftosaur, Lyfta, GymMane, OpenGym, FitBod and more, with exact per-app exercise names
 - 🤖 **ChatGPT + Hevy prompt** — auto-build all 3 routines inside the app with a single prompt
 - 🔒 **Privacy by design** — no server, no account; everything stays on your device
 - 🌓 **Dark emerald theme** — mobile-first, Vazirmatn font, fully offline-capable
 
 ## 📤 Workout App Exports
 
-Ready-made files in [`public/exports`](public/exports): `build-hevy*.txt` · `liftosaur-*.liftoscript` · `build-lyfta*.txt` · `build-gymmane*.txt` · `opengym-plan*.json` · `chatgpt-hevy-prompt-*.txt` · `weekly-routine-full.md`
+Ready-made files in [`public/exports`](public/exports): `build-hevy*.txt` · `build-lyfta*.txt` · `build-gymmane*.txt` · `build-opengym*.txt` · `build-generic*.txt` · `opengym-plan*.json` · `chatgpt-hevy-prompt-*.txt` · `weekly-routine-full.md` — plus **Liftoscript** (Liftosaur format), generated in-app by the built-in guide.
 
 ## 🧠 Architecture
 
@@ -109,15 +109,15 @@ bun run build:static   # static build for GitHub Pages
 
 ### ✨ این چیه؟
 
-داشبورد شخصی تمرین بر پایهٔ اصل **FST-7** (هانی رامبد): برنامهٔ ۳ روزهٔ **Push / Pull / Legs** که هر جلسه با فینیشر ۷ ست × ۴۵ ثانیه تمام می‌شود. هر ۲۰ حرکت نسخهٔ **دستگاه ↔ وزنهٔ آزاد**، نکات فرم، خطاهای رایج و ویدیو دارد. همه‌چیز فارسی و RTL، کاملاً آفلاین، و داده‌ها فقط روی دستگاه خودت — بدون سرور و حساب کاربری.
+داشبورد شخصی تمرین بر پایهٔ اصل **FST-7** (هانی رامبد): برنامهٔ ۳ روزهٔ **Push / Pull / Legs** که هر جلسه با فینیشر ۷ ست × ۳۰–۴۵ ثانیه تمام می‌شود. هر ۲۰ حرکت نسخهٔ **دستگاه ↔ وزنهٔ آزاد**، نکات فرم، خطاهای رایج و ویدیو دارد. همه‌چیز فارسی و RTL، کاملاً آفلاین، و داده‌ها فقط روی دستگاه خودت — بدون سرور و حساب کاربری.
 
 ### 🏋️ برنامه
 
 | جلسه | تمرکز | ست‌های کاری | فینیشر FST-7 |
 |:---:|:---|:---:|:---|
-| **شنبه** | سینه · سرشانه · پشت‌بازو | ۲۳ ست | نشر جانب کابل — ۷ × ۴۵ث |
-| **دوشنبه** | زیربغل · جلوبازو | ۲۶ ست | فییس‌پول — ۷ × ۴۵ث |
-| **چهارشنبه** | پا · باسن · شکم | ۲۷ ست | نشر جانب دستگاه — ۷ × ۴۵ث |
+| **شنبه** | سینه · سرشانه · پشت‌بازو | ۲۳ ست | نشر جانب دمبل — ۷ × ۳۰–۴۵ث |
+| **دوشنبه** | زیربغل · جلوبازو | ۲۶ ست | پول‌اور سیم‌کش دست صاف — ۷ × ۳۰–۴۵ث |
+| **چهارشنبه** | پا · باسن · شکم | ۲۷ ست | شکم سیم‌کش زانوزده — ۷ × ۳۰–۴۵ث |
 
 ### 🚀 قابلیت‌ها
 
