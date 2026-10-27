@@ -1005,3 +1005,24 @@ Stage Summary:
 - ۴۸ آیتم QA: همه پاس — ۱ باگ TS واقعی، ۷ خطای دقت README، و مودهای ۷۵۵ پیدا و تعمیر شد
 - دو کامیت جدید: 9361a59 (mode hygiene) + 4425251 (QA fixes) — هر دو با نویسندهٔ proton و linked
 - سایت لایو و مخزن عمومی حالا کاملاً سالم، دقیق و حرفه‌ای‌اند؛ محتوای دارویی/شخصی صفر
+
+---
+Task ID: 29
+Agent: Z.ai Code (main)
+Task: «پوش کردی به گیتهاب؟» — بررسی وضعیت push، شناسایی رسانهٔ کامیت‌نشده و تکمیل انتشار
+
+Work Log:
+- بررسی git status: HEAD (73fdfc3 — bake ⚠️ نکن در نوتس ChatGPT+Hevy) روی origin بود، ولی ۱۱ فایل رسانهٔ کامیت‌نشده روی دیسک ماند: ویدیوهای جدید lateral-raise.mp4 و rope-pushdown.mp4 + ۸ فریم فلیپ‌بوک
+- دو کامپوننت یتیم (MedicalNotes.tsx / ClaResearch.tsx) که به MEDICAL_NOTES/CLA_RESEARCH حذف‌شدهٔ تسک ۲۷ ارجاع می‌دادند tsc را می‌شکستند → حذف از دیسک؛ همچنین p4_ssri.json (دادهٔ پزشکی شخصی) و آرتیفکت‌های videotasks غیر-tracked پاک شدند
+- دو فایل tracked videotasks (bench-press__machine / rope-pushdown json) اشتباهی حذف شده بودند → git checkout بازگرداند
+- فانتوم mode 755→644 همهٔ فایل‌های modified با chmod حل شد (الگوی شناخته‌شدهٔ محیط)
+- scripts/gen-media-manifest.mjs اجرا شد: مانیفست از ۴ به ۶ ویدیوی تمرین و ۶ فلیپ‌بوک رفت (lateral-raise و rope-pushdown اضافه شدند)
+- tsc + lint سبز؛ ویدیوها با file/ISO-Media سنجیده شدند؛ ۶۴۴ نرمال؛ کامیت e9ca66d با نویسندهٔ Soroush <lmsoroush@proton.me>
+- credential store بعد از ریست sandbox دوباره ساخته شد (فقط token خام برای API جدا استخراج شود — دام: کولن https://)
+- push 73fdfc3..e9ca66d → Actions «Deploy to GitHub Pages» در ~۱۰دقیقه completed/success
+- راستی‌آزمایی لایو: هر ۴ دارایی (۲ mp4 + ۲ فریم) روی چeginisoroush.github.io/Workout با همان بایت‌سایز دیسک ۲۰۰
+
+Stage Summary:
+- جواب سؤال کاربر: بله — الان همه‌چیز از جمله ویدیوهای دمو حرکت فینیشر (نشر جانب دمبل) و پوش‌داون طناب روی GitHub Pages لایو است
+- سایت لایو حالا ۶ ویدیوی تمرین دارد؛ فلیپ‌بوک/ویدیو دو حرکتی که کاربر در باشگاه سخت‌تر یافت (lateral-raise) پوشش داده شد
+- ریپو فاقد هرگونه دادهٔ پزشکی شخصی؛ tsc/lint سبز؛ main=e9ca66d همگام با origin
