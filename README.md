@@ -52,7 +52,7 @@ All 20 exercises include video/flipbook demos, form cues, common mistakes and a 
 - 🧠 **Knowledge library** — 31-term glossary, creatine research digest, linked scientific sources
 - 🧘 **14-move stretching routine** + LISS bike cardio + nutrition guidance
 - 📤 **Export to workout apps** — Hevy, Liftosaur, Lyfta, GymMane, OpenGym, FitBod and more, with exact per-app exercise names
-- 🤖 **ChatGPT + Hevy prompt** — auto-build all 3 routines inside the app with a single prompt
+- 🤖 **ChatGPT + Hevy prompt** — auto-build all 3 routines inside the app with a single prompt; every exercise note carries its form cue, top mistake (⚠️) and RPE target
 - 🔒 **Privacy by design** — no server, no account; everything stays on your device
 - 🌓 **Dark emerald theme** — mobile-first, Vazirmatn font, fully offline-capable
 

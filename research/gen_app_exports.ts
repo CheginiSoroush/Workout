@@ -954,6 +954,7 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
         repsEn(ex.reps).replace(/\s*هر پا/g, "") + (perLeg ? " each leg" : "");
       const note = [
         ex.tips[0] || ex.faName,
+        ex.mistakes?.[0] ? `⚠️ نکن: ${ex.mistakes[0]}` : "",
         mode === "machine" ? ex.machineAlt?.note : ex.freeAlt?.note,
       ]
         .filter(Boolean)
