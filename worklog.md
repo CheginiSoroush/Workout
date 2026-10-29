@@ -1026,3 +1026,22 @@ Stage Summary:
 - جواب سؤال کاربر: بله — الان همه‌چیز از جمله ویدیوهای دمو حرکت فینیشر (نشر جانب دمبل) و پوش‌داون طناب روی GitHub Pages لایو است
 - سایت لایو حالا ۶ ویدیوی تمرین دارد؛ فلیپ‌بوک/ویدیو دو حرکتی که کاربر در باشگاه سخت‌تر یافت (lateral-raise) پوشش داده شد
 - ریپو فاقد هرگونه دادهٔ پزشکی شخصی؛ tsc/lint سبز؛ main=e9ca66d همگام با origin
+
+---
+Task ID: 30
+Agent: Z.ai Code (main)
+Task: «هرکاری که لازمه» — افزودن کاردیوی LISS به‌صورت آیتم واقعی قابل‌ثبت در خروجی اپ‌ها
+
+Work Log:
+- بین دو سؤال کاربر، محیط دو کامیت ناخواستهٔ UUID ساخت (auto-commit حین قطعی ابزار): خام‌رسانه‌ها + tests/ + و دو کامپوننت یتیمِ پزشکی که snapshot-restore دوباره زنده کرده بود — چون [ahead 2] و پوش‌نشده بودند → git reset --hard fdae7d8؛ وضعیت دیسک تمیزتر از قبل (حتی خام‌رسانه‌های untracked هم پاک شدند)
+- research/gen_app_exports.ts: ثابت BIKE_CARDIO_FA + daySheet() حالا به‌جای خط براکتِ [LISS]، آیتم شماره‌دار واقعی می‌دهد: «N. Stationary Bike — کاردیوی LISS — 1 × 20:00 (duration)» + نوت ضربان/جایگزین تردمیل
+- hevyPromptSheet(): حرکت آخر هر روتین = Stationary Bike ست زمانی + HARD RULE جدید ۹ (Exact search، duration 20:00، هرگز حذف نشود)
+- بازتولید کامل ۱۵ فایل خروجی + src/lib/appExports.ts (اعتبار → 2026-10-27)؛ Hevy/Lyfta/generic/GymMane همه ارث بردند؛ openGym (schema v1.4) دست نخورد
+- شماره‌گذاری چک شد: Push → آیتم ۷، Pull/Legs → آیتم ۸؛ tsc + lint سبز؛ chmod 644
+- credential store باز هم ریست شده بود → بازسازی و push a8490b5؛ Actions completed/success
+- راستی‌آزمایی لایو: build-hevy-machine.txt روی Pages → 200 و هر سه آیتم Stationary Bike دیده می‌شود
+
+Stage Summary:
+- کاردیو دیگر «خط توضیح» نیست — در هر ۳ روال، حرکت آخر با Duration ۲۰ دقیقه قابل لاگ است
+- کاربر می‌تواند هم دستی در Hevy اضافه کند (۱۰ ثانیه) و هم با پرومپت به‌روز روتین‌ها را با کاردیو بسازد
+- ریپو تمیز، main=a8490b5+worklog، همگام با origin؛ درس: خروجی ابزارها بعد از قطعی، اول وضعیت گیت چک شود
