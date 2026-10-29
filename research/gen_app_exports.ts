@@ -30,9 +30,14 @@ const ROOT = path.join(__dirname, "..");
 const TODAY = "2026-10-27";
 
 // کاردیوی پایانی هر جلسه — به‌صورت آیتم «واقعی قابل‌ثبت» (Duration) نه فقط خط توضیح
-// نام دقیق «Stationary Bike» از کتابخانهٔ خود Hevy است — مثل بقیهٔ اسم‌ها Exact-Search می‌شود
+// نام «Stationary Bike» ترجیحی است؛ کتابخانهٔ Hevy هر کاربر ممکن است اسم دیگری داشته باشد
+// (مثلاً Cycling / Treadmill) — کاردیو LISS دستگاه‌مستقل است، پس فقط این آیتم حق جایگزینی دارد
 const BIKE_CARDIO_FA =
   "ضربان ۱۱۵ تا ۱۳۵ — مقاومت متوسط، ریتم ثابت. جایگزین: تردمیل شیب‌دار (سرعت ۵–۶ / شیب ۵–۸٪) یا پیاده‌روی تند.";
+const BIKE_SHEET_LABEL =
+  "Stationary Bike — کاردیوی LISS — 1 × 20:00 (duration)";
+const BIKE_SHEET_ALT =
+  "  در کتابخانهٔ اپ اگر Stationary Bike نبود: Cycling یا Treadmill یا هر کاردیوی زمان‌دار — همان ۲۰ دقیقه";
 
 // استراحت بر حسب ثانیه — دقیقاً هماهنگ با نسخهٔ Liftosaur v2 (کانونی)
 const REST_SEC: Record<string, number> = {
@@ -137,10 +142,9 @@ function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "ba
   });
   lines.push("");
   // کاردیوی LISS — آیتم آخر جلسه با Duration تا در اپ هم دیده و ثبت شود (فقط خط توضیح نیست)
-  lines.push(
-    `${day.exercises.length + 1}. Stationary Bike — کاردیوی LISS — 1 × 20:00 (duration)`
-  );
+  lines.push(`${day.exercises.length + 1}. ${BIKE_SHEET_LABEL}`);
   lines.push(`  Notes: ${BIKE_CARDIO_FA}`);
+  lines.push(BIKE_SHEET_ALT);
   lines.push(`[سرد کردن — روتین کششی سایت: ${cd.label}]`);
   return lines.join("\n");
 }
@@ -973,8 +977,9 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
       );
     });
     // کاردیوی LISS — حرکت آخر هر روتین، ست زمانی (Duration) بدون وزنه/تکرار
+    // تنها آیتمی که جایگزینی مجاز است — کتابخانهٔ Hevy هر کاربر اسم کاردیو متفاوتی دارد
     L.push(
-      `${day.exercises.length + 1}. Stationary Bike - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: ${JSON.stringify(BIKE_CARDIO_FA)}`
+      `${day.exercises.length + 1}. Stationary Bike (PREFERRED name - if NOT in my library, use ANY duration-based cardio it does have, e.g. Cycling / Treadmill / Walking / Elliptical) - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: ${JSON.stringify(BIKE_CARDIO_FA)}`
     );
     L.push("");
   });
@@ -1015,7 +1020,7 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
     "8. When done, list every routine with its exercises (sets x reps, rest) so I can verify. If the Hevy tool is unavailable, do NOT pretend it worked - output the 3 routines as plain text instead."
   );
   L.push(
-    '9. The LAST exercise of every routine is "Stationary Bike" as a DURATION set: 1 set x 20:00, no weight/rep targets. Search exactly "Stationary Bike" and keep its note text unchanged. Never drop or replace it.'
+    '9. The LAST exercise of every routine is LISS cardio as a DURATION set: 1 set x 20:00, no weight/rep targets. Preferred name "Stationary Bike" - if that exact name is not in my library, substitute ANY duration-based cardio exercise that IS (e.g. Cycling, Treadmill, Walking, Elliptical) and tell me which one you picked. This is the ONLY exercise where substitution is allowed. Keep its note text unchanged. Never drop it.'
   );
   L.push("");
   L.push(
