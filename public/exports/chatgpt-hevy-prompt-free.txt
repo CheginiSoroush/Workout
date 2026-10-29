@@ -13,6 +13,7 @@ ROUTINE - name: "FST-7 Push (Sat)"
 4. Chest Fly (Dumbbell) - 3 sets x 10-15 - rest 90s - RPE 9 - note: "قوس دست‌ها در کل حرکت ثابت بمونه — مثل در آغوش گرفتن یه درخت - ⚠️ نکن: تبدیل‌شدن به پرس با خم کردن آرنج‌ها - وقتی دستگاه شلوغه — کشش عمیق‌تر ولی کنترلش سخت‌تره؛ وزنه سبک انتخاب کن."
 5. Triceps Rope Pushdown - 3 sets x 10-15 - rest 75s - RPE 9 - note: "آرنج‌ها چسبیده به بدن و ثابت — فقط ساعد حرکت می‌کنه - ⚠️ نکن: خم شدن به جلو و فشار با وزن بدن"
 6. Lateral Raise (Dumbbell) - 7 sets x 10-15 - rest 45s - RPE 9 (pump) - FST-7 FINISHER - note: "شونه‌ها پایین و عقب — ترپس رو درگیر نکن - ⚠️ نکن: سوئینگ و پرتاب دمبل با کمر"
+7. Stationary Bike - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: "ضربان ۱۱۵ تا ۱۳۵ — مقاومت متوسط، ریتم ثابت. جایگزین: تردمیل شیب‌دار (سرعت ۵–۶ / شیب ۵–۸٪) یا پیاده‌روی تند."
 
 ROUTINE - name: "FST-7 Pull (Mon)"
 1. Pull Up - 4 sets x 5-10 - rest 180s - RPE 8 - note: "دست‌ها کمی بازتر از عرض شانه، سینه به سمت میله - ⚠️ نکن: کیک زدن با پا"
@@ -22,6 +23,7 @@ ROUTINE - name: "FST-7 Pull (Mon)"
 5. Rear Delt Reverse Fly (Dumbbell) - 3 sets x 12-15 - rest 75s - RPE 9 - note: "سینه چسبیده به پد، تنه ثابت — حرکت فقط از شانه‌ها - ⚠️ نکن: وزنه سنگین → سوئینگ و کمک گرفتن از کمر - وقتی دستگاه شلوغه — تنه موازی زمین، دمبل سبک، همون جمع کردن تیغه‌ها در انتها."
 6. EZ Bar Biceps Curl - 3 sets x 8-12 - rest 90s - RPE 9 - note: "آرنج‌ها ثابت کنار بدن — فقط ساعد حرکت می‌کنه - ⚠️ نکن: سوئینگ کمر و پرتاب هالتر"
 7. Straight Arm Lat Pulldown (Cable) - 7 sets x 10-15 - rest 45s - RPE 9 (pump) - FST-7 FINISHER - note: "آرنج ثابت و کمی خم — زاویه دست در کل حرکت ثابت - ⚠️ نکن: خم کردن آرنج → تبدیل به پوش‌داون"
+8. Stationary Bike - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: "ضربان ۱۱۵ تا ۱۳۵ — مقاومت متوسط، ریتم ثابت. جایگزین: تردمیل شیب‌دار (سرعت ۵–۶ / شیب ۵–۸٪) یا پیاده‌روی تند."
 
 ROUTINE - name: "FST-7 Legs + Abs (Wed)"
 1. Goblet Squat - 4 sets x 8-12 - rest 180s - RPE 8 - note: "پاها عرض شانه وسط صفحه — کف پا کامل روی صفحه - ⚠️ نکن: نصفه دامنه با وزنه خیلی سنگین - برای تنوع یا تمرین در خانه/سفر — دمبل رو کنار سینه بگیر و عمیق پایین برو."
@@ -31,6 +33,7 @@ ROUTINE - name: "FST-7 Legs + Abs (Wed)"
 5. Standing Calf Raise - 4 sets x 10-15 - rest 60s - RPE 9 - note: "دامنه کامل: پایین کشش ۲ ثانیه، بالا اسکوییز ۱ ثانیه - ⚠️ نکن: ریتم سریع باکونس"
 6. Hanging Leg Raise - 3 sets x 8-15 - rest 90s - RPE 9 - note: "کلید حرکت چرخش لگنه (posterior pelvic tilt) — نه فقط بالا بردن پا - ⚠️ نکن: تاب خوردن از شانه‌ها"
 7. Cable Crunch - 7 sets x 12-15 - rest 45s - RPE 9 (pump) - FST-7 FINISHER - note: "دسته رو کنار گردن بگیر (نه پشت سر) و زانوها روی زمین - ⚠️ نکن: کشیدن با بازو"
+8. Stationary Bike - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: "ضربان ۱۱۵ تا ۱۳۵ — مقاومت متوسط، ریتم ثابت. جایگزین: تردمیل شیب‌دار (سرعت ۵–۶ / شیب ۵–۸٪) یا پیاده‌روی تند."
 
 SESSION NOTES (put each text into the notes field of its routine, unchanged - it is in Persian):
 - FST-7 Push (Sat): [گرم‌کردن: دوچرخه ثابت ۵ دقیقه خیلی سبک (مقاومت کم — ریتمی که راحت حرف بزنی) + ست‌های سبکِ حرکت اول جلسه] + [بعد از ست آخر: LISS دوچرخه ۱۵ تا ۲۰ دقیقه (ضربان ۱۱۵ تا ۱۳۵) — جایگزین تردمیل شیب‌دار] + [سرد کردن — روتین کششی سایت: چارچوب در (سینه) — کراس‌بادی شانه — کودک]
@@ -46,6 +49,7 @@ HARD RULES
 6. Leave all working weights EMPTY - I will log my first session to find my starting weights.
 7. Create exactly 3 routines with the exact names above ("FST-7 Push (Sat)", "FST-7 Pull (Mon)", "FST-7 Legs + Abs (Wed)").
 8. When done, list every routine with its exercises (sets x reps, rest) so I can verify. If the Hevy tool is unavailable, do NOT pretend it worked - output the 3 routines as plain text instead.
+9. The LAST exercise of every routine is "Stationary Bike" as a DURATION set: 1 set x 20:00, no weight/rep targets. Search exactly "Stationary Bike" and keep its note text unchanged. Never drop or replace it.
 
 PROGRESSION (my own rule - Hevy has no auto-progression; reference only):
 - Double progression: when I hit the top of the rep range on all sets with good form (RPE 8), next session I add ~2.5 kg (upper body) / ~5 kg (lower body) and drop back to the bottom of the range.

@@ -27,7 +27,12 @@ import * as fs from "fs";
 import * as path from "path";
 
 const ROOT = path.join(__dirname, "..");
-const TODAY = "2026-10-24";
+const TODAY = "2026-10-27";
+
+// کاردیوی پایانی هر جلسه — به‌صورت آیتم «واقعی قابل‌ثبت» (Duration) نه فقط خط توضیح
+// نام دقیق «Stationary Bike» از کتابخانهٔ خود Hevy است — مثل بقیهٔ اسم‌ها Exact-Search می‌شود
+const BIKE_CARDIO_FA =
+  "ضربان ۱۱۵ تا ۱۳۵ — مقاومت متوسط، ریتم ثابت. جایگزین: تردمیل شیب‌دار (سرعت ۵–۶ / شیب ۵–۸٪) یا پیاده‌روی تند.";
 
 // استراحت بر حسب ثانیه — دقیقاً هماهنگ با نسخهٔ Liftosaur v2 (کانونی)
 const REST_SEC: Record<string, number> = {
@@ -131,7 +136,11 @@ function daySheet(dayId: string, appName: string, mode: "base" | "machine" = "ba
     }
   });
   lines.push("");
-  lines.push(`[${LISS_LINE}]`);
+  // کاردیوی LISS — آیتم آخر جلسه با Duration تا در اپ هم دیده و ثبت شود (فقط خط توضیح نیست)
+  lines.push(
+    `${day.exercises.length + 1}. Stationary Bike — کاردیوی LISS — 1 × 20:00 (duration)`
+  );
+  lines.push(`  Notes: ${BIKE_CARDIO_FA}`);
   lines.push(`[سرد کردن — روتین کششی سایت: ${cd.label}]`);
   return lines.join("\n");
 }
@@ -963,6 +972,10 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
         `${i + 1}. ${exName(ex, mode)} - ${ex.sets} sets x ${repsTxt} - rest ${REST_SEC[ex.id]}s - RPE ${fa2en(ex.rpe).replace("پامپ", "9 (pump)")}${ex.fst7 ? " - FST-7 FINISHER" : ""} - note: ${JSON.stringify(note)}`
       );
     });
+    // کاردیوی LISS — حرکت آخر هر روتین، ست زمانی (Duration) بدون وزنه/تکرار
+    L.push(
+      `${day.exercises.length + 1}. Stationary Bike - 1 set x 20:00 duration (LISS cardio, HR 115-135) - note: ${JSON.stringify(BIKE_CARDIO_FA)}`
+    );
     L.push("");
   });
   L.push(
@@ -1000,6 +1013,9 @@ function hevyPromptSheet(mode: "base" | "machine"): string {
   );
   L.push(
     "8. When done, list every routine with its exercises (sets x reps, rest) so I can verify. If the Hevy tool is unavailable, do NOT pretend it worked - output the 3 routines as plain text instead."
+  );
+  L.push(
+    '9. The LAST exercise of every routine is "Stationary Bike" as a DURATION set: 1 set x 20:00, no weight/rep targets. Search exactly "Stationary Bike" and keep its note text unchanged. Never drop or replace it.'
   );
   L.push("");
   L.push(
