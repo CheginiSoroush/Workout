@@ -1045,3 +1045,20 @@ Stage Summary:
 - کاردیو دیگر «خط توضیح» نیست — در هر ۳ روال، حرکت آخر با Duration ۲۰ دقیقه قابل لاگ است
 - کاربر می‌تواند هم دستی در Hevy اضافه کند (۱۰ ثانیه) و هم با پرومپت به‌روز روتین‌ها را با کاردیو بسازد
 - ریپو تمیز، main=a8490b5+worklog، همگام با origin؛ درس: خروجی ابزارها بعد از قطعی، اول وضعیت گیت چک شود
+
+---
+Task ID: 31
+Agent: Z.ai Code (main)
+Task: رفع توقف ChatGPT — قانون جایگزینی کاردیو LISS (اسم Stationary Bike در کتابخانهٔ Hevy کاربر نبود)
+
+Work Log:
+- ChatGPT+Hevy دقیقاً طبق قانون ۱ توقف کرد: «Stationary Bike» exact-match نبود؛ بقیهٔ ۲۰ اسم سبز
+- تحلیل: برای حرکات قدرتی exact-name درست است، ولی LISS دستگاه‌مستقل است (برنامهٔ خودش تردمیل/پیاده‌روی را جایگزین مجاز می‌داند)
+- gen_app_exports.ts: خط کاردیوی پرامپت → «Stationary Bike (PREFERRED — if NOT in library use ANY duration-based cardio e.g. Cycling/Treadmill/Walking/Elliptical)»؛ قانون ۹ بازنویسی: تنها آیتمی که جایگزینی مجاز است + گزارش اسم انتخابی
+- برگه‌های ساخت: خط کمکی «اگر Stationary Bike نبود: Cycling یا Treadmill یا هر کاردیوی زمان‌دار — همان ۲۰ دقیقه»
+- بازتولید ۱۵ فایل؛ tsc/lint سبز؛ push بعد از drama: sandbox-restore کامیت ورک‌لاگ را با SHA تکراری-but-متفاوت بازساخته بود → pull --rebase → یکپارچه؛ mode-noise باز نرمال شد
+- درس: بعد از هر قطعی/ریست سندباکس، تاریخچهٔ محلی را با origin مقایسه کن (SHA با پیام یکسان = قرمز)
+
+Stage Summary:
+- پرومپت دیگر روی اسم کاردیو نمی‌ایستد؛ کاربر با یک جمله به ChatGPT جواب می‌دهد و ۳ روال ساخته می‌شود
+- main=68cf259+worklog، همگام با origin؛ Actions باید سبز شود — لایو چک شد
